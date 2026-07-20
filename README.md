@@ -130,4 +130,20 @@
 
 ---
 
+---
+
+## Materiais do Repositório
+
+| Arquivo | Conteúdo |
+|---------|----------|
+| `apostila_01_fundamentos.md` | Fundamentos de Python para Economia |
+| `apostila_02_pandas.md` | Pandas para análise de dados econômicos |
+| `apostila_03_visualizacao.md` | Visualização de dados (matplotlib, seaborn) |
+| `apostila_04_econometria.md` | Econometria com Python (statsmodels) |
+| `apostila_05_projetos.md` | Projetos práticos de portfólio |
+| `apostila_06_matematica_financeira.md` | Matemática Financeira com Python (juros, amortização, VPL, TIR) |
+| `apostila_07_financas.md` | Finanças com Python (CAPM, WACC, valuation, indicadores) |
+| `livro_python_economia.md` | Livro completo: Python para Economia |
+| `python_para_economia.md` | Guia de Python para Economia |
+
 > Lema: Programação é igual econometria — só se aprende fazendo.

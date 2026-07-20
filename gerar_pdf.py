@@ -4,8 +4,8 @@ Gera PDF do livro Python para Economia a partir do markdown.
 import markdown
 from weasyprint import HTML
 
-MD_FILE = "/home/devimts/economia/livro_python_economia.md"
-PDF_FILE = "/home/devimts/economia/livro_python_economia.pdf"
+MD_FILE = "./apostila_06_matematica_financeira.md"
+PDF_FILE = "./apostila_06_matematica_financeira.pdf"
 
 with open(MD_FILE, "r", encoding="utf-8") as f:
     md_content = f.read()
