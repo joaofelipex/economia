@@ -41,15 +41,15 @@ devem ser absolutamente dominados antes de qualquer avanço.
     table.header([Conceito], [Símbolo], [Nomes
       Alternativos], [Definição],),
     table.hline(),
-    [#strong[Capital]], [$C$, $P V$], [Valor Presente, Principal, Valor
-    Atual], [Quantia disponível ou devida na data de referência inicial
-    da operação],
-    [#strong[Montante]], [$M$, $F V$], [Valor Futuro, Valor de Resgate,
-    Valor Nominal], [Quantia disponível ou devida na data de referência
-    final da operação],
+    [#strong[Capital]], [$C$, $upright("PV")$], [Valor Presente,
+    Principal, Valor Atual], [Quantia disponível ou devida na data de
+    referência inicial da operação],
+    [#strong[Montante]], [$M$, $upright("FV")$], [Valor Futuro, Valor de
+    Resgate, Valor Nominal], [Quantia disponível ou devida na data de
+    referência final da operação],
     [#strong[Juros]], [$J$], [Remuneração, Encargos,
     Rendimento], [Diferença entre o montante e o capital:
-    $J = F V - P V$],
+    $J = upright("FV") - upright("PV")$],
     [#strong[Taxa de Juros]], [$i$], [Taxa de juros, Rentabilidade,
     Custo], [Razão entre os juros de um período e o capital que os
     produziu],
@@ -68,7 +68,7 @@ de duas formas equivalentes:
 
 A conversão é simples:
 
-$ i_(d e c i m a l) = i_(p e r c e n t u a l) / 100 $
+$ i_(upright("decimal")) = i_(upright("percentual")) / 100 $
 
 #strong[Importante:] a taxa de juros e o período devem estar sempre na
 #strong[mesma unidade de tempo]. Se a taxa é mensal, o período deve ser
@@ -177,36 +177,38 @@ o composto, dependendo da convenção adotada.
 <capítulo-2-juros-simples>
 === 2.1. Dedução das Fórmulas
 <dedução-das-fórmulas>
-Seja $P V$ o capital inicial aplicado a uma taxa $i$ por período,
-durante $n$ períodos, no regime de juros simples.
+Seja $upright("PV")$ o capital inicial aplicado a uma taxa $i$ por
+período, durante $n$ períodos, no regime de juros simples.
 
-#strong[Período 1:] $J_1 = P V times i$
+#strong[Período 1:] $J_1 = upright("PV") times i$
 
-#strong[Período 2:] $J_2 = P V times i$ (ainda sobre o capital inicial)
+#strong[Período 2:] $J_2 = upright("PV") times i$ (ainda sobre o capital
+inicial)
 
-#strong[Período n:] $J_n = P V times i$
+#strong[Período n:] $J_n = upright("PV") times i$
 
 O juro total é simplesmente a soma dos juros de cada período:
 
-$ J = J_1 + J_2 + . . . + J_n = P V times i times n $
+$ J = J_1 + J_2 + . . . + J_n = upright("PV") times i times n $
 
 O montante (valor futuro) é:
 
-$ F V = P V + J = P V + P V times i times n = P V times\(1 + i times n\) $
+$ upright("FV") = upright("PV") + J = upright("PV") + upright("PV") times i times n = upright("PV") times\(1 + i times n\) $
 
 #strong[Fórmulas fundamentais (juros simples):]
 
 #figure(
   align(center)[#table(
-    columns: 2,
+    columns: (52.63%, 47.37%),
     align: (auto,auto,),
     table.header([Objetivo], [Fórmula],),
     table.hline(),
-    [Juros totais], [$J = P V times i times n$],
-    [Montante], [$F V = P V times\(1 + i times n\)$],
-    [Capital inicial], [$P V = frac(F V, 1 + i times n)$],
-    [Taxa de juros], [$i = frac(F V\/P V - 1, n)$],
-    [Período], [$n = frac(F V\/P V - 1, i)$],
+    [Juros totais], [$J = upright("PV") times i times n$],
+    [Montante], [$upright("FV") = upright("PV") times\(1 + i times n\)$],
+    [Capital
+    inicial], [$upright("PV") = frac(upright("FV"), 1 + i times n)$],
+    [Taxa de juros], [$i = frac(upright("FV")\/upright("PV") - 1, n)$],
+    [Período], [$n = frac(upright("FV")\/upright("PV") - 1, i)$],
   )]
   , kind: table
   )
@@ -285,11 +287,11 @@ Dia (exato)      0.0658%             0.24/365
 #strong[Juros comerciais (ordinários):] utilizam o ano de 360 dias. São
 os mais usados em operações bancárias de curto prazo.
 
-$ J_(c o m e r c i a l) = P V times i_(a n u a l) times frac(d i a s, 360) $
+$ J_(upright("comercial")) = upright("PV") times i_(upright("anual")) times upright("dias") / 360 $
 
 #strong[Juros exatos:] utilizam o ano civil de 365 dias.
 
-$ J_(e x a t o) = P V times i_(a n u a l) times frac(d i a s, 365) $
+$ J_(upright("exato")) = upright("PV") times i_(upright("anual")) times upright("dias") / 365 $
 
 ```python
 def comparar_juros(pv, i_aa, dias):
@@ -316,7 +318,8 @@ Relação: 1.0139 (=0.9863)
 #strong[Observação:] Os juros comerciais são sempre #strong[maiores] que
 os exatos para um mesmo capital, taxa e prazo, pois o ano de 360 dias
 divide o numerador por um denominador menor. A relação entre eles é
-sempre $J_(c o m)\/J_(e x) = 365\/360 approx 1\,0139$.
+sempre
+$J_(upright("com"))\/J_(upright("ex")) = 365\/360 approx 1\,0139$.
 
 === 2.4. Descontos Simples
 <descontos-simples>
@@ -328,30 +331,31 @@ título. Existem duas modalidades fundamentais.
 O desconto é calculado #strong[sobre o valor nominal] (valor futuro, de
 face) do título. É o mais usado pelo mercado bancário brasileiro.
 
-$ D_c = F V times i times n $
+$ D_c = upright("FV") times i times n $
 
-$ P V = F V - D_c = F V times\(1 - i times n\) $
+$ upright("PV") = upright("FV") - D_c = upright("FV") times\(1 - i times n\) $
 
-#strong[Onde:] - $F V$ = valor nominal (valor de face, valor no
-vencimento) - $P V$ = valor atual (valor descontado, valor líquido) -
-$i$ = taxa de desconto - $n$ = período de antecipação
+#strong[Onde:] - $upright("FV")$ = valor nominal (valor de face, valor
+no vencimento) - $upright("PV")$ = valor atual (valor descontado, valor
+líquido) - $i$ = taxa de desconto - $n$ = período de antecipação
 
 #strong[Restrição:] a operação só faz sentido se $i times n < 1$. Caso
-contrário, $P V$ seria zero ou negativo.
+contrário, $upright("PV")$ seria zero ou negativo.
 
 ==== 2.4.2. Desconto Racional (por Dentro)
 <desconto-racional-por-dentro>
 O desconto é calculado #strong[sobre o valor presente]. É o "verdadeiro"
 desconto, pois usa a mesma lógica dos juros.
 
-$ D_r = P V times i times n $
+$ D_r = upright("PV") times i times n $
 
-$ P V = frac(F V, 1 + i times n) $
+$ upright("PV") = frac(upright("FV"), 1 + i times n) $
 
 ==== 2.4.3. Relação entre os Descontos
 <relação-entre-os-descontos>
-- $D_c > D_r$ para o mesmo $F V$, $i$ e $n$
-- $P V_c < P V_r$ (o desconto comercial concede um valor líquido menor)
+- $D_c > D_r$ para o mesmo $upright("FV")$, $i$ e $n$
+- $upright("PV")_c < upright("PV")_r$ (o desconto comercial concede um
+  valor líquido menor)
 
 ```python
 def descontos(fv, i, n):
@@ -385,7 +389,7 @@ Taxa efetiva         6.38%            6.00%
 === 2.5. Equivalência entre Taxa de Desconto e Taxa de Juros
 <equivalência-entre-taxa-de-desconto-e-taxa-de-juros>
 A taxa de desconto $d$ e a taxa de juros $i$ são diferentes. Para um
-mesmo valor nominal $F V$ e mesmo prazo $n$:
+mesmo valor nominal $upright("FV")$ e mesmo prazo $n$:
 
 $ i = frac(d, 1 - d times n) $
 
@@ -416,7 +420,7 @@ Quando se deseja substituir vários títulos por um único, calcula-se o
 #strong[prazo médio], que é a média ponderada dos prazos pelos valores
 nominais.
 
-$ n_(m é d i o) = frac(Sigma\(F V_k times n_k\), Sigma F V_k) $
+$ n_(upright("médio")) = frac(Sigma\(upright("FV")_k times n_k\), Sigma upright("FV")_k) $
 
 ```python
 def prazo_medio(titulos):
@@ -446,12 +450,13 @@ No regime de juros compostos, a #strong[base de cálculo dos juros se
 renova a cada período]. Os juros do período anterior são incorporados ao
 capital para o cálculo dos juros do período seguinte.
 
-#strong[Período 1:] $ F V_1 = P V + P V times i = P V times\(1 + i\) $
+#strong[Período 1:]
+$ upright("FV")_1 = upright("PV") + upright("PV") times i = upright("PV") times\(1 + i\) $
 
 #strong[Período 2:]
-$ F V_2 = F V_1 + F V_1 times i = F V_1 times\(1 + i\)= P V times\(1 + i\)^2 $
+$ upright("FV")_2 = upright("FV")_1 + upright("FV")_1 times i = upright("FV")_1 times\(1 + i\)= upright("PV") times\(1 + i\)^2 $
 
-#strong[Período n:] $ F V_n = P V times\(1 + i\)^n $
+#strong[Período n:] $ upright("FV")_n = upright("PV") times\(1 + i\)^n $
 
 #strong[Fórmulas fundamentais (juros compostos):]
 
@@ -461,12 +466,13 @@ $ F V_2 = F V_1 + F V_1 times i = F V_1 times\(1 + i\)= P V times\(1 + i\)^2 $
     align: (auto,auto,),
     table.header([Objetivo], [Fórmula],),
     table.hline(),
-    [Montante], [$F V = P V times\(1 + i\)^n$],
+    [Montante], [$upright("FV") = upright("PV") times\(1 + i\)^n$],
     [Capital
-    inicial], [$P V = frac(F V, \(1 + i\)^n) = F V times\(1 + i\)^(- n)$],
-    [Juros totais], [$J = F V - P V = P V times\[\(1 + i\)^n- 1\]$],
-    [Taxa de juros], [$i = (frac(F V, P V))^(1\/n) - 1$],
-    [Período], [$n = frac(ln\(F V\/P V\), ln\(1 + i\))$],
+    inicial], [$upright("PV") = frac(upright("FV"), \(1 + i\)^n) = upright("FV") times\(1 + i\)^(- n)$],
+    [Juros
+    totais], [$J = upright("FV") - upright("PV") = upright("PV") times\[\(1 + i\)^n- 1\]$],
+    [Taxa de juros], [$i = (upright("FV") / upright("PV"))^(1\/n) - 1$],
+    [Período], [$n = frac(ln\(upright("FV")\/upright("PV")\), ln\(1 + i\))$],
   )]
   , kind: table
   )
@@ -512,7 +518,7 @@ Ex.3: Tempo para triplicar a 1,5% a.m. = 73.79 meses
 Uma aproximação útil para estimar o tempo de duplicação de um capital a
 uma dada taxa:
 
-$ n_(d o b r o) approx 72 / i_(p e r c e n t u a l) $
+$ n_(upright("dobro")) approx 72 / i_(upright("percentual")) $
 
 ```python
 def regra_72(taxa_percentual):
@@ -549,9 +555,9 @@ $ \(1 + i_1\)^(n_1)=\(1 + i_2\)^(n_2) $
 
 Generalizando:
 
-$ i_(m a i o r) =\(1 + i_(m e n o r)\)^k- 1 $
+$ i_(upright("maior")) =\(1 + i_(upright("menor"))\)^k- 1 $
 
-$ i_(m e n o r) =\(1 + i_(m a i o r)\)^(1\/k)- 1 $
+$ i_(upright("menor")) =\(1 + i_(upright("maior"))\)^(1\/k)- 1 $
 
 Onde $k$ é o número de períodos menores contidos no período maior.
 
@@ -600,7 +606,7 @@ período considerado.
 
 Para converter nominal em efetiva:
 
-$ i_(e f e t i v a) = (1 + i_(n o m i n a l) / k)^k - 1 $
+$ i_(upright("efetiva")) = (1 + i_(upright("nominal")) / k)^k - 1 $
 
 Onde $k$ = número de capitalizações dentro do período nominal.
 
@@ -630,7 +636,7 @@ for taxa_nominal in [0.12, 0.18, 0.24, 0.30]:
 capitalizações dentro do período, #strong[maior] será a taxa efetiva. O
 limite teórico é a #strong[capitalização contínua]:
 
-$ i_(c o n t í n u a) = e^(i_(n o m i n a l)) - 1 $
+$ i_(upright("contínua")) = e^(i_(upright("nominal"))) - 1 $
 
 onde $e approx 2\,71828$ (número de Euler).
 
@@ -653,10 +659,10 @@ convenções:
 
 #strong[Convenção Linear (exponencial para parte inteira, linear para
 fração):]
-$ F V = P V times\(1 + i\)^(n_(i n t))times\(1 + i times n_(f r a c)\) $
+$ upright("FV") = upright("PV") times\(1 + i\)^(n_(upright("int")))times\(1 + i times n_(upright("frac"))\) $
 
 #strong[Convenção Exponencial (potência para o prazo total):]
-$ F V = P V times\(1 + i\)^n $
+$ upright("FV") = upright("PV") times\(1 + i\)^n $
 
 ```python
 def fv_convencao(pv, i, n, convencao='exponencial'):
@@ -724,21 +730,21 @@ PV
 
 #strong[Valor Presente:]
 
-Cada pagamento $P M T$ é descontado a valor presente:
+Cada pagamento $upright("PMT")$ é descontado a valor presente:
 
-$ P V = frac(P M T, \(1 + i\)^1) + frac(P M T, \(1 + i\)^2) + . . . + frac(P M T, \(1 + i\)^n) $
+$ upright("PV") = frac(upright("PMT"), \(1 + i\)^1) + frac(upright("PMT"), \(1 + i\)^2) + . . . + frac(upright("PMT"), \(1 + i\)^n) $
 
 A soma da progressão geométrica resulta em:
 
-$ P V = P M T times frac(\(1 + i\)^n- 1, i times\(1 + i\)^n) $
+$ upright("PV") = upright("PMT") times frac(\(1 + i\)^n- 1, i times\(1 + i\)^n) $
 
 #strong[Valor Futuro:]
 
-$ F V = P M T times frac(\(1 + i\)^n- 1, i) $
+$ upright("FV") = upright("PMT") times frac(\(1 + i\)^n- 1, i) $
 
 #strong[Prestação (PMT):]
 
-$ P M T = P V times frac(i times\(1 + i\)^n, \(1 + i\)^n- 1) $
+$ upright("PMT") = upright("PV") times frac(i times\(1 + i\)^n, \(1 + i\)^n- 1) $
 
 O fator $frac(i times\(1 + i\)^n, \(1 + i\)^n- 1)$ é chamado
 #strong[Fator de Recuperação de Capital (FRC)].
@@ -799,11 +805,11 @@ PMT    PMT    PMT    PMT    PMT
 
 #strong[Valor Presente:]
 
-$ P V_(a n t) = P M T times frac(\(1 + i\)^n- 1, i times\(1 + i\)^n) times\(1 + i\) $
+$ upright("PV")_(upright("ant")) = upright("PMT") times frac(\(1 + i\)^n- 1, i times\(1 + i\)^n) times\(1 + i\) $
 
 Ou alternativamente:
 
-$ P V_(a n t) = P M T + P M T times frac(\(1 + i\)^(n - 1)- 1, i times\(1 + i\)^(n - 1)) $
+$ upright("PV")_(upright("ant")) = upright("PMT") + upright("PMT") times frac(\(1 + i\)^(n - 1)- 1, i times\(1 + i\)^(n - 1)) $
 
 ```python
 def serie_antecipada(pv, i, n):
@@ -829,7 +835,7 @@ Diferença: R$27.40 por mês
 <série-diferida-com-carência>
 Quando há um período de carência antes do início dos pagamentos.
 
-$ P V_(d i f e r i d a) = frac(P M T times frac(\(1 + i\)^n- 1, i times\(1 + i\)^n), \(1 + i\)^m) $
+$ upright("PV")_(upright("diferida")) = frac(upright("PMT") times frac(\(1 + i\)^n- 1, i times\(1 + i\)^n), \(1 + i\)^m) $
 
 Onde $m$ = número de períodos de carência.
 
@@ -863,7 +869,7 @@ Uma perpetuidade é uma série de pagamentos #strong[infinitos] e iguais.
 
 #strong[Valor Presente da Perpetuidade:]
 
-$ P V = frac(P M T, i) $
+$ upright("PV") = upright("PMT") / i $
 
 ```python
 def perpetuidade(pmt=None, i=None, pv=None):
@@ -892,7 +898,7 @@ Saque mensal perpétuo: R$6,000.00
 <perpetuidade-com-crescimento-modelo-de-gordon>
 Quando os pagamentos crescem a uma taxa constante $g$:
 
-$ P V = frac(P M T, i - g) $
+$ upright("PV") = frac(upright("PMT"), i - g) $
 
 #strong[Restrição:] $i > g$ (senão o valor presente explode para
 infinito).
@@ -923,9 +929,9 @@ Amortização é o processo de #strong[devolução do capital emprestado] por
 meio de pagamentos periódicos. Cada prestação (PMT) é composta de duas
 partes:
 
-$ P r e s t a ç ã o = A m o r t i z a ç ã o + J u r o s $
+$ upright("Prestação") = upright("Amortização") + upright("Juros") $
 
-$ P M T_k = A_k + J_k $
+$ upright("PMT")_k = A_k + J_k $
 
 Onde: - $A_k$ = parcela que abate o saldo devedor (amortização do
 principal) - $J_k$ = parcela que remunera o credor (juros sobre o saldo
@@ -940,17 +946,18 @@ financiamento imobiliário, consórcios, crédito direto
 
 #strong[Cálculo da prestação:]
 
-$ P M T = P V times frac(i times\(1 + i\)^n, \(1 + i\)^n- 1) $
+$ upright("PMT") = upright("PV") times frac(i times\(1 + i\)^n, \(1 + i\)^n- 1) $
 
 #strong[Evolução da dívida:]
 
-$ J_k = S D_(k - 1) times i $
+$ J_k = upright("SD")_(k - 1) times i $
 
-$ A_k = P M T - J_k $
+$ A_k = upright("PMT") - J_k $
 
-$ S D_k = S D_(k - 1) - A_k $
+$ upright("SD")_k = upright("SD")_(k - 1) - A_k $
 
-Onde $S D_k$ é o saldo devedor após o pagamento da $k$-ésima prestação.
+Onde $upright("SD")_k$ é o saldo devedor após o pagamento da $k$-ésima
+prestação.
 
 ```python
 def tabela_price(pv, i, n):
@@ -1000,15 +1007,15 @@ no SFH (Sistema Financeiro de Habitação) e financiamentos imobiliários
 
 #strong[Cálculo da amortização:]
 
-$ A = frac(P V, n) $
+$ A = upright("PV") / n $
 
 #strong[Evolução da dívida:]
 
-$ J_k = S D_(k - 1) times i $
+$ J_k = upright("SD")_(k - 1) times i $
 
-$ P M T_k = A + J_k $
+$ upright("PMT")_k = A + J_k $
 
-$ S D_k = S D_(k - 1) - A $
+$ upright("SD")_k = upright("SD")_(k - 1) - A $
 
 ```python
 def tabela_sac(pv, i, n):
@@ -1091,9 +1098,9 @@ comparar_sistemas(50000, 0.02, 12)
 <sam-sistema-de-amortização-mista>
 O SAM é a #strong[média aritmética] entre Price e SAC:
 
-$ P M T_k^(S A M) = frac(P M T_k^(P r i c e) + P M T_k^(S A C), 2) $
+$ upright("PMT")_k^(upright("SAM")) = frac(upright("PMT")_k^(upright("Price")) + upright("PMT")_k^(upright("SAC")), 2) $
 
-$ A_k^(S A M) = frac(A_k^(P r i c e) + A_k^(S A C), 2) $
+$ A_k^(upright("SAM")) = frac(A_k^(upright("Price")) + A_k^(upright("SAC")), 2) $
 
 === 5.6. Sistema Americano
 <sistema-americano>
@@ -1102,16 +1109,16 @@ o período - Principal (amortização total) pago ao #strong[final] do
 contrato - Usado em debêntures, títulos de dívida (bond), operações
 interbancárias
 
-$ J_k = P V times i upright(" (constante para todos os períodos)") $
+$ J_k = upright("PV") times i upright(" (constante para todos os períodos)") $
 
-$ A_n = P V upright(" (apenas na última prestação)") $
+$ A_n = upright("PV") upright(" (apenas na última prestação)") $
 
 === 5.7. Custo Efetivo Total (CET)
 <custo-efetivo-total-cet>
 O CET vai além da taxa de juros, incluindo todos os encargos, tributos,
 tarifas e seguros:
 
-$ C E T = i_(e f e t i v a) upright(" que iguala ") P V_(r e c e b i d o) upright(" a todos os pagamentos futuros") $
+$ upright("CET") = i_(upright("efetiva")) upright(" que iguala ") upright("PV")_(upright("recebido")) upright(" a todos os pagamentos futuros") $
 
 ```python
 def calcular_cet(pv_recebido, pagamentos, periodos):
@@ -1216,7 +1223,7 @@ Erro da aproximação: -0.38 p.p.
 <correção-monetária>
 Valor corrigido por um índice de preços:
 
-$ V_(c o r r i g i d o) = V_(o r i g i n a l) times product_(t = 1)^n\(1 + pi_t\) $
+$ V_(upright("corrigido")) = V_(upright("original")) times product_(t = 1)^n\(1 + pi_t\) $
 
 ```python
 def corrigir_por_indice(valor_original, indices):
@@ -1244,11 +1251,11 @@ print(f"\nValor corrigido (6 meses): R\${valor_corrigido:.2f}")
 <taxa-pré-fixada-vs-pós-fixada>
 #strong[Título Pré-fixado:] a taxa é conhecida no momento da aplicação:
 
-$ F V = P V times\(1 + i\)^n $
+$ upright("FV") = upright("PV") times\(1 + i\)^n $
 
 #strong[Título Pós-fixado:] atrelado a um indexador + spread:
 
-$ F V = P V times\(1 + i n d e x a d o r + s p r e a d\)^n $
+$ upright("FV") = upright("PV") times\(1 + upright("indexador") + upright("spread")\)^n $
 
 Mas o indexador é desconhecido a priori, então usa-se projeções.
 
@@ -1286,11 +1293,11 @@ comparar_prefixado_posfixado(10000, 0.12, 0.1325, 0.005, 252)
 O VPL é a soma de todos os fluxos de caixa descontados a valor presente
 pela taxa mínima de atratividade (TMA):
 
-$ V P L = sum_(t = 0)^n frac(F C_t, \(1 + T M A\)^t) $
+$ upright("VPL") = sum_(t = 0)^n frac(upright("FC")_t, \(1 + upright("TMA")\)^t) $
 
-#strong[Critério de decisão:] - $V P L > 0$ → investimento
-#strong[viável] (cria valor) - $V P L = 0$ → indiferente - $V P L < 0$ →
-#strong[inviável] (destrói valor)
+#strong[Critério de decisão:] - $upright("VPL") > 0$ → investimento
+#strong[viável] (cria valor) - $upright("VPL") = 0$ → indiferente -
+$upright("VPL") < 0$ → #strong[inviável] (destrói valor)
 
 ```python
 def vpl(taxa, fluxos):
@@ -1324,9 +1331,9 @@ Melhor projeto: B
 <taxa-interna-de-retorno-tir-irr>
 A TIR é a taxa de desconto que #strong[zera o VPL]:
 
-$ 0 = sum_(t = 0)^n frac(F C_t, \(1 + T I R\)^t) $
+$ 0 = sum_(t = 0)^n frac(upright("FC")_t, \(1 + upright("TIR")\)^t) $
 
-#strong[Critério de decisão:] $T I R > T M A$ → viável
+#strong[Critério de decisão:] $upright("TIR") > upright("TMA")$ → viável
 
 ```python
 def tir(fluxos, precisao=1e-10, max_iter=10000):
@@ -1386,11 +1393,11 @@ print(f"MTIR do Projeto A: {mtir_a*100:.2f}% a.a.")
 #strong[Payback Simples:] tempo necessário para recuperar o investimento
 #strong[sem] considerar o custo do capital.
 
-$ P a y b a c k = upright("menor ") n upright(" tal que ") sum_(t = 0)^n F C_t gt.eq 0 $
+$ upright("Payback") = upright("menor ") n upright(" tal que ") sum_(t = 0)^n upright("FC")_t gt.eq 0 $
 
 #strong[Payback Descontado:] considera o valor do dinheiro no tempo.
 
-$ P a y b a c k_D = upright("menor ") n upright(" tal que ") sum_(t = 0)^n frac(F C_t, \(1 + T M A\)^t) gt.eq 0 $
+$ upright("Payback")_D = upright("menor ") n upright(" tal que ") sum_(t = 0)^n frac(upright("FC")_t, \(1 + upright("TMA")\)^t) gt.eq 0 $
 
 ```python
 def payback(fluxos, taxa=None):
@@ -1421,9 +1428,9 @@ print(f"Payback descontado (Proj A): {payback(fluxos_a, 0.10):.2f} anos")
 <índice-de-lucratividade-il>
 Mede a relação benefício-custo:
 
-$ I L = frac(sum_(t = 1)^n frac(F C_t, \(1 + T M A\)^t), \|F C_0\|) $
+$ upright("IL") = frac(sum_(t = 1)^n frac(upright("FC")_t, \(1 + upright("TMA")\)^t), \|upright("FC")_0\|) $
 
-#strong[Critério:] $I L > 1$ → projeto viável
+#strong[Critério:] $upright("IL") > 1$ → projeto viável
 
 ```python
 def indice_lucratividade(taxa, fluxos):
@@ -1442,7 +1449,7 @@ print(f"IL B: {il_b:.3f} {'VIÁVEL' if il_b > 1 else 'INVIÁVEL'}")
 Converte o VPL em uma série uniforme equivalente ao longo da vida do
 projeto:
 
-$ V P L A = V P L times frac(i times\(1 + i\)^n, \(1 + i\)^n- 1) $
+$ upright("VPLA") = upright("VPL") times frac(i times\(1 + i\)^n, \(1 + i\)^n- 1) $
 
 Útil para comparar projetos com #strong[diferentes prazos].
 
@@ -1515,42 +1522,46 @@ analise_sensibilidade([-15000, 4500, 4500, 4500, 4500, 4500], 0.10)
     align: (auto,auto,auto,),
     table.header([Conceito], [Fórmula], [Observação],),
     table.hline(),
-    [#strong[Juros Simples]], [$J = P V times i times n$], [Crescimento
+    [#strong[Juros
+    Simples]], [$J = upright("PV") times i times n$], [Crescimento
     linear],
     [#strong[Montante
-    (Simples)]], [$F V = P V times\(1 + i times n\)$], [PA],
+    (Simples)]], [$upright("FV") = upright("PV") times\(1 + i times n\)$], [PA],
     [#strong[Juros
-    Compostos]], [$J = P V times\[\(1 + i\)^n- 1\]$], [Crescimento
+    Compostos]], [$J = upright("PV") times\[\(1 + i\)^n- 1\]$], [Crescimento
     exponencial],
     [#strong[Montante
-    (Composto)]], [$F V = P V times\(1 + i\)^n$], [PG],
+    (Composto)]], [$upright("FV") = upright("PV") times\(1 + i\)^n$], [PG],
     [#strong[Valor
-    Presente]], [$P V = F V\/\(1 + i\)^n$], [Descapitalização],
+    Presente]], [$upright("PV") = upright("FV")\/\(1 + i\)^n$], [Descapitalização],
     [#strong[Taxa Equivalente
-    (Comp)]], [$i_(m a i o r) =\(1 + i_(m e n o r)\)^k- 1$], [Não
+    (Comp)]], [$i_(upright("maior")) =\(1 + i_(upright("menor"))\)^k- 1$], [Não
     confundir com proporcional],
     [#strong[Nominal →
-    Efetiva]], [$i_(e f) =\(1 + i_(n o m)\/k\)^k- 1$], [k =
-    capitalizações],
+    Efetiva]], [$i_(upright("ef")) =\(1 + i_(upright("nom"))\/k\)^k- 1$], [k
+    \= capitalizações],
     [#strong[Série
-    Postecipada]], [$P M T = P V times frac(i\(1 + i\)^n, \(1 + i\)^n- 1)$], [Sem
+    Postecipada]], [$upright("PMT") = upright("PV") times frac(i\(1 + i\)^n, \(1 + i\)^n- 1)$], [Sem
     entrada],
     [#strong[Série
-    Antecipada]], [$P V_(a n t) = P V_(p o s t) times\(1 + i\)$], [Com
+    Antecipada]], [$upright("PV")_(upright("ant")) = upright("PV")_(upright("post")) times\(1 + i\)$], [Com
     entrada],
-    [#strong[Perpetuidade]], [$P V = P M T\/i$], [Pagamentos infinitos],
-    [#strong[Gordon]], [$P V = P M T\/\(i - g\)$], [Com crescimento],
+    [#strong[Perpetuidade]], [$upright("PV") = upright("PMT")\/i$], [Pagamentos
+    infinitos],
+    [#strong[Gordon]], [$upright("PV") = upright("PMT")\/\(i - g\)$], [Com
+    crescimento],
     [#strong[Price]], [Prestações fixas], [Juros decrescentes, amort.
     crescente],
     [#strong[SAC]], [Amortização fixa], [Prestações decrescentes],
-    [#strong[VPL]], [$sum F C_t\/\(1 + T M A\)^t$], [$> 0$ = viável],
-    [#strong[TIR]], [$sum F C_t\/\(1 + T I R\)^t= 0$], [$> T M A$ =
-    viável],
+    [#strong[VPL]], [$sum upright("FC")_t\/\(1 + upright("TMA")\)^t$], [$> 0$
+    \= viável],
+    [#strong[TIR]], [$sum upright("FC")_t\/\(1 + upright("TIR")\)^t= 0$], [$> upright("TMA")$
+    \= viável],
     [#strong[Payback]], [Tempo de recuperação], [Sem considerar custo de
     capital],
     [#strong[Fisher]], [$\(1 + i_n\)=\(1 + i_r\)\(1 + pi\)$], [Relação
     nominal-real],
-    [#strong[IL]], [$V P_(e n t r a d a s)\/\|i n v e s t i m e n t o\|$], [$> 1$
+    [#strong[IL]], [$upright("VP")_(upright("entradas"))\/\|upright("investimento")\|$], [$> 1$
     \= viável],
   )]
   , kind: table
@@ -1563,7 +1574,7 @@ analise_sensibilidade([-15000, 4500, 4500, 4500, 4500, 4500], 0.10)
 #strong[E1.] Um capital de R\$ 8.000 foi aplicado a juros simples de
 1,8% ao mês durante 15 meses. Calcule o montante e os juros.
 
-$ F V = 8000 times\(1 + 0\,018 times 15\)= 8000 times 1\,27 = 10.160 $
+$ upright("FV") = 8000 times\(1 + 0\,018 times 15\)= 8000 times 1\,27 = 10.160 $
 $ J = 10.160 - 8.000 = 2.160 $
 
 ```python
@@ -1577,7 +1588,7 @@ print(f"Montante: R\${fv:.2f}, Juros: R\${fv - pv:.2f}")
 #strong[E2.] Qual o capital que, aplicado a 2,5% ao mês por 8 meses,
 rende juros compostos de R\$ 2.500?
 
-$ P V = frac(J, \(1 + i\)^n- 1) = frac(2500, \(1\,025\)^8- 1) $
+$ upright("PV") = frac(J, \(1 + i\)^n- 1) = frac(2500, \(1\,025\)^8- 1) $
 
 ```python
 j, i, n = 2500, 0.025, 8
@@ -1591,7 +1602,7 @@ print(f"Capital necessário: R\${pv:.2f}")
 parcelas iguais sem entrada, a juros de 3% ao mês. Qual o valor de cada
 parcela?
 
-$ P M T = 1200 times frac(0\,03 times\(1\,03\)^3, \(1\,03\)^3- 1) $
+$ upright("PMT") = 1200 times frac(0\,03 times\(1\,03\)^3, \(1\,03\)^3- 1) $
 
 ```python
 pv, i, n = 1200, 0.03, 3
@@ -1607,7 +1618,7 @@ print(f"Juros pagos: R\${pmt * n - pv:.2f}")
 descontado a uma taxa de desconto comercial de 3,5% ao mês. Qual o valor
 líquido?
 
-$ P V = 10000 times\(1 - 0\,035 times 2\) $
+$ upright("PV") = 10000 times\(1 - 0\,035 times 2\) $
 
 ```python
 fv, i, n = 10000, 0.035, 2
@@ -1643,7 +1654,7 @@ milhões e dívida de R\$ 40 milhões. O custo do capital próprio é 16% e o
 custo da dívida bruto é 10% (IR = 34%). Verifique se o WACC está
 correto.
 
-$ W A C C = 80 / 120 times 0\,16 + 40 / 120 times 0\,10 times\(1 - 0\,34\) $
+$ upright("WACC") = 80 / 120 times 0\,16 + 40 / 120 times 0\,10 times\(1 - 0\,34\) $
 
 ```python
 pl, divida = 80, 40

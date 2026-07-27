@@ -299,8 +299,8 @@ Multiplicador: 2.16x
 
 ### Exercícios do Capítulo 2
 
-1. Calcule o montante de R$ 5.000 a 1,5% ao mês por 24 meses
-2. Converta US$ 1.000 em reais (câmbio = R$ 5,45) e exiba com duas casas decimais
+1. Calcule o montante de R\$ 5.000 a 1,5% ao mês por 24 meses
+2. Converta US\$ 1.000 em reais (câmbio = R\$ 5,45) e exiba com duas casas decimais
 3. Verifique se as seguintes condições são True/False:
    - 10 > 5 and 3 < 2
    - 7 == 7 or 4 != 4
@@ -539,7 +539,7 @@ conjunto_a - conjunto_b  # {1, 2}  (diferença)
 
 4. Dado o dicionário `moedas = {"USD": 5.45, "EUR": 5.95, "GBP": 6.90, "ARS": 0.006}`:
    - Qual moeda tem a maior taxa?
-   - Quantas moedas estão abaixo de R$ 1,00?
+   - Quantas moedas estão abaixo de R\$ 1,00?
    - Adicione "JPY": 0.036
 
 ---
@@ -737,9 +737,9 @@ for valor in [0.5, 0.7, 0.88, 0.67, 0.58, 0.16]:
 
 1. Dada uma lista de PIBs anuais, classifique cada ano como "Recessão" (< 0), "Crescimento fraco" (0-2), "Crescimento forte" (> 2). Use if/elif/else.
 
-2. Use for para simular R$ 5.000 a 0,8% ao mês por 36 meses. Mostre o saldo a cada 6 meses.
+2. Use for para simular R\$ 5.000 a 0,8% ao mês por 36 meses. Mostre o saldo a cada 6 meses.
 
-3. Com while, descubra quantos meses leva para R$ 1.000 virar R$ 2.000 a 1,2% ao mês.
+3. Com while, descubra quantos meses leva para R\$ 1.000 virar R\$ 2.000 a 1,2% ao mês.
 
 4. Percorra uma lista de inflações e pare ao encontrar a primeira acima de 1%.
 
@@ -2290,7 +2290,7 @@ ipca = [0.5, 0.7, 0.88, 0.67, 0.58, 0.16]
 print(ipca[:3], ipca[-3:], ipca[::-1])
 ```
 
-4. EUR é a maior. 3 moedas abaixo de R$ 1. `moedas["JPY"] = 0.036`
+4. EUR é a maior. 3 moedas abaixo de R\$ 1. `moedas["JPY"] = 0.036`
 
 ### Capítulo 4
 

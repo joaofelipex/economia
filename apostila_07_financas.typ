@@ -77,9 +77,10 @@ contábeis
 
 #strong[Valor da empresa:]
 
-$ V a l o r = sum_(t = 1)^oo frac(F C L_t, \(1 + W A C C\)^t) $
+$ upright("Valor") = sum_(t = 1)^oo frac(upright("FCL")_t, \(1 + upright("WACC")\)^t) $
 
-Onde $F C L_t$ são os fluxos de caixa livres gerados em cada período.
+Onde $upright("FCL")_t$ são os fluxos de caixa livres gerados em cada
+período $t$, e $upright("WACC")$ é a taxa de desconto.
 
 ```python
 def valor_descontado(fluxos, wacc):
@@ -118,9 +119,9 @@ valor para o acionista.
   , kind: table
   )
 
-#strong[Regra fundamental:] Se $R O I C > W A C C$, a empresa está
-#strong[criando valor]. Se $R O I C < W A C C$, está #strong[destruindo
-valor].
+#strong[Regra fundamental:] Se $upright("ROIC") > upright("WACC")$, a
+empresa está #strong[criando valor]. Se
+$upright("ROIC") < upright("WACC")$, está #strong[destruindo valor].
 
 ```python
 def metricas_vbm(nopat, capital_investido, wacc, valor_mercado, ll, pl):
@@ -245,10 +246,11 @@ $ sigma_p^2 = w_1^2 sigma_1^2 + w_2^2 sigma_2^2 + 2 w_1 w_2 sigma_1 sigma_2 rho_
 
 #strong[Variância da carteira (n ativos):]
 
-$ sigma_p^2 = sum_(i = 1)^n sum_(j = 1)^n w_i w_j sigma_(i j) $
+$ sigma_p^2 = sum_(i = 1)^n sum_(j = 1)^n w_i w_j sigma_(upright("ij")) $
 
-Onde $sigma_(i j) = rho_(i j) times sigma_i times sigma_j$ é a
-covariância.
+Onde
+$sigma_(upright("ij")) = rho_(upright("ij")) times sigma_i times sigma_j$
+é a covariância.
 
 ```python
 def risco_carteira(pesos, cov_matrix):
@@ -340,7 +342,7 @@ for beta in [0.0, 0.5, 0.8, 1.0, 1.2, 1.5, 2.0]:
 <beta-beta>
 O beta mede o #strong[risco sistemático] de um ativo:
 
-$ beta_i = frac(C o v\(R_i\,R_m\), V a r\(R_m\)) $
+$ beta_i = frac(upright("Cov")\(R_i\,R_m\), upright("Var")\(R_m\)) $
 
 #strong[Interpretação:] - $beta = 1$: o ativo acompanha o mercado -
 $beta > 1$: o ativo é mais volátil que o mercado (ações de crescimento,
@@ -495,12 +497,13 @@ sobre seus investimentos para manter o valor de suas ações inalterado."
 É a taxa de retorno exigida pelos acionistas. As principais formas de
 estimá-lo:
 
-#strong[\1. CAPM:] $ K e = R_f + beta times\(R_m - R_f\) $
+#strong[\1. CAPM:] $ upright("Ke") = R_f + beta times\(R_m - R_f\) $
 
 #strong[\2. Modelo de Gordon (Dividend Discount Model):]
-$ K e = D_1 / P_0 + g $
+$ upright("Ke") = D_1 / P_0 + g $
 
-#strong[\3. Bond Yield + Risk Premium:] $ K e = K d + P r ê m i o $
+#strong[\3. Bond Yield + Risk Premium:]
+$ upright("Ke") = upright("Kd") + upright("Prêmio") $
 
 ```python
 def custo_capital_proprio_capm(rf, beta, rm):
@@ -526,7 +529,7 @@ print(f"Ke (Gordon): {ke_gordon*100:.2f}%")
 É a taxa efetiva que a empresa paga sobre suas dívidas. Como os juros
 são dedutíveis do IR, usa-se o #strong[custo líquido]:
 
-$ K d_(l í q u i d o) = K d_(b r u t o) times\(1 - I R\) $
+$ upright("Kd")_(upright("líquido")) = upright("Kd")_(upright("bruto")) times\(1 - upright("IR")\) $
 
 #strong[Formas de estimar:] - Taxa de juros dos empréstimos bancários
 recentes - Yield to maturity (YTM) das debêntures da empresa - Spread
@@ -550,7 +553,7 @@ print(f"Custo líquido da dívida: {custo_terceiros(kd_bruto, 0.34)*100:.2f}% a.
 <wacc-weighted-average-cost-of-capital>
 O WACC é a média ponderada do custo de cada fonte de capital:
 
-$ W A C C = E / V times K e + D / V times K d times\(1 - I R\) $
+$ upright("WACC") = E / V times upright("Ke") + D / V times upright("Kd") times\(1 - upright("IR")\) $
 
 Onde: - $E$ = valor de mercado do capital próprio (equity) - $D$ = valor
 de mercado da dívida (debt) - $V = E + D$ = valor total da empresa
@@ -644,18 +647,19 @@ for w in [0.08, 0.10, 0.12, 0.14, 0.16]:
 O valor intrínseco de uma empresa é o valor presente de todos os fluxos
 de caixa futuros:
 
-$ E V = sum_(t = 1)^n frac(F C F_t, \(1 + W A C C\)^t) + frac(V T, \(1 + W A C C\)^n) $
+$ upright("EV") = sum_(t = 1)^n frac(upright("FCF")_t, \(1 + upright("WACC")\)^t) + frac(upright("VT"), \(1 + upright("WACC")\)^n) $
 
-#strong[Onde:] - $E V$ = Enterprise Value (valor da firma) - $F C F_t$ =
-Fluxo de Caixa Livre no ano t - $W A C C$ = custo médio ponderado de
-capital - $V T$ = Valor Terminal (perpetuidade)
+#strong[Onde:] - $upright("EV")$ = Enterprise Value (valor da firma) -
+$upright("FCF")_t$ = Fluxo de Caixa Livre no ano t - $upright("WACC")$ =
+custo médio ponderado de capital - $upright("VT")$ = Valor Terminal
+(perpetuidade)
 
 #strong[Valor Terminal (Gordon):]
 
-$ V T = frac(F C F_n times\(1 + g\), W A C C - g) $
+$ upright("VT") = frac(upright("FCF")_n times\(1 + g\), upright("WACC") - g) $
 
 #strong[Equity Value:]
-$ E q u i t y med V a l u e = E V - D í v i d a + C a i x a $
+$ upright("Equity") med upright("Value") = upright("EV") - upright("Dívida") + upright("Caixa") $
 
 ```python
 def valuation_fcd(fcfs, wacc, g, divida, caixa):
@@ -746,18 +750,18 @@ multiplos_empresa(
     align: (auto,auto,auto,auto,),
     table.header([Múltiplo], [Fórmula], [Indicação], [Melhor Uso],),
     table.hline(),
-    [#strong[P/L] (Preço/Lucro)], [$P\/L P A$], [Mais
+    [#strong[P/L] (Preço/Lucro)], [$P\/upright("LPA")$], [Mais
     popular], [Empresas maduras, lucro estável],
-    [#strong[EV/EBITDA]], [$E V\/E B I T D A$], [Ignora
+    [#strong[EV/EBITDA]], [$upright("EV")\/upright("EBITDA")$], [Ignora
     depreciação], [Empresas de capital intensivo],
-    [#strong[P/VP]], [$P\/V P A$], [Valor patrimonial], [Bancos,
-    seguradoras],
-    [#strong[Div. Yield]], [$D P A\/P$], [Retorno em
+    [#strong[P/VP]], [$P\/upright("VPA")$], [Valor
+    patrimonial], [Bancos, seguradoras],
+    [#strong[Div. Yield]], [$upright("DPA")\/P$], [Retorno em
     dividendos], [Empresas que distribuem lucro],
-    [#strong[P/Receita]], [$P\/R e c e i t a$], [Empresas sem
+    [#strong[P/Receita]], [$P\/upright("Receita")$], [Empresas sem
     lucro], [Startups, crescimento],
-    [#strong[EV/FCF]], [$E V\/F C F$], [Geração de caixa], [Qualquer
-    empresa],
+    [#strong[EV/FCF]], [$upright("EV")\/upright("FCF")$], [Geração de
+    caixa], [Qualquer empresa],
   )]
   , kind: table
   )
@@ -771,12 +775,12 @@ multiplos_empresa(
 #strong[\1. Balanço Patrimonial (BP) --- "Fotografia"] Mostra a posição
 financeira em uma data específica:
 
-$ A t i v o = P a s s i v o + P a t r i m ô n i o L í q u i d o $
+$ upright("Ativo") = upright("Passivo") + upright("Patrimônio") upright("Líquido") $
 
 #strong[\2. Demonstração do Resultado (DRE) --- "Filme"] Mostra a
 geração de lucro em um período:
 
-$ R e c e i t a - C u s t o s - D e s p e s a s = L u c r o L í q u i d o $
+$ upright("Receita") - upright("Custos") - upright("Despesas") = upright("Lucro") upright("Líquido") $
 
 #strong[\3. Demonstração do Fluxo de Caixa (DFC)] Mostra as origens e
 usos do caixa, dividido em operacional, investimento e financiamento.
@@ -814,17 +818,21 @@ Medem a capacidade de pagar obrigações de curto prazo.
 
 #figure(
   align(center)[#table(
-    columns: 3,
+    columns: (31.43%, 25.71%, 42.86%),
     align: (auto,auto,auto,),
     table.header([Indicador], [Fórmula], [Interpretação],),
     table.hline(),
-    [#strong[Liquidez Corrente]], [$A C\/P C$], [Ideal \> 1,5],
-    [#strong[Liquidez Seca]], [$\(A C - E s t o q u e s\)\/P C$], [Ideal
+    [#strong[Liquidez
+    Corrente]], [$upright("AC")\/upright("PC")$], [Ideal \> 1,5],
+    [#strong[Liquidez
+    Seca]], [$\(upright("AC") - upright("Estoques")\)\/upright("PC")$], [Ideal
     \> 1,0],
     [#strong[Liquidez
-    Imediata]], [$D i s p o n í v e l\/P C$], [Capacidade imediata],
+    Imediata]], [$upright("Disponível")\/upright("PC")$], [Capacidade
+    imediata],
     [#strong[Liquidez
-    Geral]], [$\(A C + R L P\)\/\(P C + E L P\)$], [Longo prazo],
+    Geral]], [$\(upright("AC") + upright("RLP")\)\/\(upright("PC") + upright("ELP")\)$], [Longo
+    prazo],
   )]
   , kind: table
   )
@@ -855,13 +863,15 @@ Medem a estrutura de capital e o risco financeiro.
     align: (auto,auto,auto,),
     table.header([Indicador], [Fórmula], [Interpretação],),
     table.hline(),
-    [#strong[Dívida/PL]], [$P a s s i v o\/P L$], [Quanto maior, mais
-    alavancado],
-    [#strong[Dívida/Ativo]], [$P a s s i v o\/A t i v o$], [Percentual
+    [#strong[Dívida/PL]], [$upright("Passivo")\/upright("PL")$], [Quanto
+    maior, mais alavancado],
+    [#strong[Dívida/Ativo]], [$upright("Passivo")\/upright("Ativo")$], [Percentual
     financiado por terceiros],
-    [#strong[ICJ]], [$L A J I R\/D F$], [Cobertura de juros],
+    [#strong[ICJ]], [$upright("LAJIR")\/upright("DF")$], [Cobertura de
+    juros],
     [#strong[Composição do
-    Endividamento]], [$P C\/\(P C + E L P\)$], [Perfil da dívida],
+    Endividamento]], [$upright("PC")\/\(upright("PC") + upright("ELP")\)$], [Perfil
+    da dívida],
   )]
   , kind: table
   )
@@ -892,17 +902,21 @@ Medem a capacidade de gerar retorno sobre os recursos investidos.
     align: (auto,auto,auto,),
     table.header([Indicador], [Fórmula], [Significado],),
     table.hline(),
-    [#strong[ROE]], [$L L\/P L$], [Retorno do acionista],
-    [#strong[ROA]], [$L L\/A t i v o$], [Retorno sobre ativos],
-    [#strong[ROIC]], [$N O P A T\/C a p i t a l I n v e s t i d o$], [Retorno
+    [#strong[ROE]], [$upright("LL")\/upright("PL")$], [Retorno do
+    acionista],
+    [#strong[ROA]], [$upright("LL")\/upright("Ativo")$], [Retorno sobre
+    ativos],
+    [#strong[ROIC]], [$upright("NOPAT")\/upright("Capital") upright("Investido")$], [Retorno
     operacional],
-    [#strong[Margem Líquida]], [$L L\/R e c e i t a$], [Lucratividade
+    [#strong[Margem
+    Líquida]], [$upright("LL")\/upright("Receita")$], [Lucratividade
     sobre vendas],
     [#strong[Margem
-    Bruta]], [$\(R e c e i t a - C P V\)\/R e c e i t a$], [Lucro após
-    custo dos produtos],
-    [#strong[Giro do Ativo]], [$R e c e i t a\/A t i v o$], [Eficiência
-    no uso dos ativos],
+    Bruta]], [$\(upright("Receita") - upright("CPV")\)\/upright("Receita")$], [Lucro
+    após custo dos produtos],
+    [#strong[Giro do
+    Ativo]], [$upright("Receita")\/upright("Ativo")$], [Eficiência no
+    uso dos ativos],
   )]
   , kind: table
   )
@@ -930,9 +944,9 @@ for k, v in rent.items():
 <sistema-dupont>
 Decompõe o ROE em suas alavancas operacionais e financeiras:
 
-$ R O E = frac(L L, V e n d a s) times frac(V e n d a s, A t i v o) times frac(A t i v o, P L) $
+$ upright("ROE") = upright("LL") / upright("Vendas") times upright("Vendas") / upright("Ativo") times upright("Ativo") / upright("PL") $
 
-$ R O E = M a r g e m med L í q u i d a times G i r o med d o med A t i v o times A l a v a n c a g e m med F i n a n c e i r a $
+$ upright("ROE") = upright("Margem") med upright("Líquida") times upright("Giro") med upright("do") med upright("Ativo") times upright("Alavancagem") med upright("Financeira") $
 
 #strong[Utilidade:] identifica qual alavanca está puxando (ou
 prejudicando) o retorno do acionista.
@@ -969,7 +983,7 @@ dupont_analysis(800, 15000, 12000, 7000)
 Amortization) --- Lucro antes de juros, impostos, depreciação e
 amortização.
 
-$ E B I T D A = L A J I R + D e p r e c i a ç ã o + A m o r t i z a ç ã o $
+$ upright("EBITDA") = upright("LAJIR") + upright("Depreciação") + upright("Amortização") $
 
 #strong[Importante:] o EBITDA não é fluxo de caixa, pois ignora: -
 Investimentos (CapEx) - Necessidade de Capital de Giro (NCG) - Impostos
@@ -1019,7 +1033,7 @@ $ V_L = V_U $
 
 O custo do capital próprio aumenta linearmente com o endividamento:
 
-$ K e = K e_U +\(K e_U - K d\)times D / E $
+$ upright("Ke") = upright("Ke")_U +\(upright("Ke")_U - upright("Kd")\)times D / E $
 
 #strong[Implicação:] o aumento do Ke compensa exatamente o benefício da
 dívida mais barata, mantendo o WACC constante.
@@ -1045,10 +1059,10 @@ for d_e in [0, 0.25, 0.5, 1.0, 2.0]:
 Com a dedutibilidade dos juros da dívida, a empresa alavancada vale
 #strong[mais]:
 
-$ V_L = V_U + D times I R $
+$ V_L = V_U + D times upright("IR") $
 
-O termo $D times I R$ é o #strong[benefício fiscal] (escudo fiscal) da
-dívida.
+O termo $D times upright("IR")$ é o #strong[benefício fiscal] (escudo
+fiscal) da dívida.
 
 ```python
 def mm_com_impostos(vu, d, ir):
@@ -1068,7 +1082,7 @@ for d in [0, 100, 200, 300, 400]:
 Na prática, o endividamento excessivo traz #strong[custos de falência]
 (diretos e indiretos):
 
-$ V_L = V_U + V P\(B e n e f í c i o med F i s c a l\)- V P\(C u s t o med d e med F a l ê n c i a\) $
+$ V_L = V_U + upright("VP")\(upright("Benefício") med upright("Fiscal")\)- upright("VP")\(upright("Custo") med upright("de") med upright("Falência")\) $
 
 ```
 Valor da Empresa
@@ -1134,11 +1148,11 @@ oportunidades de crescimento emitem menos ações - A estrutura de capital
 
 === 7.2. Métricas de Dividendos
 <métricas-de-dividendos>
-$ D P A = frac(D i v i d e n d o s med T o t a i s, N ú m e r o med d e med A ç õ e s) $
+$ upright("DPA") = frac(upright("Dividendos") med upright("Totais"), upright("Número") med upright("de") med upright("Ações")) $
 
-$ P a y - o u t = frac(D i v i d e n d o s, L u c r o med L í q u i d o) $
+$ upright("Pay") - upright("out") = frac(upright("Dividendos"), upright("Lucro") med upright("Líquido")) $
 
-$ D i v i d e n d med Y i e l d = frac(D P A, P r e ç o med d a med A ç ã o) $
+$ upright("Dividend") med upright("Yield") = frac(upright("DPA"), upright("Preço") med upright("da") med upright("Ação")) $
 
 ```python
 def metricas_dividendos(lucro_liquido, dividendos_pagos, num_acoes, preco_acao):
@@ -1190,16 +1204,17 @@ dividendos: - #strong[Aposentados:] preferem alta distribuição (renda) -
 #strong[Capital de Giro] = recursos necessários para financiar as
 operações do dia a dia.
 
-$ C C L = A t i v o med C i r c u l a n t e - P a s s i v o med C i r c u l a n t e $
+$ upright("CCL") = upright("Ativo") med upright("Circulante") - upright("Passivo") med upright("Circulante") $
 
-$ N C G = A C med O p e r a c i o n a l - P C med O p e r a c i o n a l $
+$ upright("NCG") = upright("AC") med upright("Operacional") - upright("PC") med upright("Operacional") $
 
-$ S T = C C L - N C G $
+$ upright("ST") = upright("CCL") - upright("NCG") $
 
-#strong[Onde:] - $A C med O p e r a c i o n a l$ = contas a receber +
-estoques + adiantamentos - $P C med O p e r a c i o n a l$ =
-fornecedores + salários + impostos a pagar - $S T$ (Saldo de Tesouraria)
-\> 0 indica folga financeira
+#strong[Onde:] - $upright("AC") med upright("Operacional")$ = contas a
+receber + estoques + adiantamentos -
+$upright("PC") med upright("Operacional")$ = fornecedores + salários +
+impostos a pagar - $upright("ST")$ (Saldo de Tesouraria) \> 0 indica
+folga financeira
 
 ```python
 def diagnostico_capital_giro(ac, pc, ac_op, pc_op):
@@ -1296,9 +1311,9 @@ passivos de curto prazo. Exemplos:
 
 === 9.2. Sinergias
 <sinergias>
-$ V\(A B\)> V\(A\)+ V\(B\) $
+$ V\(upright("AB")\)> V\(A\)+ V\(B\) $
 
-$ S i n e r g i a = V\(A B\)-\[V\(A\)+ V\(B\)\] $
+$ upright("Sinergia") = V\(upright("AB")\)-\[V\(A\)+ V\(B\)\] $
 
 ```python
 def analise_sinergia(v_a, v_b, v_ab, premio_pago):
@@ -1513,7 +1528,7 @@ def analisar_acao(ticker, periodo="5y"):
 <taxa-de-câmbio>
 #strong[Taxa de câmbio] = preço de uma moeda em termos de outra.
 
-$ R\$\/U S\$= frac(R\$, U S\$) $
+$ R\$\/upright("US")\$= frac(R\$, upright("US")\$) $
 
 #strong[Regimes cambiais:] - #strong[Fixo:] governo define a taxa -
 #strong[Flutuante:] mercado define (Brasil adota este) - #strong[Banda
@@ -1545,12 +1560,12 @@ Medido pelo spread dos títulos soberanos sobre os Treasuries americanos.
 
 === 12.3. Teoria da Paridade do Poder de Compra (PPP)
 <teoria-da-paridade-do-poder-de-compra-ppp>
-$ T a x a med d e med C â m b i o = frac(N í v e l med d e med P r e ç o s med\(P a í s med A\), N í v e l med d e med P r e ç o s med\(P a í s med B\)) $
+$ upright("Taxa") med upright("de") med upright("Câmbio") = frac(upright("Nível") med upright("de") med upright("Preços") med\(upright("País") med A\), upright("Nível") med upright("de") med upright("Preços") med\(upright("País") med B\)) $
 
 #strong[PPP Relativa:] a variação cambial reflete o diferencial de
 inflação:
 
-$ E_t / E_(t - 1) = frac(1 + pi_(d o m é s t i c a), 1 + pi_(e s t r a n g e i r a)) $
+$ E_t / E_(t - 1) = frac(1 + pi_(upright("doméstica")), 1 + pi_(upright("estrangeira"))) $
 
 #line()
 
@@ -1566,40 +1581,44 @@ $ E_t / E_(t - 1) = frac(1 + pi_(d o m é s t i c a), 1 + pi_(e s t r a n g e i 
     Total]], [$R =\(P_t - P_(t - 1) + D_t\)\/P_(t - 1)$], [Performance],
     [#strong[CAPM]], [$E\(R_i\)= R_f + beta_i times\(R_m - R_f\)$], [Custo
     de capital próprio],
-    [#strong[Beta]], [$beta_i = C o v\(R_i\,R_m\)\/V a r\(R_m\)$], [Risco
+    [#strong[Beta]], [$beta_i = upright("Cov")\(R_i\,R_m\)\/upright("Var")\(R_m\)$], [Risco
     sistemático],
     [#strong[Retorno
     Carteira]], [$E\(R_p\)= sum w_i times E\(R_i\)$], [Portfólio],
     [#strong[Risco Carteira (2
     ativos)]], [$sigma_p^2 = w_1^2 sigma_1^2 + w_2^2 sigma_2^2 + 2 w_1 w_2 sigma_1 sigma_2 rho_12$], [Diversificação],
-    [#strong[WACC]], [$W A C C =\(E\/V\)times K e +\(D\/V\)times K d times\(1 - I R\)$], [TMA
+    [#strong[WACC]], [$upright("WACC") =\(E\/V\)times upright("Ke") +\(D\/V\)times upright("Kd") times\(1 - upright("IR")\)$], [TMA
     para projetos],
-    [#strong[Ke (Gordon)]], [$K e = D_1\/P_0 + g$], [Ações que pagam
-    dividendos],
+    [#strong[Ke (Gordon)]], [$upright("Ke") = D_1\/P_0 + g$], [Ações que
+    pagam dividendos],
     [#strong[Kd
-    líquido]], [$K d_(l i q) = K d_(b r u t o) times\(1 - I R\)$], [Custo
+    líquido]], [$upright("Kd")_(upright("liq")) = upright("Kd")_(upright("bruto")) times\(1 - upright("IR")\)$], [Custo
     da dívida],
-    [#strong[EVA]], [$E V A = N O P A T -\(C a p i t a l times W A C C\)$], [Criação
+    [#strong[EVA]], [$upright("EVA") = upright("NOPAT") -\(upright("Capital") times upright("WACC")\)$], [Criação
     de valor],
-    [#strong[ROE]], [$R O E = L L\/P L$], [Rentabilidade do acionista],
-    [#strong[DuPont]], [$R O E =\(L L\/V\)times\(V\/A\)times\(A\/P L\)$], [Decomposição
+    [#strong[ROE]], [$upright("ROE") = upright("LL")\/upright("PL")$], [Rentabilidade
+    do acionista],
+    [#strong[DuPont]], [$upright("ROE") =\(upright("LL")\/V\)times\(V\/A\)times\(A\/upright("PL")\)$], [Decomposição
     ROE],
     [#strong[Valuation
-    FCD]], [$E V = sum F C F_t\/\(1 + W A C C\)^t+ V T\/\(1 + W A C C\)^n$], [Valor
+    FCD]], [$upright("EV") = sum upright("FCF")_t\/\(1 + upright("WACC")\)^t+ upright("VT")\/\(1 + upright("WACC")\)^n$], [Valor
     intrínseco],
     [#strong[Valor
-    Terminal]], [$V T = F C F_n times\(1 + g\)\/\(W A C C - g\)$], [Perpetuidade],
-    [#strong[P/L]], [$P L = P r e ç o\/L P A$], [Múltiplo],
+    Terminal]], [$upright("VT") = upright("FCF")_n times\(1 + g\)\/\(upright("WACC") - g\)$], [Perpetuidade],
+    [#strong[P/L]], [$upright("PL") = upright("Preço")\/upright("LPA")$], [Múltiplo],
     [#strong[MM I (s/ imposto)]], [$V_L = V_U$], [Irrelevância],
     [#strong[MM II (c/
-    imposto)]], [$V_L = V_U + D times I R$], [Benefício fiscal],
-    [#strong[Dividend Yield]], [$D Y = D P A\/P r e ç o$], [Retorno em
-    dividendos],
-    [#strong[Pay-out]], [$P O = D i v i d e n d o s\/L L$], [Distribuição
+    imposto)]], [$V_L = V_U + D times upright("IR")$], [Benefício
+    fiscal],
+    [#strong[Dividend
+    Yield]], [$upright("DY") = upright("DPA")\/upright("Preço")$], [Retorno
+    em dividendos],
+    [#strong[Pay-out]], [$upright("PO") = upright("Dividendos")\/upright("LL")$], [Distribuição
     de lucro],
-    [#strong[CCL]], [$A C - P C$], [Capital de giro],
+    [#strong[CCL]], [$upright("AC") - upright("PC")$], [Capital de
+    giro],
     [#strong[Fisher]], [$\(1 + i_n\)=\(1 + i_r\)times\(1 + pi\)$], [Inflação],
-    [#strong[PPP]], [$Delta E =\(1 + pi_(d o m)\)\/\(1 + pi_(e s t)\)$], [Câmbio],
+    [#strong[PPP]], [$Delta E =\(1 + pi_(upright("dom"))\)\/\(1 + pi_(upright("est"))\)$], [Câmbio],
   )]
   , kind: table
   )
