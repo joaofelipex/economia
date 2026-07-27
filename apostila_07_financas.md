@@ -63,9 +63,11 @@ O objetivo consensual da teoria financeira moderna é **maximizar a riqueza dos 
 
 **Valor da empresa:**
 
-$$Valor = \sum_{t=1}^{\infty} \frac{FCL_t}{(1 + WACC)^t}$$
+$$
+\text{Valor} = \sum_{t=1}^{\infty} \frac{\text{FCL}_t}{(1 + \text{WACC})^t}
+$$
 
-Onde $FCL_t$ são os fluxos de caixa livres gerados em cada período.
+Onde $\text{FCL}_t$ são os fluxos de caixa livres gerados em cada período $t$, e $\text{WACC}$ é a taxa de desconto.
 
 ```python
 def valor_descontado(fluxos, wacc):
@@ -91,7 +93,7 @@ Value-Based Management é uma filosofia de gestão que alinha todas as decisões
 | **ROIC** | NOPAT / Capital Investido | Retorno sobre o capital |
 | **ROE** | Lucro Líquido / Patrimônio Líquido | Retorno sobre capital próprio |
 
-**Regra fundamental:** Se $ROIC > WACC$, a empresa está **criando valor**. Se $ROIC < WACC$, está **destruindo valor**.
+**Regra fundamental:** Se $\text{ROIC} > \text{WACC}$, a empresa está **criando valor**. Se $\text{ROIC} < \text{WACC}$, está **destruindo valor**.
 
 ```python
 def metricas_vbm(nopat, capital_investido, wacc, valor_mercado, ll, pl):
@@ -209,9 +211,9 @@ $$\sigma_p^2 = w_1^2 \sigma_1^2 + w_2^2 \sigma_2^2 + 2 w_1 w_2 \sigma_1 \sigma_2
 
 **Variância da carteira (n ativos):**
 
-$$\sigma_p^2 = \sum_{i=1}^{n} \sum_{j=1}^{n} w_i w_j \sigma_{ij}$$
+$$\sigma_p^2 = \sum_{i=1}^{n} \sum_{j=1}^{n} w_i w_j \sigma_{\text{ij}}$$
 
-Onde $\sigma_{ij} = \rho_{ij} \times \sigma_i \times \sigma_j$ é a covariância.
+Onde $\sigma_{\text{ij}} = \rho_{\text{ij}} \times \sigma_i \times \sigma_j$ é a covariância.
 
 ```python
 def risco_carteira(pesos, cov_matrix):
@@ -302,7 +304,7 @@ for beta in [0.0, 0.5, 0.8, 1.0, 1.2, 1.5, 2.0]:
 
 O beta mede o **risco sistemático** de um ativo:
 
-$$\beta_i = \frac{Cov(R_i, R_m)}{Var(R_m)}$$
+$$\beta_i = \frac{\text{Cov}(R_i, R_m)}{\text{Var}(R_m)}$$
 
 **Interpretação:**
 - $\beta = 1$: o ativo acompanha o mercado
@@ -445,13 +447,13 @@ O **custo de capital** é a taxa de retorno mínima exigida pelos provedores de 
 É a taxa de retorno exigida pelos acionistas. As principais formas de estimá-lo:
 
 **1. CAPM:**
-$$Ke = R_f + \beta \times (R_m - R_f)$$
+$$\text{Ke} = R_f + \beta \times (R_m - R_f)$$
 
 **2. Modelo de Gordon (Dividend Discount Model):**
-$$Ke = \frac{D_1}{P_0} + g$$
+$$\text{Ke} = \frac{D_1}{P_0} + g$$
 
 **3. Bond Yield + Risk Premium:**
-$$Ke = Kd + Prêmio$$
+$$\text{Ke} = \text{Kd} + \text{Prêmio}$$
 
 ```python
 def custo_capital_proprio_capm(rf, beta, rm):
@@ -476,7 +478,7 @@ print(f"Ke (Gordon): {ke_gordon*100:.2f}%")
 
 É a taxa efetiva que a empresa paga sobre suas dívidas. Como os juros são dedutíveis do IR, usa-se o **custo líquido**:
 
-$$Kd_{líquido} = Kd_{bruto} \times (1 - IR)$$
+$$\text{Kd}_{\text{líquido}} = \text{Kd}_{\text{bruto}} \times (1 - \text{IR})$$
 
 **Formas de estimar:**
 - Taxa de juros dos empréstimos bancários recentes
@@ -501,7 +503,7 @@ print(f"Custo líquido da dívida: {custo_terceiros(kd_bruto, 0.34)*100:.2f}% a.
 
 O WACC é a média ponderada do custo de cada fonte de capital:
 
-$$WACC = \frac{E}{V} \times Ke + \frac{D}{V} \times Kd \times (1 - IR)$$
+$$\text{WACC} = \frac{E}{V} \times \text{Ke} + \frac{D}{V} \times \text{Kd} \times (1 - \text{IR})$$
 
 Onde:
 - $E$ = valor de mercado do capital próprio (equity)
@@ -582,20 +584,20 @@ for w in [0.08, 0.10, 0.12, 0.14, 0.16]:
 
 O valor intrínseco de uma empresa é o valor presente de todos os fluxos de caixa futuros:
 
-$$EV = \sum_{t=1}^{n} \frac{FCF_t}{(1 + WACC)^t} + \frac{VT}{(1 + WACC)^n}$$
+$$\text{EV} = \sum_{t=1}^{n} \frac{\text{FCF}_t}{(1 + \text{WACC})^t} + \frac{\text{VT}}{(1 + \text{WACC})^n}$$
 
 **Onde:**
-- $EV$ = Enterprise Value (valor da firma)
-- $FCF_t$ = Fluxo de Caixa Livre no ano t
-- $WACC$ = custo médio ponderado de capital
-- $VT$ = Valor Terminal (perpetuidade)
+- $\text{EV}$ = Enterprise Value (valor da firma)
+- $\text{FCF}_t$ = Fluxo de Caixa Livre no ano t
+- $\text{WACC}$ = custo médio ponderado de capital
+- $\text{VT}$ = Valor Terminal (perpetuidade)
 
 **Valor Terminal (Gordon):**
 
-$$VT = \frac{FCF_n \times (1 + g)}{WACC - g}$$
+$$\text{VT} = \frac{\text{FCF}_n \times (1 + g)}{\text{WACC} - g}$$
 
 **Equity Value:**
-$$Equity\ Value = EV - Dívida + Caixa$$
+$$\text{Equity}\ \text{Value} = \text{EV} - \text{Dívida} + \text{Caixa}$$
 
 ```python
 def valuation_fcd(fcfs, wacc, g, divida, caixa):
@@ -682,12 +684,12 @@ multiplos_empresa(
 
 | Múltiplo | Fórmula | Indicação | Melhor Uso |
 |----------|---------|-----------|------------|
-| **P/L** (Preço/Lucro) | $P / LPA$ | Mais popular | Empresas maduras, lucro estável |
-| **EV/EBITDA** | $EV / EBITDA$ | Ignora depreciação | Empresas de capital intensivo |
-| **P/VP** | $P / VPA$ | Valor patrimonial | Bancos, seguradoras |
-| **Div. Yield** | $DPA / P$ | Retorno em dividendos | Empresas que distribuem lucro |
-| **P/Receita** | $P / Receita$ | Empresas sem lucro | Startups, crescimento |
-| **EV/FCF** | $EV / FCF$ | Geração de caixa | Qualquer empresa |
+| **P/L** (Preço/Lucro) | $P / \text{LPA}$ | Mais popular | Empresas maduras, lucro estável |
+| **EV/EBITDA** | $\text{EV} / \text{EBITDA}$ | Ignora depreciação | Empresas de capital intensivo |
+| **P/VP** | $P / \text{VPA}$ | Valor patrimonial | Bancos, seguradoras |
+| **Div. Yield** | $\text{DPA} / P$ | Retorno em dividendos | Empresas que distribuem lucro |
+| **P/Receita** | $P / \text{Receita}$ | Empresas sem lucro | Startups, crescimento |
+| **EV/FCF** | $\text{EV} / \text{FCF}$ | Geração de caixa | Qualquer empresa |
 
 ---
 
@@ -698,12 +700,12 @@ multiplos_empresa(
 **1. Balanço Patrimonial (BP) — "Fotografia"**
 Mostra a posição financeira em uma data específica:
 
-$$Ativo = Passivo + Patrimônio Líquido$$
+$$\text{Ativo} = \text{Passivo} + \text{Patrimônio} \text{Líquido}$$
 
 **2. Demonstração do Resultado (DRE) — "Filme"**
 Mostra a geração de lucro em um período:
 
-$$Receita - Custos - Despesas = Lucro Líquido$$
+$$\text{Receita} - \text{Custos} - \text{Despesas} = \text{Lucro} \text{Líquido}$$
 
 **3. Demonstração do Fluxo de Caixa (DFC)**
 Mostra as origens e usos do caixa, dividido em operacional, investimento e financiamento.
@@ -740,10 +742,10 @@ Medem a capacidade de pagar obrigações de curto prazo.
 
 | Indicador | Fórmula | Interpretação |
 |-----------|---------|---------------|
-| **Liquidez Corrente** | $AC / PC$ | Ideal > 1,5 |
-| **Liquidez Seca** | $(AC - Estoques) / PC$ | Ideal > 1,0 |
-| **Liquidez Imediata** | $Disponível / PC$ | Capacidade imediata |
-| **Liquidez Geral** | $(AC + RLP) / (PC + ELP)$ | Longo prazo |
+| **Liquidez Corrente** | $\text{AC} / \text{PC}$ | Ideal > 1,5 |
+| **Liquidez Seca** | $(\text{AC} - \text{Estoques}) / \text{PC}$ | Ideal > 1,0 |
+| **Liquidez Imediata** | $\text{Disponível} / \text{PC}$ | Capacidade imediata |
+| **Liquidez Geral** | $(\text{AC} + \text{RLP}) / (\text{PC} + \text{ELP})$ | Longo prazo |
 
 ```python
 def indicadores_liquidez(ac, pc, estoques, disponivel, rlp, elp):
@@ -767,10 +769,10 @@ Medem a estrutura de capital e o risco financeiro.
 
 | Indicador | Fórmula | Interpretação |
 |-----------|---------|---------------|
-| **Dívida/PL** | $Passivo / PL$ | Quanto maior, mais alavancado |
-| **Dívida/Ativo** | $Passivo / Ativo$ | Percentual financiado por terceiros |
-| **ICJ** | $LAJIR / DF$ | Cobertura de juros |
-| **Composição do Endividamento** | $PC / (PC + ELP)$ | Perfil da dívida |
+| **Dívida/PL** | $\text{Passivo} / \text{PL}$ | Quanto maior, mais alavancado |
+| **Dívida/Ativo** | $\text{Passivo} / \text{Ativo}$ | Percentual financiado por terceiros |
+| **ICJ** | $\text{LAJIR} / \text{DF}$ | Cobertura de juros |
+| **Composição do Endividamento** | $\text{PC} / (\text{PC} + \text{ELP})$ | Perfil da dívida |
 
 ```python
 def indicadores_endividamento(passivo_circ, passivo_ncirc, pl, lajir, despesas_fin):
@@ -794,12 +796,12 @@ Medem a capacidade de gerar retorno sobre os recursos investidos.
 
 | Indicador | Fórmula | Significado |
 |-----------|---------|-------------|
-| **ROE** | $LL / PL$ | Retorno do acionista |
-| **ROA** | $LL / Ativo$ | Retorno sobre ativos |
-| **ROIC** | $NOPAT / Capital Investido$ | Retorno operacional |
-| **Margem Líquida** | $LL / Receita$ | Lucratividade sobre vendas |
-| **Margem Bruta** | $(Receita - CPV) / Receita$ | Lucro após custo dos produtos |
-| **Giro do Ativo** | $Receita / Ativo$ | Eficiência no uso dos ativos |
+| **ROE** | $\text{LL} / \text{PL}$ | Retorno do acionista |
+| **ROA** | $\text{LL} / \text{Ativo}$ | Retorno sobre ativos |
+| **ROIC** | $\text{NOPAT} / \text{Capital} \text{Investido}$ | Retorno operacional |
+| **Margem Líquida** | $\text{LL} / \text{Receita}$ | Lucratividade sobre vendas |
+| **Margem Bruta** | $(\text{Receita} - \text{CPV}) / \text{Receita}$ | Lucro após custo dos produtos |
+| **Giro do Ativo** | $\text{Receita} / \text{Ativo}$ | Eficiência no uso dos ativos |
 
 ```python
 def indicadores_rentabilidade(ll, nopat, receita, ativo, pl, capital_investido):
@@ -824,9 +826,9 @@ for k, v in rent.items():
 
 Decompõe o ROE em suas alavancas operacionais e financeiras:
 
-$$ROE = \frac{LL}{Vendas} \times \frac{Vendas}{Ativo} \times \frac{Ativo}{PL}$$
+$$\text{ROE} = \frac{\text{LL}}{\text{Vendas}} \times \frac{\text{Vendas}}{\text{Ativo}} \times \frac{\text{Ativo}}{\text{PL}}$$
 
-$$ROE = Margem\ Líquida \times Giro\ do\ Ativo \times Alavancagem\ Financeira$$
+$$\text{ROE} = \text{Margem}\ \text{Líquida} \times \text{Giro}\ \text{do}\ \text{Ativo} \times \text{Alavancagem}\ \text{Financeira}$$
 
 **Utilidade:** identifica qual alavanca está puxando (ou prejudicando) o retorno do acionista.
 
@@ -860,7 +862,7 @@ dupont_analysis(800, 15000, 12000, 7000)
 
 **EBITDA** (Earnings Before Interest, Taxes, Depreciation and Amortization) — Lucro antes de juros, impostos, depreciação e amortização.
 
-$$EBITDA = LAJIR + Depreciação + Amortização$$
+$$\text{EBITDA} = \text{LAJIR} + \text{Depreciação} + \text{Amortização}$$
 
 **Importante:** o EBITDA não é fluxo de caixa, pois ignora:
 - Investimentos (CapEx)
@@ -908,7 +910,7 @@ $$V_L = V_U$$
 
 O custo do capital próprio aumenta linearmente com o endividamento:
 
-$$Ke = Ke_U + (Ke_U - Kd) \times \frac{D}{E}$$
+$$\text{Ke} = \text{Ke}_U + (\text{Ke}_U - \text{Kd}) \times \frac{D}{E}$$
 
 **Implicação:** o aumento do Ke compensa exatamente o benefício da dívida mais barata, mantendo o WACC constante.
 
@@ -932,9 +934,9 @@ for d_e in [0, 0.25, 0.5, 1.0, 2.0]:
 
 Com a dedutibilidade dos juros da dívida, a empresa alavancada vale **mais**:
 
-$$V_L = V_U + D \times IR$$
+$$V_L = V_U + D \times \text{IR}$$
 
-O termo $D \times IR$ é o **benefício fiscal** (escudo fiscal) da dívida.
+O termo $D \times \text{IR}$ é o **benefício fiscal** (escudo fiscal) da dívida.
 
 ```python
 def mm_com_impostos(vu, d, ir):
@@ -953,7 +955,7 @@ for d in [0, 100, 200, 300, 400]:
 
 Na prática, o endividamento excessivo traz **custos de falência** (diretos e indiretos):
 
-$$V_L = V_U + VP(Benefício\ Fiscal) - VP(Custo\ de\ Falência)$$
+$$V_L = V_U + \text{VP}(\text{Benefício}\ \text{Fiscal}) - \text{VP}(\text{Custo}\ \text{de}\ \text{Falência})$$
 
 ```
 Valor da Empresa
@@ -1003,11 +1005,11 @@ Devido à **assimetria de informação** (gestores sabem mais que investidores),
 
 ### 7.2. Métricas de Dividendos
 
-$$DPA = \frac{Dividendos\ Totais}{Número\ de\ Ações}$$
+$$\text{DPA} = \frac{\text{Dividendos}\ \text{Totais}}{\text{Número}\ \text{de}\ \text{Ações}}$$
 
-$$Pay-out = \frac{Dividendos}{Lucro\ Líquido}$$
+$$\text{Pay}-\text{out} = \frac{\text{Dividendos}}{\text{Lucro}\ \text{Líquido}}$$
 
-$$Dividend\ Yield = \frac{DPA}{Preço\ da\ Ação}$$
+$$\text{Dividend}\ \text{Yield} = \frac{\text{DPA}}{\text{Preço}\ \text{da}\ \text{Ação}}$$
 
 ```python
 def metricas_dividendos(lucro_liquido, dividendos_pagos, num_acoes, preco_acao):
@@ -1052,16 +1054,16 @@ Diferentes grupos de investidores preferem diferentes políticas de dividendos:
 
 **Capital de Giro** = recursos necessários para financiar as operações do dia a dia.
 
-$$CCL = Ativo\ Circulante - Passivo\ Circulante$$
+$$\text{CCL} = \text{Ativo}\ \text{Circulante} - \text{Passivo}\ \text{Circulante}$$
 
-$$NCG = AC\ Operacional - PC\ Operacional$$
+$$\text{NCG} = \text{AC}\ \text{Operacional} - \text{PC}\ \text{Operacional}$$
 
-$$ST = CCL - NCG$$
+$$\text{ST} = \text{CCL} - \text{NCG}$$
 
 **Onde:**
-- $AC\ Operacional$ = contas a receber + estoques + adiantamentos
-- $PC\ Operacional$ = fornecedores + salários + impostos a pagar
-- $ST$ (Saldo de Tesouraria) > 0 indica folga financeira
+- $\text{AC}\ \text{Operacional}$ = contas a receber + estoques + adiantamentos
+- $\text{PC}\ \text{Operacional}$ = fornecedores + salários + impostos a pagar
+- $\text{ST}$ (Saldo de Tesouraria) > 0 indica folga financeira
 
 ```python
 def diagnostico_capital_giro(ac, pc, ac_op, pc_op):
@@ -1143,9 +1145,9 @@ Algumas empresas operam com **capital de giro negativo** (CCL < 0), o que signif
 
 ### 9.2. Sinergias
 
-$$V(AB) > V(A) + V(B)$$
+$$V(\text{AB}) > V(A) + V(B)$$
 
-$$Sinergia = V(AB) - [V(A) + V(B)]$$
+$$\text{Sinergia} = V(\text{AB}) - [V(A) + V(B)]$$
 
 ```python
 def analise_sinergia(v_a, v_b, v_ab, premio_pago):
@@ -1343,7 +1345,7 @@ def analisar_acao(ticker, periodo="5y"):
 
 **Taxa de câmbio** = preço de uma moeda em termos de outra.
 
-$$R\$ / US\$ = \frac{R\$}{US\$}$$
+$$R\$ / \text{US}\$ = \frac{R\$}{\text{US}\$}$$
 
 **Regimes cambiais:**
 - **Fixo:** governo define a taxa
@@ -1375,11 +1377,11 @@ Prêmio de risco que o mercado exige para investir em títulos de um país. Medi
 
 ### 12.3. Teoria da Paridade do Poder de Compra (PPP)
 
-$$Taxa\ de\ Câmbio = \frac{Nível\ de\ Preços\ (País\ A)}{Nível\ de\ Preços\ (País\ B)}$$
+$$\text{Taxa}\ \text{de}\ \text{Câmbio} = \frac{\text{Nível}\ \text{de}\ \text{Preços}\ (\text{País}\ A)}{\text{Nível}\ \text{de}\ \text{Preços}\ (\text{País}\ B)}$$
 
 **PPP Relativa:** a variação cambial reflete o diferencial de inflação:
 
-$$\frac{E_t}{E_{t-1}} = \frac{1 + \pi_{doméstica}}{1 + \pi_{estrangeira}}$$
+$$\frac{E_t}{E_{t-1}} = \frac{1 + \pi_{\text{doméstica}}}{1 + \pi_{\text{estrangeira}}}$$
 
 ---
 
@@ -1389,25 +1391,25 @@ $$\frac{E_t}{E_{t-1}} = \frac{1 + \pi_{doméstica}}{1 + \pi_{estrangeira}}$$
 |----------|---------|-----|
 | **Retorno Total** | $R = (P_t - P_{t-1} + D_t) / P_{t-1}$ | Performance |
 | **CAPM** | $E(R_i) = R_f + \beta_i \times (R_m - R_f)$ | Custo de capital próprio |
-| **Beta** | $\beta_i = Cov(R_i, R_m) / Var(R_m)$ | Risco sistemático |
+| **Beta** | $\beta_i = \text{Cov}(R_i, R_m) / \text{Var}(R_m)$ | Risco sistemático |
 | **Retorno Carteira** | $E(R_p) = \sum w_i \times E(R_i)$ | Portfólio |
 | **Risco Carteira (2 ativos)** | $\sigma_p^2 = w_1^2\sigma_1^2 + w_2^2\sigma_2^2 + 2w_1w_2\sigma_1\sigma_2\rho_{12}$ | Diversificação |
-| **WACC** | $WACC = (E/V) \times Ke + (D/V) \times Kd \times (1 - IR)$ | TMA para projetos |
-| **Ke (Gordon)** | $Ke = D_1/P_0 + g$ | Ações que pagam dividendos |
-| **Kd líquido** | $Kd_{liq} = Kd_{bruto} \times (1 - IR)$ | Custo da dívida |
-| **EVA** | $EVA = NOPAT - (Capital \times WACC)$ | Criação de valor |
-| **ROE** | $ROE = LL/PL$ | Rentabilidade do acionista |
-| **DuPont** | $ROE = (LL/V) \times (V/A) \times (A/PL)$ | Decomposição ROE |
-| **Valuation FCD** | $EV = \sum FCF_t / (1+WACC)^t + VT/(1+WACC)^n$ | Valor intrínseco |
-| **Valor Terminal** | $VT = FCF_n \times (1+g) / (WACC - g)$ | Perpetuidade |
-| **P/L** | $PL = Preço / LPA$ | Múltiplo |
+| **WACC** | $\text{WACC} = (E/V) \times \text{Ke} + (D/V) \times \text{Kd} \times (1 - \text{IR})$ | TMA para projetos |
+| **Ke (Gordon)** | $\text{Ke} = D_1/P_0 + g$ | Ações que pagam dividendos |
+| **Kd líquido** | $\text{Kd}_{\text{liq}} = \text{Kd}_{\text{bruto}} \times (1 - \text{IR})$ | Custo da dívida |
+| **EVA** | $\text{EVA} = \text{NOPAT} - (\text{Capital} \times \text{WACC})$ | Criação de valor |
+| **ROE** | $\text{ROE} = \text{LL}/\text{PL}$ | Rentabilidade do acionista |
+| **DuPont** | $\text{ROE} = (\text{LL}/V) \times (V/A) \times (A/\text{PL})$ | Decomposição ROE |
+| **Valuation FCD** | $\text{EV} = \sum \text{FCF}_t / (1+\text{WACC})^t + \text{VT}/(1+\text{WACC})^n$ | Valor intrínseco |
+| **Valor Terminal** | $\text{VT} = \text{FCF}_n \times (1+g) / (\text{WACC} - g)$ | Perpetuidade |
+| **P/L** | $\text{PL} = \text{Preço} / \text{LPA}$ | Múltiplo |
 | **MM I (s/ imposto)** | $V_L = V_U$ | Irrelevância |
-| **MM II (c/ imposto)** | $V_L = V_U + D \times IR$ | Benefício fiscal |
-| **Dividend Yield** | $DY = DPA / Preço$ | Retorno em dividendos |
-| **Pay-out** | $PO = Dividendos / LL$ | Distribuição de lucro |
-| **CCL** | $AC - PC$ | Capital de giro |
+| **MM II (c/ imposto)** | $V_L = V_U + D \times \text{IR}$ | Benefício fiscal |
+| **Dividend Yield** | $\text{DY} = \text{DPA} / \text{Preço}$ | Retorno em dividendos |
+| **Pay-out** | $\text{PO} = \text{Dividendos} / \text{LL}$ | Distribuição de lucro |
+| **CCL** | $\text{AC} - \text{PC}$ | Capital de giro |
 | **Fisher** | $(1 + i_n) = (1 + i_r) \times (1 + \pi)$ | Inflação |
-| **PPP** | $\Delta E = (1 + \pi_{dom}) / (1 + \pi_{est})$ | Câmbio |
+| **PPP** | $\Delta E = (1 + \pi_{\text{dom}}) / (1 + \pi_{\text{est}})$ | Câmbio |
 
 ---
 

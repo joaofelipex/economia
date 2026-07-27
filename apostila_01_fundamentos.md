@@ -543,7 +543,7 @@ print(f"Menor: {menor_p} ({v_menor}%)")
 </details>
 
 ### Exercício 3
-Simule juros compostos: comece com R$ 1000, taxa de 1% ao mês, por 12 meses. Mostre o saldo a cada mês.
+Simule juros compostos: comece com R\$ 1000, taxa de 1% ao mês, por 12 meses. Mostre o saldo a cada mês.
 
 <details>
 <summary>Solução</summary>

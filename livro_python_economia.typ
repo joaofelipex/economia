@@ -1,73 +1,81 @@
-# Python para Economia — Livro-Texto Completo
+= Python para Economia --- Livro-Texto Completo
+<python-para-economia-livro-texto-completo>
+#strong[Autor:] Gerado por IA --- Estude, pratique, erre, aprenda.
 
-**Autor:** Gerado por IA — Estude, pratique, erre, aprenda.
+#line()
 
----
+= Parte I --- Fundamentos de Python
+<parte-i-fundamentos-de-python>
+#quote(block: true)[
+"A melhor maneira de aprender programação é programar. A melhor maneira
+de aprender economia é programar modelos econômicos."
+]
 
-# Parte I — Fundamentos de Python
+#line()
 
-> "A melhor maneira de aprender programação é programar. A melhor maneira de aprender economia é programar modelos econômicos."
-
----
-
-## Capítulo 1 — Introdução
-
-### 1.1 Por que Python?
-
+== Capítulo 1 --- Introdução
+<capítulo-1-introdução>
+=== 1.1 Por que Python?
+<por-que-python>
 Python se tornou a linguagem padrão em economia por razões objetivas:
 
-1. **Curva de aprendizado suave** — sua sintaxe se aproxima do inglês/português
-2. **Ecossistema maduro** — pandas (dados tabulares), numpy (matemática), statsmodels (econometria), matplotlib (gráficos)
-3. **Reprodutibilidade** — scripts substituem comandos manuais no Excel/Stata
-4. **Gratuito e aberto** — ao contrário de Stata, SAS, EViews
++ #strong[Curva de aprendizado suave] --- sua sintaxe se aproxima do
+  inglês/português
++ #strong[Ecossistema maduro] --- pandas (dados tabulares), numpy
+  (matemática), statsmodels (econometria), matplotlib (gráficos)
++ #strong[Reprodutibilidade] --- scripts substituem comandos manuais no
+  Excel/Stata
++ #strong[Gratuito e aberto] --- ao contrário de Stata, SAS, EViews
 
-Instituições que usam Python:
-- Banco Central do Brasil
-- FMI (Fundo Monetário Internacional)
-- Banco Mundial
-- MIT, Harvard, Chicago (cursos de economia)
-- Quase todas as fintechs e bancos
+Instituições que usam Python: - Banco Central do Brasil - FMI (Fundo
+Monetário Internacional) - Banco Mundial - MIT, Harvard, Chicago (cursos
+de economia) - Quase todas as fintechs e bancos
 
-### 1.2 Como este livro está organizado
-
+=== 1.2 Como este livro está organizado
+<como-este-livro-está-organizado>
 Cada capítulo segue a mesma estrutura:
 
-1. **Conceito** — explicação teórica
-2. **Aplicação econômica** — exemplo real
-3. **Código** — implementação completa
-4. **Exercícios** — para fixação (com soluções no apêndice)
++ #strong[Conceito] --- explicação teórica
++ #strong[Aplicação econômica] --- exemplo real
++ #strong[Código] --- implementação completa
++ #strong[Exercícios] --- para fixação (com soluções no apêndice)
 
-### 1.3 Como usar este livro
-
+=== 1.3 Como usar este livro
+<como-usar-este-livro>
 Você precisa de:
 
-1. **Python 3.11+** instalado (já temos no sistema)
-2. **Ambiente virtual** ativado (`source ~/economia/.venv/bin/activate`)
-3. **Editor de texto** (Cursor AI / VS Code)
-4. **Um terminal aberto** para executar os exemplos
++ #strong[Python 3.11+] instalado (já temos no sistema)
++ #strong[Ambiente virtual] ativado
+  (`source ~/economia/.venv/bin/activate`)
++ #strong[Editor de texto] (Cursor AI / VS Code)
++ #strong[Um terminal aberto] para executar os exemplos
 
-Cada bloco de código neste livro foi testado e executa sem erros. Copie, cole, modifique.
+Cada bloco de código neste livro foi testado e executa sem erros. Copie,
+cole, modifique.
 
----
+#line()
 
-## Capítulo 2 — Variáveis, Tipos e Operadores
-
-### 2.1 O que é uma variável?
-
-Uma variável é um nome que armazena um valor na memória do computador. Pense nela como uma caixa com uma etiqueta.
+== Capítulo 2 --- Variáveis, Tipos e Operadores
+<capítulo-2-variáveis-tipos-e-operadores>
+=== 2.1 O que é uma variável?
+<o-que-é-uma-variável>
+Uma variável é um nome que armazena um valor na memória do computador.
+Pense nela como uma caixa com uma etiqueta.
 
 ```python
 pib_brasil_2025 = 2.2  # a caixa se chama "pib_brasil_2025" e contém 2.2
 ```
 
-Quando você escreve `pib_brasil_2025`, o computador substitui pelo valor `2.2`.
+Quando você escreve `pib_brasil_2025`, o computador substitui pelo valor
+`2.2`.
 
-### 2.2 Tipos de dados fundamentais
+=== 2.2 Tipos de dados fundamentais
+<tipos-de-dados-fundamentais>
+Python reconhece quatro tipos básicos automaticamente (tipagem
+dinâmica).
 
-Python reconhece quatro tipos básicos automaticamente (tipagem dinâmica).
-
-#### Inteiros (int)
-
+==== Inteiros (int)
+<inteiros-int>
 Números sem casa decimal:
 
 ```python
@@ -86,8 +94,8 @@ print(10 // 3)              # 3 (divisão inteira)
 print(10 % 3)               # 1 (resto da divisão)
 ```
 
-#### Ponto flutuante (float)
-
+==== Ponto flutuante (float)
+<ponto-flutuante-float>
 Números decimais:
 
 ```python
@@ -104,8 +112,8 @@ print(0.1 + 0.2)            # 0.30000000000000004 (erro de ponto flutuante)
 print(round(0.1 + 0.2, 2))  # 0.3 (sempre arredonde para exibição)
 ```
 
-#### Strings (str)
-
+==== Strings (str)
+<strings-str>
 Texto. Sempre entre aspas (simples ou duplas):
 
 ```python
@@ -124,8 +132,8 @@ print("Linha 1\nLinha 2")    # \n = nova linha
 print("Coluna1\tColuna2")    # \t = tabulação
 ```
 
-#### Booleanos (bool)
-
+==== Booleanos (bool)
+<booleanos-bool>
 Verdadeiro ou falso. Usado em decisões:
 
 ```python
@@ -133,8 +141,8 @@ em_recessao = False
 crescendo = True
 ```
 
-### 2.3 Operadores aritméticos
-
+=== 2.3 Operadores aritméticos
+<operadores-aritméticos>
 ```python
 a = 1000   # principal (R$)
 b = 0.01   # taxa de juros (1%)
@@ -159,8 +167,8 @@ x = 2 + 3 * 4     # 14
 y = (2 + 3) * 4   # 20
 ```
 
-### 2.4 Operadores de comparação
-
+=== 2.4 Operadores de comparação
+<operadores-de-comparação>
 Sempre retornam bool:
 
 ```python
@@ -184,8 +192,8 @@ print(inflacao > 4.5)          # True
 print(desemprego >= 10)        # True
 ```
 
-### 2.5 Operadores lógicos
-
+=== 2.5 Operadores lógicos
+<operadores-lógicos>
 Combinam condições:
 
 ```python
@@ -214,8 +222,8 @@ print(estagflacao)  # True
 alerta = pib < 0 or inflacao > 8
 ```
 
-### 2.6 Conversão entre tipos
-
+=== 2.6 Conversão entre tipos
+<conversão-entre-tipos>
 ```python
 # str -> int
 int("2026")           # 2026
@@ -236,8 +244,8 @@ bool(-1)             # True
 bool(0.0)            # False
 ```
 
-### 2.7 F-strings (formatação)
-
+=== 2.7 F-strings (formatação)
+<f-strings-formatação>
 Essencial para exibir resultados de forma clara:
 
 ```python
@@ -267,8 +275,8 @@ print(f"{pop:,}")            # 214,000,000
 print(f"{pop:_}")            # 214_000_000
 ```
 
-### 2.8 Aplicação econômica completa
-
+=== 2.8 Aplicação econômica completa
+<aplicação-econômica-completa>
 ```python
 # Cenário: investimento de R$ 10.000
 valor_inicial = 10000
@@ -288,6 +296,7 @@ print(f"Multiplicador: {(1 + taxa_anual) ** anos:.2f}x")
 ```
 
 Saída:
+
 ```
 Investimento inicial: R$ 10,000.00
 Taxa: 8.0% ao ano
@@ -297,26 +306,28 @@ Rendimento: R$ 11,589.25
 Multiplicador: 2.16x
 ```
 
-### Exercícios do Capítulo 2
+=== Exercícios do Capítulo 2
+<exercícios-do-capítulo-2>
++ Calcule o montante de R\$ 5.000 a 1,5% ao mês por 24 meses
++ Converta US\$ 1.000 em reais (câmbio = R\$ 5,45) e exiba com duas
+  casas decimais
++ Verifique se as seguintes condições são True/False:
+  - 10 \> 5 and 3 \< 2
+  - 7 == 7 or 4 != 4
+  - not (5 \<= 3)
++ Dada inflação de 4,8% e meta de 3,5%, crie uma variável bool
+  `meta_descumprida`
 
-1. Calcule o montante de R\$ 5.000 a 1,5% ao mês por 24 meses
-2. Converta US\$ 1.000 em reais (câmbio = R\$ 5,45) e exiba com duas casas decimais
-3. Verifique se as seguintes condições são True/False:
-   - 10 > 5 and 3 < 2
-   - 7 == 7 or 4 != 4
-   - not (5 <= 3)
-4. Dada inflação de 4,8% e meta de 3,5%, crie uma variável bool `meta_descumprida`
+#line()
 
----
-
-## Capítulo 3 — Estruturas de Dados
-
-### 3.1 Listas
-
+== Capítulo 3 --- Estruturas de Dados
+<capítulo-3-estruturas-de-dados>
+=== 3.1 Listas
+<listas>
 Lista é uma coleção ordenada e mutável de elementos.
 
-#### Criando listas
-
+==== Criando listas
+<criando-listas>
 ```python
 # Lista de números
 inflacoes = [0.50, 0.70, 0.88, 0.67, 0.58, 0.16]
@@ -332,9 +343,9 @@ vazia = []
 vazia = list()
 ```
 
-#### Acessando elementos
-
-O índice começa em **zero**:
+==== Acessando elementos
+<acessando-elementos>
+O índice começa em #strong[zero]:
 
 ```python
 inflacoes[0]    # 0.50  (primeiro elemento)
@@ -347,8 +358,8 @@ inflacoes[-2]   # 0.58  (penúltimo)
 inflacoes[10]   # IndexError: list index out of range
 ```
 
-#### Fatiamento (slicing)
-
+==== Fatiamento (slicing)
+<fatiamento-slicing>
 Sintaxe: `lista[inicio:fim:passo]`
 
 ```python
@@ -365,8 +376,8 @@ numeros[-3:]      # [7, 8, 9]  (últimos 3)
 numeros[:-3]      # [0, 1, 2, 3, 4, 5, 6]
 ```
 
-#### Métodos de lista
-
+==== Métodos de lista
+<métodos-de-lista>
 ```python
 dados = [1, 2, 3]
 
@@ -381,8 +392,8 @@ dados.sort(reverse=True)  # ordena decrescente
 dados.reverse()         # inverte a ordem
 ```
 
-#### Funções nativas para listas
-
+==== Funções nativas para listas
+<funções-nativas-para-listas>
 ```python
 numeros = [3, 7, 1, 9, 4, 6]
 
@@ -396,8 +407,8 @@ any([False, True])      # True (pelo menos um True)
 all([True, True])       # True (todos True)
 ```
 
-#### Aplicação econômica
-
+==== Aplicação econômica
+<aplicação-econômica>
 ```python
 # Taxas de crescimento do PIB de 5 países
 pibs = [2.2, -1.8, 3.1, 2.8, -0.5]
@@ -409,9 +420,10 @@ print(f"Menor PIB: {min(pibs)}% ({paises[pibs.index(min(pibs))]})")
 print(f"Países em recessão: {sum(1 for p in pibs if p < 0)}")
 ```
 
-### 3.2 Tuplas
-
-Tupla é como uma lista, mas **imutável** (não pode ser alterada depois de criada).
+=== 3.2 Tuplas
+<tuplas>
+Tupla é como uma lista, mas #strong[imutável] (não pode ser alterada
+depois de criada).
 
 ```python
 # Criando tuplas
@@ -430,12 +442,13 @@ coordenadas[0] = -22  # TypeError: 'tuple' object does not support item assignme
 # 3. Chaves de dicionário (listas não podem)
 ```
 
-### 3.3 Dicionários
+=== 3.3 Dicionários
+<dicionários>
+Armazenam pares #strong[chave: valor]. É a estrutura mais importante
+depois da lista.
 
-Armazenam pares **chave: valor**. É a estrutura mais importante depois da lista.
-
-#### Criando dicionários
-
+==== Criando dicionários
+<criando-dicionários>
 ```python
 # Dicionário de indicadores
 indicadores = {
@@ -450,8 +463,8 @@ indicadores = {
 pibs = dict(Brasil=2.2, Argentina=-1.8, Chile=3.1)
 ```
 
-#### Acessando valores
-
+==== Acessando valores
+<acessando-valores>
 ```python
 indicadores["pais"]       # "Brasil"
 indicadores.get("pais")   # "Brasil" (seguro)
@@ -461,8 +474,8 @@ indicadores.get("cambio", 0.0)  # 0.0 (valor padrão se não existir)
 indicadores["cambio"]     # KeyError: 'cambio'
 ```
 
-#### Adicionar e modificar
-
+==== Adicionar e modificar
+<adicionar-e-modificar>
 ```python
 indicadores["cambio"] = 5.45         # adiciona
 indicadores["pib"] = 2.5             # modifica
@@ -471,8 +484,8 @@ indicadores["pib"] = 2.5             # modifica
 indicadores.update({"pib": 2.8, "inflacao": 4.8})
 ```
 
-#### Métodos de dicionário
-
+==== Métodos de dicionário
+<métodos-de-dicionário>
 ```python
 indicadores.keys()     # dict_keys(['pais', 'pib', ...])
 indicadores.values()   # dict_values(['Brasil', 2.2, ...])
@@ -492,8 +505,8 @@ del indicadores["cambio"]  # remove sem retornar
 len(indicadores)  # número de pares
 ```
 
-#### Aplicação econômica
-
+==== Aplicação econômica
+<aplicação-econômica-1>
 ```python
 # Dicionário aninhado (dados de múltiplos países)
 paises = {
@@ -506,8 +519,8 @@ for pais, dados in paises.items():
     print(f"{pais}: PIB {dados['pib']}%, Inflação {dados['inflacao']}%")
 ```
 
-### 3.4 Conjuntos (set)
-
+=== 3.4 Conjuntos (set)
+<conjuntos-set>
 Coleção não ordenada de elementos únicos:
 
 ```python
@@ -524,34 +537,39 @@ conjunto_a | conjunto_b  # {1, 2, 3, 4, 5, 6}  (união)
 conjunto_a - conjunto_b  # {1, 2}  (diferença)
 ```
 
-### Exercícios do Capítulo 3
+=== Exercícios do Capítulo 3
+<exercícios-do-capítulo-3>
++ Dada a lista `pib = [2.2, -1.8, 3.1, 2.8, -0.5]`, calcule:
 
-1. Dada a lista `pib = [2.2, -1.8, 3.1, 2.8, -0.5]`, calcule:
-   - Quantos países tiveram PIB positivo
-   - O PIB médio apenas dos positivos
+  - Quantos países tiveram PIB positivo
+  - O PIB médio apenas dos positivos
 
-2. Crie um dicionário com 3 indicadores de 2 países. Calcule a diferença de inflação entre eles.
++ Crie um dicionário com 3 indicadores de 2 países. Calcule a diferença
+  de inflação entre eles.
 
-3. Use fatiamento para extrair:
-   - Os 3 primeiros meses de `ipca = [0.5, 0.7, 0.88, 0.67, 0.58, 0.16]`
-   - Os 3 últimos
-   - A lista invertida
++ Use fatiamento para extrair:
 
-4. Dado o dicionário `moedas = {"USD": 5.45, "EUR": 5.95, "GBP": 6.90, "ARS": 0.006}`:
-   - Qual moeda tem a maior taxa?
-   - Quantas moedas estão abaixo de R\$ 1,00?
-   - Adicione "JPY": 0.036
+  - Os 3 primeiros meses de `ipca = [0.5, 0.7, 0.88, 0.67, 0.58, 0.16]`
+  - Os 3 últimos
+  - A lista invertida
 
----
++ Dado o dicionário
+  `moedas = {"USD": 5.45, "EUR": 5.95, "GBP": 6.90, "ARS": 0.006}`:
 
-## Capítulo 4 — Controle de Fluxo
+  - Qual moeda tem a maior taxa?
+  - Quantas moedas estão abaixo de R\$ 1,00?
+  - Adicione "JPY": 0.036
 
-### 4.1 Condicionais (if/elif/else)
+#line()
 
+== Capítulo 4 --- Controle de Fluxo
+<capítulo-4-controle-de-fluxo>
+=== 4.1 Condicionais (if/elif/else)
+<condicionais-ifelifelse>
 Permitem que o programa tome decisões.
 
-#### Estrutura básica
-
+==== Estrutura básica
+<estrutura-básica>
 ```python
 if condicao:
     # bloco executado se condicao for True
@@ -564,8 +582,8 @@ else:
     pass
 ```
 
-#### Exemplos econômicos
-
+==== Exemplos econômicos
+<exemplos-econômicos>
 ```python
 # Classificação de inflação
 inflacao = 7.2
@@ -594,8 +612,8 @@ elif pib > 0:
     print("Crescimento")
 ```
 
-#### Operador ternário
-
+==== Operador ternário
+<operador-ternário>
 ```python
 # Forma compacta de if/else
 status = "Crescendo" if pib > 0 else "Recessão"
@@ -607,8 +625,8 @@ else:
     status = "Recessão"
 ```
 
-#### Match/case (Python 3.10+)
-
+==== Match/case (Python 3.10+)
+<matchcase-python-3.10>
 ```python
 # Similar ao switch de outras linguagens
 codigo_pais = "BR"
@@ -624,12 +642,12 @@ match codigo_pais:
         nome = "Outro"
 ```
 
-### 4.2 Loop for
-
+=== 4.2 Loop for
+<loop-for>
 Percorre elementos de uma sequência.
 
-#### For com listas
-
+==== For com listas
+<for-com-listas>
 ```python
 inflacoes = [0.5, 0.7, 0.88, 0.67]
 
@@ -641,8 +659,8 @@ for i, valor in enumerate(inflacoes):
     print(f"Mês {i + 1}: {valor}%")
 ```
 
-#### For com dicionários
-
+==== For com dicionários
+<for-com-dicionários>
 ```python
 pibs = {"Brasil": 2.2, "Chile": 3.1, "Peru": 2.5}
 
@@ -655,8 +673,8 @@ for pais, valor in pibs.items():
     print(f"{pais}: {valor}%")
 ```
 
-#### For com range()
-
+==== For com range()
+<for-com-range>
 ```python
 # range(5) → 0, 1, 2, 3, 4
 for i in range(5):
@@ -671,8 +689,8 @@ for ano in range(2000, 2026, 5):
     print(f"Ano {ano}")
 ```
 
-#### Aplicação: juros compostos mês a mês
-
+==== Aplicação: juros compostos mês a mês
+<aplicação-juros-compostos-mês-a-mês>
 ```python
 saldo = 1000
 taxa = 0.01  # 1% ao mês
@@ -684,8 +702,8 @@ for mes in range(1, 13):
     print(f"{mes:3d}   R$ {saldo:>8.2f}")
 ```
 
-### 4.3 Loop while
-
+=== 4.3 Loop while
+<loop-while>
 Repete enquanto a condição for verdadeira.
 
 ```python
@@ -700,7 +718,8 @@ while mes <= 12:
     mes += 1
 ```
 
-**Cuidado com loop infinito:** sempre garanta que a condição se torne False em algum momento.
+#strong[Cuidado com loop infinito:] sempre garanta que a condição se
+torne False em algum momento.
 
 ```python
 # ERRADO — loop infinito
@@ -716,8 +735,8 @@ while saldo < 2000:
 print(f"Leva {anos} anos para dobrar a R$ {saldo:.2f}")
 ```
 
-### 4.4 Break e Continue
-
+=== 4.4 Break e Continue
+<break-e-continue>
 ```python
 # break — interrompe o loop
 for valor in [0.5, 0.7, 1.2, 0.88, 0.67]:
@@ -733,22 +752,27 @@ for valor in [0.5, 0.7, 0.88, 0.67, 0.58, 0.16]:
     print(f"IPCA: {valor}%")
 ```
 
-### Exercícios do Capítulo 4
+=== Exercícios do Capítulo 4
+<exercícios-do-capítulo-4>
++ Dada uma lista de PIBs anuais, classifique cada ano como "Recessão"
+  (\< 0), "Crescimento fraco" (0-2), "Crescimento forte" (\> 2). Use
+  if/elif/else.
 
-1. Dada uma lista de PIBs anuais, classifique cada ano como "Recessão" (< 0), "Crescimento fraco" (0-2), "Crescimento forte" (> 2). Use if/elif/else.
++ Use for para simular R\$ 5.000 a 0,8% ao mês por 36 meses. Mostre o
+  saldo a cada 6 meses.
 
-2. Use for para simular R\$ 5.000 a 0,8% ao mês por 36 meses. Mostre o saldo a cada 6 meses.
++ Com while, descubra quantos meses leva para R\$ 1.000 virar R\$ 2.000
+  a 1,2% ao mês.
 
-3. Com while, descubra quantos meses leva para R\$ 1.000 virar R\$ 2.000 a 1,2% ao mês.
++ Percorra uma lista de inflações e pare ao encontrar a primeira acima
+  de 1%.
 
-4. Percorra uma lista de inflações e pare ao encontrar a primeira acima de 1%.
+#line()
 
----
-
-## Capítulo 5 — Funções
-
-### 5.1 Definindo funções
-
+== Capítulo 5 --- Funções
+<capítulo-5-funções>
+=== 5.1 Definindo funções
+<definindo-funções>
 ```python
 def nome_da_funcao(parametro1, parametro2):
     """Docstring: explica o que a função faz"""
@@ -756,8 +780,8 @@ def nome_da_funcao(parametro1, parametro2):
     return resultado
 ```
 
-### 5.2 Função simples
-
+=== 5.2 Função simples
+<função-simples>
 ```python
 def media_aritmetica(dados):
     """Calcula a média aritmética de uma lista"""
@@ -767,8 +791,8 @@ inflacoes = [0.5, 0.7, 0.88, 0.67, 0.58, 0.16]
 print(f"Média: {media_aritmetica(inflacoes):.2f}%")
 ```
 
-### 5.3 Múltiplos parâmetros
-
+=== 5.3 Múltiplos parâmetros
+<múltiplos-parâmetros>
 ```python
 def juros_compostos(principal, taxa, periodos):
     """Calcula montante final de juros compostos"""
@@ -778,8 +802,8 @@ montante = juros_compostos(1000, 0.01, 12)
 print(f"Montante: R$ {montante:.2f}")
 ```
 
-### 5.4 Parâmetros com valor padrão
-
+=== 5.4 Parâmetros com valor padrão
+<parâmetros-com-valor-padrão>
 ```python
 def pib_per_capita(pib_total, populacao, unidade="mil"):
     """Calcula PIB per capita"""
@@ -796,8 +820,8 @@ pib_per_capita(2e12, 214e6, "unidade")   # explicita
 pib_per_capita(2e12, 214e6, unidade="unidade")  # nomeando
 ```
 
-### 5.5 Retorno múltiplo
-
+=== 5.5 Retorno múltiplo
+<retorno-múltiplo>
 ```python
 def estatisticas(dados):
     """Retorna média, mínimo e máximo"""
@@ -811,8 +835,8 @@ media, min_inf, max_inf = estatisticas(inf)
 print(f"Média: {media:.2f}, Mín: {min_inf:.2f}, Máx: {max_inf:.2f}")
 ```
 
-### 5.6 Função como argumento
-
+=== 5.6 Função como argumento
+<função-como-argumento>
 ```python
 def aplicar_a_cada(lista, funcao):
     """Aplica uma função a cada elemento da lista"""
@@ -825,8 +849,8 @@ resultado = aplicar_a_cada([1, 2, 3], dobrar)
 print(resultado)  # [2, 4, 6]
 ```
 
-### 5.7 Funções lambda (anônimas)
-
+=== 5.7 Funções lambda (anônimas)
+<funções-lambda-anônimas>
 ```python
 # Lambda é uma função sem nome, em uma linha
 quadrado = lambda x: x ** 2
@@ -838,25 +862,28 @@ ordenado = sorted(paises, key=lambda x: x[1])  # ordena pelo PIB
 print(ordenado)  # [("Argentina", -1.8), ("Brasil", 2.2), ("Chile", 3.1)]
 ```
 
-### Exercícios do Capítulo 5
+=== Exercícios do Capítulo 5
+<exercícios-do-capítulo-5>
++ Crie uma função `inflacao_acumulada` que recebe uma lista de taxas
+  mensais e retorna a acumulada.
 
-1. Crie uma função `inflacao_acumulada` que recebe uma lista de taxas mensais e retorna a acumulada.
++ Crie `curva_laffer` que recebe alíquota e retorna arrecadação =
+  alíquota \* base \* (1 - alíquota). Encontre a alíquota ótima.
 
-2. Crie `curva_laffer` que recebe alíquota e retorna arrecadação = alíquota * base * (1 - alíquota). Encontre a alíquota ótima.
++ Crie `classificar_pais` que recebe PIB e inflação e retorna:
 
-3. Crie `classificar_pais` que recebe PIB e inflação e retorna:
-   - "Bom" se PIB > 2 e inflação < 5
-   - "Atenção" se um dos dois está ruim
-   - "Crítico" se ambos estão ruins
+  - "Bom" se PIB \> 2 e inflação \< 5
+  - "Atenção" se um dos dois está ruim
+  - "Crítico" se ambos estão ruins
 
-4. Use `sorted` com lambda para ordenar países por inflação decrescente.
++ Use `sorted` com lambda para ordenar países por inflação decrescente.
 
----
+#line()
 
-## Capítulo 6 — List Comprehension e Ferramentas
-
-### 6.1 List comprehension
-
+== Capítulo 6 --- List Comprehension e Ferramentas
+<capítulo-6-list-comprehension-e-ferramentas>
+=== 6.1 List comprehension
+<list-comprehension>
 Cria listas de forma concisa:
 
 ```python
@@ -881,8 +908,8 @@ quadrados_dict = {x: x ** 2 for x in range(5)}
 # {0: 0, 1: 1, 2: 4, 3: 9, 4: 16}
 ```
 
-### 6.2 zip — juntar listas
-
+=== 6.2 zip --- juntar listas
+<zip-juntar-listas>
 ```python
 paises = ["Brasil", "Chile", "Argentina"]
 pibs = [2.2, 3.1, -1.8]
@@ -894,15 +921,15 @@ for pais, pib in zip(paises, pibs):
 dic = dict(zip(paises, pibs))
 ```
 
-### 6.3 enumerate — índice + valor
-
+=== 6.3 enumerate --- índice + valor
+<enumerate-índice-valor>
 ```python
 for i, valor in enumerate(inflacoes, start=1):
     print(f"Mês {i}: {valor}%")
 ```
 
-### 6.4 map e filter
-
+=== 6.4 map e filter
+<map-e-filter>
 ```python
 # map — aplica função a cada elemento
 def ao_quadrado(x):
@@ -915,8 +942,8 @@ list(map(lambda x: x ** 2, [1, 2, 3]))  # [1, 4, 9]
 list(filter(lambda x: x > 0, [-1, 2, -3, 4]))  # [2, 4]
 ```
 
-### 6.5 any e all
-
+=== 6.5 any e all
+<any-e-all>
 ```python
 # any — True se pelo menos um elemento for True
 # all — True se todos os elementos forem True
@@ -931,35 +958,36 @@ any(p < 0 for p in pibs)  # True
 all(p > 0 for p in pibs)  # False
 ```
 
-### Exercícios do Capítulo 6
+=== Exercícios do Capítulo 6
+<exercícios-do-capítulo-6>
++ Use list comprehension para criar lista de PIBs acima da média.
++ Use `zip` para criar dicionário de paises -\> inflação.
++ Use `enumerate` para exibir "País 1: Brasil (2.2%)".
++ Use `filter` para extrair apenas valores positivos de uma lista.
 
-1. Use list comprehension para criar lista de PIBs acima da média.
-2. Use `zip` para criar dicionário de paises -> inflação.
-3. Use `enumerate` para exibir "País 1: Brasil (2.2%)".
-4. Use `filter` para extrair apenas valores positivos de uma lista.
+#line()
 
----
+= Parte II --- pandas para Análise de Dados
+<parte-ii-pandas-para-análise-de-dados>
+== Capítulo 7 --- Introdução ao pandas
+<capítulo-7-introdução-ao-pandas>
+=== 7.1 O que é pandas?
+<o-que-é-pandas>
+pandas é a biblioteca para manipulação de dados tabulares. Os dois
+objetos principais:
 
-# Parte II — pandas para Análise de Dados
-
-## Capítulo 7 — Introdução ao pandas
-
-### 7.1 O que é pandas?
-
-pandas é a biblioteca para manipulação de dados tabulares. Os dois objetos principais:
-
-- **Series**: uma coluna (vetor com índice)
-- **DataFrame**: tabela completa (várias colunas)
+- #strong[Series]: uma coluna (vetor com índice)
+- #strong[DataFrame]: tabela completa (várias colunas)
 
 ```python
 import pandas as pd
 import numpy as np
 ```
 
-### 7.2 Criando DataFrames
-
-#### A partir de dicionário
-
+=== 7.2 Criando DataFrames
+<criando-dataframes>
+==== A partir de dicionário
+<a-partir-de-dicionário>
 ```python
 dados = {
     "pais": ["Brasil", "Argentina", "Chile", "Colômbia", "Peru"],
@@ -974,6 +1002,7 @@ print(df)
 ```
 
 Saída:
+
 ```
        pais  pib_2024  inflacao  populacao_milhoes           regiao
 0    Brasil       3.2       4.5                214  América do Sul
@@ -983,8 +1012,8 @@ Saída:
 4      Peru       3.0       2.0                 34  América do Sul
 ```
 
-#### A partir de arquivos
-
+==== A partir de arquivos
+<a-partir-de-arquivos>
 ```python
 # CSV
 df = pd.read_csv("dados.csv")
@@ -997,8 +1026,8 @@ df = pd.read_excel("dados.xlsx", sheet_name="Planilha1")
 # df = pd.read_clipboard()
 ```
 
-#### A partir de API do BCB
-
+==== A partir de API do BCB
+<a-partir-de-api-do-bcb>
 ```python
 from bcb import sgs
 
@@ -1007,8 +1036,8 @@ df = sgs.get({"IPCA": 433, "SELIC": 11}, start="2020-01-01")
 print(df.head())
 ```
 
-### 7.3 Explorando o DataFrame
-
+=== 7.3 Explorando o DataFrame
+<explorando-o-dataframe>
 ```python
 df.head()             # primeiras 5 linhas
 df.head(10)           # primeiras 10
@@ -1033,17 +1062,24 @@ df.isnull().sum()     # valores nulos por coluna
 df.duplicated().sum() # linhas duplicadas
 ```
 
-### 7.4 O atributo dtype
-
+=== 7.4 O atributo dtype
+<o-atributo-dtype>
 Cada coluna tem um tipo:
 
-| dtype | Significado |
-|-------|-------------|
-| `int64` | Inteiro |
-| `float64` | Decimal |
-| `object` | Texto (string) |
-| `datetime64` | Data/hora |
-| `bool` | Booleano |
+#figure(
+  align(center)[#table(
+    columns: 2,
+    align: (auto,auto,),
+    table.header([dtype], [Significado],),
+    table.hline(),
+    [`int64`], [Inteiro],
+    [`float64`], [Decimal],
+    [`object`], [Texto (string)],
+    [`datetime64`], [Data/hora],
+    [`bool`], [Booleano],
+  )]
+  , kind: table
+  )
 
 ```python
 # Converter tipos
@@ -1051,19 +1087,19 @@ df["pib_2024"] = df["pib_2024"].astype(float)
 df["data"] = pd.to_datetime(df["data"])
 ```
 
-### Exercícios do Capítulo 7
+=== Exercícios do Capítulo 7
+<exercícios-do-capítulo-7>
++ Crie um DataFrame com 5 países e 4 indicadores.
++ Use `describe()` e interprete as estatísticas.
++ Use `value_counts()` em uma coluna categórica.
++ Verifique se há valores nulos.
 
-1. Crie um DataFrame com 5 países e 4 indicadores.
-2. Use `describe()` e interprete as estatísticas.
-3. Use `value_counts()` em uma coluna categórica.
-4. Verifique se há valores nulos.
+#line()
 
----
-
-## Capítulo 8 — Seleção e Filtragem
-
-### 8.1 Selecionando colunas
-
+== Capítulo 8 --- Seleção e Filtragem
+<capítulo-8-seleção-e-filtragem>
+=== 8.1 Selecionando colunas
+<selecionando-colunas>
 ```python
 # Uma coluna (retorna Series)
 df["pais"]
@@ -1073,8 +1109,8 @@ df.pais  # atalho (funciona se nome não tiver espaço)
 df[["pais", "pib_2024"]]
 ```
 
-### 8.2 Selecionando linhas por posição (iloc)
-
+=== 8.2 Selecionando linhas por posição (iloc)
+<selecionando-linhas-por-posição-iloc>
 ```python
 df.iloc[0]        # primeira linha
 df.iloc[-1]       # última linha
@@ -1086,8 +1122,8 @@ df.iloc[0:3, 0:2] # linhas 0-2, colunas 0-1
 df.iloc[:, 0:2]   # todas linhas, colunas 0-1
 ```
 
-### 8.3 Selecionando linhas por rótulo (loc)
-
+=== 8.3 Selecionando linhas por rótulo (loc)
+<selecionando-linhas-por-rótulo-loc>
 ```python
 # Primeiro: definir índice
 df.index = ["BR", "AR", "CL", "CO", "PE"]
@@ -1099,8 +1135,8 @@ df.loc[:, "pais"]     # todas linhas, coluna "pais"
 df.loc["BR", "pib_2024"]  # valor específico
 ```
 
-### 8.4 Filtrando linhas (a operação MAIS importante)
-
+=== 8.4 Filtrando linhas (a operação MAIS importante)
+<filtrando-linhas-a-operação-mais-importante>
 ```python
 # Sintaxe: df[condicao]
 # A condição é uma Series de True/False
@@ -1130,8 +1166,8 @@ df[~(df["pais"] == "Brasil")]
 df.query("pib_2024 > 0 and inflacao < 10")
 ```
 
-### 8.5 Como funciona por baixo
-
+=== 8.5 Como funciona por baixo
+<como-funciona-por-baixo>
 ```python
 mascara = df["pib_2024"] > 2.0
 print(mascara)
@@ -1144,19 +1180,20 @@ print(mascara)
 df[mascara]  # aplica o filtro
 ```
 
-### Exercícios do Capítulo 8
+=== Exercícios do Capítulo 8
+<exercícios-do-capítulo-8>
++ Selecione apenas países com inflação menor que 5%.
++ Selecione países com PIB positivo E inflação menor que 10%.
++ Use `iloc` para extrair as últimas 3 linhas.
++ Use `query` para filtrar países com PIB \> 2 e população \> 30
+  milhões.
 
-1. Selecione apenas países com inflação menor que 5%.
-2. Selecione países com PIB positivo E inflação menor que 10%.
-3. Use `iloc` para extrair as últimas 3 linhas.
-4. Use `query` para filtrar países com PIB > 2 e população > 30 milhões.
+#line()
 
----
-
-## Capítulo 9 — Transformação de Dados
-
-### 9.1 Criando colunas
-
+== Capítulo 9 --- Transformação de Dados
+<capítulo-9-transformação-de-dados>
+=== 9.1 Criando colunas
+<criando-colunas>
 ```python
 # Aritmética simples
 df["pib_per_capita"] = df["pib_2024"] / df["populacao_milhoes"] * 1000
@@ -1172,8 +1209,8 @@ df = df.assign(
 )
 ```
 
-### 9.2 Apply — aplicando funções
-
+=== 9.2 Apply --- aplicando funções
+<apply-aplicando-funções>
 ```python
 # Apply em coluna
 def classificar_inflacao(x):
@@ -1188,15 +1225,15 @@ df["categoria_inflacao"] = df["inflacao"].apply(classificar_inflacao)
 df[["pib_2024", "inflacao"]].apply(lambda x: x.mean(), axis=1)  # média por linha
 ```
 
-### 9.3 Renomeando colunas
-
+=== 9.3 Renomeando colunas
+<renomeando-colunas>
 ```python
 df.rename(columns={"pib_2024": "crescimento_pib"}, inplace=True)
 df.columns = [c.upper() for c in df.columns]  # tudo maiúsculo
 ```
 
-### 9.4 Removendo colunas e linhas
-
+=== 9.4 Removendo colunas e linhas
+<removendo-colunas-e-linhas>
 ```python
 # Remover colunas
 df.drop("coluna_que_nao_quero", axis=1, inplace=True)
@@ -1207,8 +1244,8 @@ df.drop([0, 2], inplace=True)  # remove índices 0 e 2
 df.drop(df[df["pib_2024"] < 0].index, inplace=True)  # remove recessão
 ```
 
-### 9.5 Valores nulos
-
+=== 9.5 Valores nulos
+<valores-nulos>
 ```python
 # Verificar
 df.isnull().sum()
@@ -1226,8 +1263,8 @@ df["coluna"].fillna(method="ffill") # último valor válido (forward fill)
 df["coluna"].fillna(method="bfill") # próximo valor válido (backward fill)
 ```
 
-### 9.6 Ordenação
-
+=== 9.6 Ordenação
+<ordenação>
 ```python
 # Por valor
 df.sort_values("pib_2024")                      # crescente
@@ -1238,27 +1275,28 @@ df.sort_values(["regiao", "pib_2024"])          # múltiplas colunas
 df.sort_index()
 ```
 
-### 9.7 Amostragem
-
+=== 9.7 Amostragem
+<amostragem>
 ```python
 df.sample(5)             # 5 amostras aleatórias
 df.sample(frac=0.1)      # 10% das linhas
 df.sample(5, random_state=42)  # reprodutível
 ```
 
-### Exercícios do Capítulo 9
+=== Exercícios do Capítulo 9
+<exercícios-do-capítulo-9>
++ Crie coluna `pib_per_capita = pib / populacao * 1000`.
++ Classifique países: "Grande" se população \> 50 milhões, "Médio" se \>
+  20, "Pequeno" caso contrário.
++ Preencha valores nulos com a média da coluna.
++ Ordene o DataFrame por inflação decrescente.
 
-1. Crie coluna `pib_per_capita = pib / populacao * 1000`.
-2. Classifique países: "Grande" se população > 50 milhões, "Médio" se > 20, "Pequeno" caso contrário.
-3. Preencha valores nulos com a média da coluna.
-4. Ordene o DataFrame por inflação decrescente.
+#line()
 
----
-
-## Capítulo 10 — Datas e Séries Temporais
-
-### 10.1 Convertendo para datetime
-
+== Capítulo 10 --- Datas e Séries Temporais
+<capítulo-10-datas-e-séries-temporais>
+=== 10.1 Convertendo para datetime
+<convertendo-para-datetime>
 ```python
 df["data"] = pd.to_datetime(df["data"])
 ```
@@ -1277,8 +1315,8 @@ pd.to_datetime("20240115", format="%Y%m%d")  # formato explícito
 pd.to_datetime(coluna, errors="coerce")
 ```
 
-### 10.2 Extraindo componentes
-
+=== 10.2 Extraindo componentes
+<extraindo-componentes>
 ```python
 df["ano"] = df["data"].dt.year
 df["mes"] = df["data"].dt.month
@@ -1290,8 +1328,8 @@ df["dia_semana"] = df["data"].dt.dayofweek  # 0=segunda, 6=domingo
 df["nome_mes"] = df["data"].dt.month_name("pt_BR")
 ```
 
-### 10.3 Indexando por data
-
+=== 10.3 Indexando por data
+<indexando-por-data>
 ```python
 df.set_index("data", inplace=True)
 df = df.sort_index()  # sempre ordene o índice
@@ -1306,8 +1344,8 @@ df[df.index.year >= 2023]
 df[df.index.month == 12]            # apenas dezembros
 ```
 
-### 10.4 Reamostragem (resample)
-
+=== 10.4 Reamostragem (resample)
+<reamostragem-resample>
 Muda a frequência dos dados.
 
 ```python
@@ -1326,9 +1364,9 @@ df.resample("Y").agg({
 })
 ```
 
-### 10.5 Lag, diferença e variação percentual
-
-**Essenciais para séries temporais.**
+=== 10.5 Lag, diferença e variação percentual
+<lag-diferença-e-variação-percentual>
+#strong[Essenciais para séries temporais.]
 
 ```python
 # Lag (valor do período anterior)
@@ -1349,8 +1387,8 @@ df["pib_mm12"] = df["pib"].rolling(window=12).mean()
 df["pib_vol"] = df["pib"].rolling(window=12).std()
 ```
 
-### 10.6 Aplicação completa
-
+=== 10.6 Aplicação completa
+<aplicação-completa>
 ```python
 from bcb import sgs
 
@@ -1374,20 +1412,22 @@ df["ipca_acum"] *= 100
 print(df.tail(12))
 ```
 
-### Exercícios do Capítulo 10
+=== Exercícios do Capítulo 10
+<exercícios-do-capítulo-10>
++ Baixe SELIC de 2015 a 2026. Calcule média móvel de 6 e 12 meses.
++ Baixe IPCA e calcule inflação acumulada em 12 meses
+  (`.rolling(12).sum()`).
++ Crie coluna com a diferença da SELIC mês a mês.
++ Reamostre IPCA para frequência trimestral com média.
++ Extraia apenas meses de dezembro de todos os anos e calcule a inflação
+  média de dezembro.
 
-1. Baixe SELIC de 2015 a 2026. Calcule média móvel de 6 e 12 meses.
-2. Baixe IPCA e calcule inflação acumulada em 12 meses (`.rolling(12).sum()`).
-3. Crie coluna com a diferença da SELIC mês a mês.
-4. Reamostre IPCA para frequência trimestral com média.
-5. Extraia apenas meses de dezembro de todos os anos e calcule a inflação média de dezembro.
+#line()
 
----
-
-## Capítulo 11 — Agrupamento e Junção de Tabelas
-
-### 11.1 Groupby — tabelas dinâmicas
-
+== Capítulo 11 --- Agrupamento e Junção de Tabelas
+<capítulo-11-agrupamento-e-junção-de-tabelas>
+=== 11.1 Groupby --- tabelas dinâmicas
+<groupby-tabelas-dinâmicas>
 ```python
 # Criando dados para exemplo
 np.random.seed(42)
@@ -1420,8 +1460,8 @@ agrupado = df.groupby("pais").agg(
 )
 ```
 
-### 11.2 Merge — juntando tabelas
-
+=== 11.2 Merge --- juntando tabelas
+<merge-juntando-tabelas>
 Equivalente ao JOIN do SQL ou PROCX do Excel.
 
 ```python
@@ -1457,8 +1497,8 @@ merged = pd.merge(pib_df2, inf_df, left_on="nome_pais", right_on="pais")
 pd.merge(pib_df, inf_df, on=["pais", "ano"])
 ```
 
-### 11.3 Concatenando DataFrames
-
+=== 11.3 Concatenando DataFrames
+<concatenando-dataframes>
 ```python
 # Empilhar verticalmente (mais linhas)
 df1 = pd.DataFrame({"pais": ["A", "B"], "pib": [1, 2]})
@@ -1469,19 +1509,22 @@ pd.concat([df1, df2], ignore_index=True)
 pd.concat([df1, df2], axis=1)
 ```
 
-### Exercícios do Capítulo 11
+=== Exercícios do Capítulo 11
+<exercícios-do-capítulo-11>
++ Crie dois DataFrames (PIB e inflação de 5 países) e faça inner, left,
+  right e outer merge.
++ Use groupby para calcular PIB médio por região (crie uma coluna
+  "regiao").
++ Calcule o desvio padrão do PIB por ano.
++ Junte dados de PIB e inflação por país e ano, depois calcule a
+  correlação.
 
-1. Crie dois DataFrames (PIB e inflação de 5 países) e faça inner, left, right e outer merge.
-2. Use groupby para calcular PIB médio por região (crie uma coluna "regiao").
-3. Calcule o desvio padrão do PIB por ano.
-4. Junte dados de PIB e inflação por país e ano, depois calcule a correlação.
+#line()
 
----
-
-## Capítulo 12 — Acessando Dados Econômicos Reais
-
-### 12.1 BCB SGS (Sistema Gerenciador de Séries Temporais)
-
+== Capítulo 12 --- Acessando Dados Econômicos Reais
+<capítulo-12-acessando-dados-econômicos-reais>
+=== 12.1 BCB SGS (Sistema Gerenciador de Séries Temporais)
+<bcb-sgs-sistema-gerenciador-de-séries-temporais>
 ```python
 from bcb import sgs
 
@@ -1498,12 +1541,11 @@ codigos = {
 dados = sgs.get(codigos, start="2020-01-01")
 ```
 
-Onde encontrar códigos:
-- https://www3.bcb.gov.br/sgspub/
-- Pesquise por nome da série
+Onde encontrar códigos: - https:/\/www3.bcb.gov.br/sgspub/ - Pesquise
+por nome da série
 
-### 12.2 Banco Mundial (WDI)
-
+=== 12.2 Banco Mundial (WDI)
+<banco-mundial-wdi>
 ```python
 # Via pandas_datareader (precisa instalar)
 # pip install pandas_datareader
@@ -1522,42 +1564,42 @@ df = wb.download(country=paises, indicator=indicadores,
                   start=2010, end=2024)
 ```
 
-### 12.3 Ipeadata (dados brasileiros históricos)
-
+=== 12.3 Ipeadata (dados brasileiros históricos)
+<ipeadata-dados-brasileiros-históricos>
 ```python
 # Requer requests + parsing manual
 # Alternativa: usar arquivos do site do Ipeadata
 ```
 
-### 12.4 FMI (IMF Data)
-
+=== 12.4 FMI (IMF Data)
+<fmi-imf-data>
 ```python
 # Via imfpy ou acesso direto ao JSON
 ```
 
-### Exercícios do Capítulo 12
+=== Exercícios do Capítulo 12
+<exercícios-do-capítulo-12>
++ Baixe IPCA, SELIC e PIB mensal do BCB de 2010 a 2026.
++ Crie um DataFrame único com os três.
++ Calcule juro real (SELIC - IPCA acumulado 12m).
++ Salve em CSV com ponto e vírgula e vírgula como decimal.
 
-1. Baixe IPCA, SELIC e PIB mensal do BCB de 2010 a 2026.
-2. Crie um DataFrame único com os três.
-3. Calcule juro real (SELIC - IPCA acumulado 12m).
-4. Salve em CSV com ponto e vírgula e vírgula como decimal.
+#line()
 
----
-
-# Parte III — Visualização de Dados
-
-## Capítulo 13 — matplotlib
-
-### 13.1 Filosofia
-
-matplotlib tem duas APIs:
-- **pyplot** (`plt.plot()`) — rápida, para exploração
-- **OOP** (`fig, ax = plt.subplots()`) — explícita, para gráficos finais
+= Parte III --- Visualização de Dados
+<parte-iii-visualização-de-dados>
+== Capítulo 13 --- matplotlib
+<capítulo-13-matplotlib>
+=== 13.1 Filosofia
+<filosofia>
+matplotlib tem duas APIs: - #strong[pyplot] (`plt.plot()`) --- rápida,
+para exploração - #strong[OOP] (`fig, ax = plt.subplots()`) ---
+explícita, para gráficos finais
 
 Sempre prefira a OOP.
 
-### 13.2 Gráfico de linha
-
+=== 13.2 Gráfico de linha
+<gráfico-de-linha>
 ```python
 import matplotlib.pyplot as plt
 from bcb import sgs
@@ -1572,8 +1614,8 @@ ax.grid(True, alpha=0.3)
 fig.tight_layout()
 ```
 
-### 13.3 Parâmetros do plot
-
+=== 13.3 Parâmetros do plot
+<parâmetros-do-plot>
 ```python
 ax.plot(x, y,
     color="crimson",        # nome, hex (#FF5733), RGB ((1, 0, 0))
@@ -1587,8 +1629,8 @@ ax.plot(x, y,
 )
 ```
 
-### 13.4 Personalização completa
-
+=== 13.4 Personalização completa
+<personalização-completa>
 ```python
 fig, ax = plt.subplots(figsize=(12, 5.5))
 
@@ -1610,8 +1652,8 @@ fig.tight_layout()
 fig.savefig("ipca_final.png", dpi=300, bbox_inches="tight")
 ```
 
-### 13.5 Dois eixos Y
-
+=== 13.5 Dois eixos Y
+<dois-eixos-y>
 ```python
 from bcb import sgs
 
@@ -1634,8 +1676,8 @@ ax1.grid(True, alpha=0.3)
 fig.tight_layout()
 ```
 
-### 13.6 Subplots
-
+=== 13.6 Subplots
+<subplots>
 ```python
 fig, axes = plt.subplots(2, 2, figsize=(14, 8))
 axes = axes.flatten()
@@ -1662,8 +1704,8 @@ for ax in axes:
 fig.tight_layout()
 ```
 
-### 13.7 Fill between
-
+=== 13.7 Fill between
+<fill-between>
 ```python
 fig, ax = plt.subplots(figsize=(12, 5))
 ax.plot(ipca.index, ipca["IPCA"], color="crimson", linewidth=1.5)
@@ -1677,12 +1719,12 @@ ax.legend()
 ax.grid(True, alpha=0.3)
 ```
 
----
+#line()
 
-## Capítulo 14 — seaborn
-
-### 14.1 Por que seaborn
-
+== Capítulo 14 --- seaborn
+<capítulo-14-seaborn>
+=== 14.1 Por que seaborn
+<por-que-seaborn>
 Gráficos estatísticos mais bonitos com menos código.
 
 ```python
@@ -1691,31 +1733,31 @@ import seaborn as sns
 sns.set_theme(style="whitegrid")
 ```
 
-### 14.2 Regplot — scatter + regressão
-
+=== 14.2 Regplot --- scatter + regressão
+<regplot-scatter-regressão>
 ```python
 sns.regplot(data=df, x="educacao", y="pib_per_capita",
             scatter_kws={"alpha": 0.6}, line_kws={"color": "red"})
 ```
 
-### 14.3 Pairplot — correlações de uma vez
-
+=== 14.3 Pairplot --- correlações de uma vez
+<pairplot-correlações-de-uma-vez>
 ```python
 sns.pairplot(df[["pib", "inflacao", "desemprego", "populacao"]])
 ```
 
-### 14.4 Boxplot comparativo
-
+=== 14.4 Boxplot comparativo
+<boxplot-comparativo>
 ```python
 sns.boxplot(data=df, x="regiao", y="pib")
 ```
 
----
+#line()
 
-## Capítulo 15 — Gráficos para Economia
-
-### 15.1 Publication-ready
-
+== Capítulo 15 --- Gráficos para Economia
+<capítulo-15-gráficos-para-economia>
+=== 15.1 Publication-ready
+<publication-ready>
 ```python
 import matplotlib.pyplot as plt
 import matplotlib.ticker as ticker
@@ -1757,21 +1799,21 @@ fig.savefig("publication_ready.png", dpi=300, bbox_inches="tight")
 plt.close()
 ```
 
-### 15.2 Cores seguras para daltônicos
-
+=== 15.2 Cores seguras para daltônicos
+<cores-seguras-para-daltônicos>
 ```python
 cores = ["#0077BB", "#33BBEE", "#EE7733",
          "#CC3311", "#009988", "#BBBBBB"]
 ```
 
----
+#line()
 
-# Parte IV — Econometria
-
-## Capítulo 16 — Regressão Linear
-
-### 16.1 Modelo OLS com statsmodels
-
+= Parte IV --- Econometria
+<parte-iv-econometria>
+== Capítulo 16 --- Regressão Linear
+<capítulo-16-regressão-linear>
+=== 16.1 Modelo OLS com statsmodels
+<modelo-ols-com-statsmodels>
 ```python
 import statsmodels.api as sm
 import numpy as np
@@ -1792,8 +1834,8 @@ modelo = sm.OLS(y, X).fit()
 print(modelo.summary())
 ```
 
-### 16.2 Extraindo resultados
-
+=== 16.2 Extraindo resultados
+<extraindo-resultados>
 ```python
 modelo.params             # [const, renda]
 modelo.pvalues            # p-valores
@@ -1811,8 +1853,8 @@ modelo.fvalue             # estatística F
 modelo.f_pvalue           # p-valor do F
 ```
 
-### 16.3 Regressão múltipla
-
+=== 16.3 Regressão múltipla
+<regressão-múltipla>
 ```python
 # Consumo ~ renda + riqueza + juros
 df["riqueza"] = renda * 3 + np.random.normal(0, 500, len(renda))
@@ -1825,16 +1867,16 @@ modelo = sm.OLS(y, X).fit()
 print(modelo.summary())
 ```
 
-### 16.4 Regressão com fórmula
-
+=== 16.4 Regressão com fórmula
+<regressão-com-fórmula>
 ```python
 import statsmodels.formula.api as smf
 
 modelo = smf.ols("consumo ~ renda + riqueza + juros", data=df).fit()
 ```
 
-### 16.5 Curva de Phillips com dados reais
-
+=== 16.5 Curva de Phillips com dados reais
+<curva-de-phillips-com-dados-reais>
 ```python
 from bcb import sgs
 
@@ -1855,12 +1897,12 @@ print(f"\nCoef. desemprego: {modelo.params['desemprego']:.4f}")
 print(f"P-valor: {modelo.pvalues['desemprego']:.4f}")
 ```
 
----
+#line()
 
-## Capítulo 17 — Diagnóstico e Validação
-
-### 17.1 Normalidade dos resíduos
-
+== Capítulo 17 --- Diagnóstico e Validação
+<capítulo-17-diagnóstico-e-validação>
+=== 17.1 Normalidade dos resíduos
+<normalidade-dos-resíduos>
 ```python
 from scipy import stats
 
@@ -1880,8 +1922,8 @@ fig, ax = plt.subplots(figsize=(6, 6))
 stats.probplot(residuos, dist="norm", plot=ax)
 ```
 
-### 17.2 Heterocedasticidade
-
+=== 17.2 Heterocedasticidade
+<heterocedasticidade>
 ```python
 from statsmodels.stats.diagnostic import het_breuschpagan
 
@@ -1892,8 +1934,8 @@ print(dict(zip(nomes, [round(v, 4) for v in bp])))
 # H0: homocedasticidade. Se p < 0.05, há heterocedasticidade
 ```
 
-### 17.3 Autocorrelação
-
+=== 17.3 Autocorrelação
+<autocorrelação>
 ```python
 from statsmodels.stats.stattools import durbin_watson
 
@@ -1909,8 +1951,8 @@ lb = acorr_ljungbox(residuos, lags=[6, 12, 24])
 print(lb)
 ```
 
-### 17.4 Multicolinearidade (VIF)
-
+=== 17.4 Multicolinearidade (VIF)
+<multicolinearidade-vif>
 ```python
 from statsmodels.stats.outliers_influence import variance_inflation_factor
 
@@ -1924,20 +1966,20 @@ print(vif)
 # VIF > 10 indica multicolinearidade severa
 ```
 
-### 17.5 Erros padrão robustos
-
+=== 17.5 Erros padrão robustos
+<erros-padrão-robustos>
 ```python
 # HC0 = White, HC1 = ajustado por graus de liberdade
 modelo_robusto = modelo.get_robustcov_results(cov_type="HC1")
 print(modelo_robusto.summary())
 ```
 
----
+#line()
 
-## Capítulo 18 — Séries Temporais
-
-### 18.1 Estacionariedade (ADF)
-
+== Capítulo 18 --- Séries Temporais
+<capítulo-18-séries-temporais>
+=== 18.1 Estacionariedade (ADF)
+<estacionariedade-adf>
 ```python
 from statsmodels.tsa.stattools import adfuller
 
@@ -1952,8 +1994,8 @@ else:
     print("Série não estacionária — precisa diferenciar")
 ```
 
-### 18.2 ACF e PACF
-
+=== 18.2 ACF e PACF
+<acf-e-pacf>
 ```python
 from statsmodels.graphics.tsaplots import plot_acf, plot_pacf
 
@@ -1962,8 +2004,8 @@ plot_acf(serie, lags=24, ax=ax1)
 plot_pacf(serie, lags=24, ax=ax2)
 ```
 
-### 18.3 ARIMA
-
+=== 18.3 ARIMA
+<arima>
 ```python
 from statsmodels.tsa.arima.model import ARIMA
 
@@ -1976,8 +2018,8 @@ forecast = resultado.forecast(steps=12)
 conf_int = resultado.get_forecast(12).conf_int()
 ```
 
-### 18.4 SARIMA (sazonal)
-
+=== 18.4 SARIMA (sazonal)
+<sarima-sazonal>
 ```python
 from statsmodels.tsa.statespace.sarimax import SARIMAX
 
@@ -1990,8 +2032,8 @@ modelo = SARIMAX(serie,
 resultado = modelo.fit(disp=False)
 ```
 
-### 18.5 Seleção automática de ordem
-
+=== 18.5 Seleção automática de ordem
+<seleção-automática-de-ordem>
 ```python
 import itertools
 
@@ -2017,8 +2059,8 @@ for pd_ in p:
 print(f"Melhor ARIMA{best_order}, AIC={best_aic:.2f}")
 ```
 
-### 18.6 Cointegração
-
+=== 18.6 Cointegração
+<cointegração>
 ```python
 from statsmodels.tsa.stattools import coint
 
@@ -2030,8 +2072,8 @@ if pvalue < 0.05:
     print("Séries são cointegradas (relação de longo prazo)")
 ```
 
-### 18.7 Modelo VAR
-
+=== 18.7 Modelo VAR
+<modelo-var>
 ```python
 from statsmodels.tsa.api import VAR
 
@@ -2047,8 +2089,8 @@ irf.plot()
 forecast = resultado.forecast(df.values[-resultado.k_ar:], steps=6)
 ```
 
-### 18.8 Causalidade de Granger
-
+=== 18.8 Causalidade de Granger
+<causalidade-de-granger>
 ```python
 from statsmodels.tsa.stattools import grangercausalitytests
 
@@ -2058,24 +2100,25 @@ for lag in range(1, 7):
     print(f"Lag {lag}: p={p:.4f} {'Causa' if p < 0.05 else 'Não causa'}")
 ```
 
----
+#line()
 
-## Capítulo 19 — Dados de Painel
+== Capítulo 19 --- Dados de Painel
+<capítulo-19-dados-de-painel>
+=== 19.1 Estrutura de painel
+<estrutura-de-painel>
+Dados que acompanham as mesmas unidades (países, estados) ao longo do
+tempo.
 
-### 19.1 Estrutura de painel
-
-Dados que acompanham as mesmas unidades (países, estados) ao longo do tempo.
-
-### 19.2 Pooled OLS
-
+=== 19.2 Pooled OLS
+<pooled-ols>
 ```python
 # Ignora estrutura de painel
 X = sm.add_constant(df[["x1", "x2"]])
 modelo = sm.OLS(y, X).fit()
 ```
 
-### 19.3 Efeitos Fixos
-
+=== 19.3 Efeitos Fixos
+<efeitos-fixos>
 ```python
 from linearmodels.panel import PanelOLS
 
@@ -2087,16 +2130,16 @@ modelo = PanelOLS.from_formula(
 ).fit()
 ```
 
-### 19.4 Efeitos Aleatórios
-
+=== 19.4 Efeitos Aleatórios
+<efeitos-aleatórios>
 ```python
 from linearmodels.panel import RandomEffects
 
 modelo = RandomEffects.from_formula("y ~ x1 + x2", data=df).fit()
 ```
 
-### 19.5 Teste de Hausman
-
+=== 19.5 Teste de Hausman
+<teste-de-hausman>
 ```python
 from linearmodels.panel import compare
 
@@ -2108,12 +2151,12 @@ print(compare({"FE": fe, "RE": re}))
 # Se p > 0.05: usar efeitos aleatórios
 ```
 
----
+#line()
 
-# Parte V — Projetos
-
-## Capítulo 20 — Projeto: Análise Macroeconômica do Brasil
-
+= Parte V --- Projetos
+<parte-v-projetos>
+== Capítulo 20 --- Projeto: Análise Macroeconômica do Brasil
+<capítulo-20-projeto-análise-macroeconômica-do-brasil>
 Script completo que baixa dados do BCB, processa e gera relatório.
 
 ```python
@@ -2168,8 +2211,8 @@ fig.tight_layout()
 fig.savefig("dashboard.png", dpi=200)
 ```
 
-## Capítulo 21 — Projeto: Previsão de Inflação com SARIMA
-
+== Capítulo 21 --- Projeto: Previsão de Inflação com SARIMA
+<capítulo-21-projeto-previsão-de-inflação-com-sarima>
 ```python
 from bcb import sgs
 import matplotlib.pyplot as plt
@@ -2208,8 +2251,8 @@ fig.tight_layout()
 fig.savefig("previsao.png", dpi=150)
 ```
 
-## Capítulo 22 — Projeto Final: Estrutura de TCC
-
+== Capítulo 22 --- Projeto Final: Estrutura de TCC
+<capítulo-22-projeto-final-estrutura-de-tcc>
 ```
 meu_tcc/
 ├── dados/              # Dados brutos (imutáveis)
@@ -2226,77 +2269,104 @@ meu_tcc/
 └── README.md
 ```
 
----
+#line()
 
-# Apêndices
+= Apêndices
+<apêndices>
+== Apêndice A --- Guia rápido de consulta
+<apêndice-a-guia-rápido-de-consulta>
+#figure(
+  align(center)[#table(
+    columns: 2,
+    align: (auto,auto,),
+    table.header([Operação], [Código],),
+    table.hline(),
+    [Abrir CSV], [`pd.read_csv("arquivo.csv")`],
+    [Filtrar], [`df[df["col"] > 0]`],
+    [Agrupar], [`df.groupby("x")["y"].mean()`],
+    [Juntar], [`pd.merge(a, b, on="x")`],
+    [Lag], [`df["x"].shift(1)`],
+    [Média móvel], [`df["x"].rolling(3).mean()`],
+    [Regressão], [`sm.OLS(y, X).fit()`],
+    [ARIMA], [`ARIMA(y, order=(p,d,q)).fit()`],
+    [ADF], [`adfuller(serie)`],
+    [Gráfico], [`ax.plot(x, y)`],
+  )]
+  , kind: table
+  )
 
-## Apêndice A — Guia rápido de consulta
+== Apêndice B --- Códigos BCB SGS mais usados
+<apêndice-b-códigos-bcb-sgs-mais-usados>
+#figure(
+  align(center)[#table(
+    columns: 2,
+    align: (auto,auto,),
+    table.header([Série], [Código],),
+    table.hline(),
+    [IPCA (mensal)], [433],
+    [IPCA (acum. 12m)], [13522],
+    [SELIC (meta)], [11],
+    [SELIC (efetiva)], [1178],
+    [Câmbio (USD)], [1],
+    [Desemprego], [24369],
+    [PIB mensal], [4380],
+    [Produção industrial], [21855],
+    [Dívida líquida (%PIB)], [4538],
+    [Resultado primário], [4501],
+  )]
+  , kind: table
+  )
 
-| Operação | Código |
-|----------|--------|
-| Abrir CSV | `pd.read_csv("arquivo.csv")` |
-| Filtrar | `df[df["col"] > 0]` |
-| Agrupar | `df.groupby("x")["y"].mean()` |
-| Juntar | `pd.merge(a, b, on="x")` |
-| Lag | `df["x"].shift(1)` |
-| Média móvel | `df["x"].rolling(3).mean()` |
-| Regressão | `sm.OLS(y, X).fit()` |
-| ARIMA | `ARIMA(y, order=(p,d,q)).fit()` |
-| ADF | `adfuller(serie)` |
-| Gráfico | `ax.plot(x, y)` |
+== Apêndice C --- Soluções dos Exercícios
+<apêndice-c-soluções-dos-exercícios>
+=== Capítulo 2
+<capítulo-2>
++ `5000 * (1 + 0.015) ** 24`
++ `1000 * 5.45`
++ False, True, True
++ `meta_descumprida = inflacao > 3.5`
 
-## Apêndice B — Códigos BCB SGS mais usados
+=== Capítulo 3
+<capítulo-3>
++
 
-| Série | Código |
-|-------|--------|
-| IPCA (mensal) | 433 |
-| IPCA (acum. 12m) | 13522 |
-| SELIC (meta) | 11 |
-| SELIC (efetiva) | 1178 |
-| Câmbio (USD) | 1 |
-| Desemprego | 24369 |
-| PIB mensal | 4380 |
-| Produção industrial | 21855 |
-| Dívida líquida (%PIB) | 4538 |
-| Resultado primário | 4501 |
-
-## Apêndice C — Soluções dos Exercícios
-
-### Capítulo 2
-
-1. `5000 * (1 + 0.015) ** 24`
-2. `1000 * 5.45`
-3. False, True, True
-4. `meta_descumprida = inflacao > 3.5`
-
-### Capítulo 3
-
-1. 
 ```python
 pib = [2.2, -1.8, 3.1, 2.8, -0.5]
 positivos = [x for x in pib if x > 0]
 print(len(positivos), sum(positivos) / len(positivos))
 ```
 
-2. 
+#block[
+#set enum(numbering: "1.", start: 2)
++
+]
+
 ```python
 paises = {"Brasil": {"inflacao": 4.5}, "Argentina": {"inflacao": 98.0}}
 print(abs(paises["Brasil"]["inflacao"] - paises["Argentina"]["inflacao"]))
 ```
 
-3. 
+#block[
+#set enum(numbering: "1.", start: 3)
++
+]
+
 ```python
 ipca = [0.5, 0.7, 0.88, 0.67, 0.58, 0.16]
 print(ipca[:3], ipca[-3:], ipca[::-1])
 ```
 
-4. EUR é a maior. 3 moedas abaixo de R\$ 1. `moedas["JPY"] = 0.036`
+#block[
+#set enum(numbering: "1.", start: 4)
++ EUR é a maior. 3 moedas abaixo de R\$ 1. `moedas["JPY"] = 0.036`
+]
 
-### Capítulo 4
+=== Capítulo 4
+<capítulo-4>
++ Loop com if/elif/else.
 
-1. Loop com if/elif/else.
++
 
-2. 
 ```python
 saldo = 5000
 for mes in range(1, 37):
@@ -2305,7 +2375,11 @@ for mes in range(1, 37):
         print(f"Mês {mes}: R$ {saldo:.2f}")
 ```
 
-3. 
+#block[
+#set enum(numbering: "1.", start: 3)
++
+]
+
 ```python
 saldo = 1000
 meses = 0
@@ -2315,7 +2389,11 @@ while saldo < 2000:
 print(meses)
 ```
 
-4. 
+#block[
+#set enum(numbering: "1.", start: 4)
++
+]
+
 ```python
 for v in [0.5, 0.7, 0.88, 0.67, 0.58, 0.16]:
     if v > 1:
@@ -2323,9 +2401,10 @@ for v in [0.5, 0.7, 0.88, 0.67, 0.58, 0.16]:
         break
 ```
 
-### Capítulo 5
+=== Capítulo 5
+<capítulo-5>
++
 
-1. 
 ```python
 def inflacao_acumulada(taxas):
     acum = 1
@@ -2334,14 +2413,22 @@ def inflacao_acumulada(taxas):
     return (acum - 1) * 100
 ```
 
-2. 
+#block[
+#set enum(numbering: "1.", start: 2)
++
+]
+
 ```python
 def curva_laffer(taxa, base=1000):
     return taxa * base * (1 - taxa)
 # Ótimo: taxa = 0.5
 ```
 
-3. 
+#block[
+#set enum(numbering: "1.", start: 3)
++
+]
+
 ```python
 def classificar(pib, inf):
     if pib > 2 and inf < 5: return "Bom"
@@ -2349,11 +2436,18 @@ def classificar(pib, inf):
     else: return "Atenção"
 ```
 
-4. 
+#block[
+#set enum(numbering: "1.", start: 4)
++
+]
+
 ```python
 sorted(paises, key=lambda x: x[1], reverse=True)
 ```
 
----
+#line()
 
-> Fim do livro. Lembre-se: teoria sem prática é inútil. Abra o terminal e execute cada exemplo.
+#quote(block: true)[
+Fim do livro. Lembre-se: teoria sem prática é inútil. Abra o terminal e
+execute cada exemplo.
+]
