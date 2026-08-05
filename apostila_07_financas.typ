@@ -1569,8 +1569,256 @@ $ E_t / E_(t - 1) = frac(1 + pi_(upright("doméstica")), 1 + pi_(upright("estran
 
 #line()
 
-== Capítulo 13 --- Tabela Resumo de Fórmulas
-<capítulo-13-tabela-resumo-de-fórmulas>
+== Capítulo 13 --- Exercícios Resolvidos
+<capítulo-13-exercícios-resolvidos>
+#strong[E1.] Uma ação tem beta de 1,3. A taxa livre de risco (Selic)
+está em 10,5% a.a. e o retorno esperado da carteira de mercado
+(Ibovespa) é de 16% a.a. Calcule o custo de capital próprio (Ke) pelo
+CAPM.
+
+$ upright("Ke") = R_f + beta times\(R_m - R_f\)= 0\,105 + 1\,3 times\(0\,16 - 0\,105\) $
+
+```python
+rf, beta, rm = 0.105, 1.3, 0.16
+premio = rm - rf
+ke = rf + beta * premio
+print(f"Prêmio de risco de mercado: {premio*100:.2f}%")
+print(f"Ke (CAPM): {ke*100:.2f}%")
+```
+
+```
+Prêmio de risco de mercado: 5.50%
+Ke (CAPM): 17.65%
+```
+
+#line()
+
+#strong[E2.] Uma empresa tem valor de mercado do capital próprio de R\$
+180 milhões e dívida de R\$ 120 milhões. O custo de capital próprio (Ke)
+é 17,65% (resultado de E1), o custo bruto da dívida (Kd) é 11,5% a.a. e
+a alíquota de IR é 34%. Calcule o WACC.
+
+$ upright("WACC") = E / V times upright("Ke") + D / V times upright("Kd") times\(1 - upright("IR")\) $
+
+```python
+e, d = 180, 120
+ke, kd_bruto, ir = 0.1765, 0.115, 0.34
+v = e + d
+kd_liq = kd_bruto * (1 - ir)
+wacc_ = (e / v) * ke + (d / v) * kd_liq
+print(f"Peso PL: {e/v*100:.1f}% | Peso Dívida: {d/v*100:.1f}%")
+print(f"Kd líquido: {kd_liq*100:.2f}%")
+print(f"WACC: {wacc_*100:.2f}%")
+```
+
+```
+Peso PL: 60.0% | Peso Dívida: 40.0%
+Kd líquido: 7.59%
+WACC: 13.63%
+```
+
+#line()
+
+#strong[E3.] Uma empresa projeta os seguintes fluxos de caixa livre
+(FCF) para os próximos 5 anos: R\$ 80, R\$ 92, R\$ 105, R\$ 118, R\$ 130
+milhões. A partir do ano 5, o crescimento perpétuo (g) esperado é de 3%
+a.a. O WACC é 13,63% (resultado de E2). A empresa tem R\$ 250 milhões de
+dívida e R\$ 60 milhões de caixa. Calcule o Enterprise Value e o Equity
+Value.
+
+$ upright("EV") = sum_(t = 1)^5 frac(upright("FCF")_t, \(1 + upright("WACC")\)^t) + frac(upright("VT"), \(1 + upright("WACC")\)^5)\,quad upright("VT") = frac(upright("FCF")_5 times\(1 + g\), upright("WACC") - g) $
+
+```python
+def valuation_fcd(fcfs, wacc, g, divida, caixa):
+    n = len(fcfs)
+    vp_fcf = sum(fcf / (1 + wacc) ** (t + 1) for t, fcf in enumerate(fcfs))
+    vt = fcfs[-1] * (1 + g) / (wacc - g)
+    vp_vt = vt / (1 + wacc) ** n
+    ev = vp_fcf + vp_vt
+    equity_value = ev - divida + caixa
+    return {'VP_FCFs': vp_fcf, 'VP_VT': vp_vt, 'EV': ev, 'Equity_Value': equity_value}
+
+fcfs = [80, 92, 105, 118, 130]
+wacc, g, divida, caixa = 0.1363, 0.03, 250, 60
+r = valuation_fcd(fcfs, wacc, g, divida, caixa)
+for k, v in r.items():
+    print(f"{k:12s}: R\${v:,.2f} milhões")
+```
+
+```
+VP_FCFs     : R$343.99 milhões
+VP_VT       : R$647.27 milhões
+EV          : R$991.26 milhões
+Equity_Value: R$801.26 milhões
+```
+
+#line()
+
+#strong[E4.] O balanço de uma empresa apresenta: Ativo Circulante = R\$
+12.000 mil, Passivo Circulante = R\$ 7.500 mil, Estoques = R\$ 3.200
+mil, Disponível (caixa) = R\$ 1.500 mil. Calcule a Liquidez Corrente, a
+Liquidez Seca e a Liquidez Imediata, e diga se a empresa tem folga de
+curto prazo.
+
+$ upright("LC") = upright("AC") / upright("PC")\,quad upright("LS") = frac(upright("AC") - upright("Estoques"), upright("PC"))\,quad upright("LI") = upright("Disponível") / upright("PC") $
+
+```python
+ac, pc, estoques, disponivel = 12000, 7500, 3200, 1500
+lc = ac / pc
+ls = (ac - estoques) / pc
+li = disponivel / pc
+
+print(f"Liquidez Corrente: {lc:.2f}")
+print(f"Liquidez Seca:     {ls:.2f}")
+print(f"Liquidez Imediata: {li:.2f}")
+print("Diagnóstico:", "folga de curto prazo (LC > 1,5)" if lc > 1.5 else "atenção: LC abaixo do ideal")
+```
+
+```
+Liquidez Corrente: 1.60
+Liquidez Seca:     1.17
+Liquidez Imediata: 0.20
+Diagnóstico: folga de curto prazo (LC > 1,5)
+```
+
+#line()
+
+#strong[E5.] Uma empresa teve Lucro Líquido de R\$ 45 milhões, Receita
+de R\$ 600 milhões, Ativo Total de R\$ 500 milhões e Patrimônio Líquido
+de R\$ 200 milhões. Decomponha o ROE pelo modelo DuPont (margem líquida
+× giro do ativo × alavancagem financeira) e identifique a principal
+alavanca do retorno.
+
+$ upright("ROE") = underbrace(upright("LL") / upright("Receita"), upright("Margem")) times underbrace(upright("Receita") / upright("Ativo"), upright("Giro")) times underbrace(upright("Ativo") / upright("PL"), upright("Alavancagem")) $
+
+```python
+def dupont(ll, receita, ativo, pl):
+    margem = ll / receita
+    giro = receita / ativo
+    alavancagem = ativo / pl
+    roe = margem * giro * alavancagem
+    return margem, giro, alavancagem, roe
+
+ll, receita, ativo, pl = 45, 600, 500, 200
+margem, giro, alav, roe = dupont(ll, receita, ativo, pl)
+print(f"Margem Líquida:         {margem*100:.2f}%")
+print(f"Giro do Ativo:          {giro:.2f}x")
+print(f"Alavancagem Financeira: {alav:.2f}x")
+print(f"ROE:                    {roe*100:.2f}%")
+```
+
+```
+Margem Líquida:         7.50%
+Giro do Ativo:          1.20x
+Alavancagem Financeira: 2.50x
+ROE:                    22.50%
+```
+
+A alavancagem financeira (2,50x) é a maior contribuidora isolada em
+magnitude, mas o giro do ativo (1,20x) já é razoável; a margem (7,5%) é
+o ponto mais baixo relativo --- um aumento nela teria o maior impacto
+marginal proporcional no ROE.
+
+#line()
+
+#strong[E6.] Uma empresa não alavancada (100% capital próprio) vale R\$
+1.000 milhões e tem custo de capital próprio (Ke\_U) de 15%. Ela avalia
+captar R\$ 400 milhões em dívida a um Kd de 10% a.a., com alíquota de IR
+de 34%. Calcule (a) o valor da empresa alavancada pelo M&M com impostos
+e (b) o novo Ke pela Proposição II de M&M (sem impostos, para efeito
+didático de comparação).
+
+$ V_L = V_U + D times upright("IR") #h(2em) upright("Ke") = upright("Ke")_U +\(upright("Ke")_U - upright("Kd")\)times D / E $
+
+```python
+vu, d, kd, ir, ke_u = 1000, 400, 0.10, 0.34, 0.15
+
+beneficio_fiscal = d * ir
+vl = vu + beneficio_fiscal
+print(f"(a) Benefício fiscal: R\${beneficio_fiscal:.2f} milhões")
+print(f"(a) Valor da empresa alavancada (VL): R\${vl:.2f} milhões")
+
+e = vl - d  # capital próprio remanescente após alavancagem
+ke = ke_u + (ke_u - kd) * (d / e)
+print(f"(b) Ke após alavancagem: {ke*100:.2f}%")
+```
+
+```
+(a) Benefício fiscal: R$136.00 milhões
+(a) Valor da empresa alavancada (VL): R$1136.00 milhões
+(b) Ke após alavancagem: 17.71%
+```
+
+#line()
+
+#strong[E7.] Uma empresa distribuiu R\$ 90 milhões em dividendos sobre
+um lucro líquido de R\$ 250 milhões, com 50 milhões de ações em
+circulação, cotadas a R\$ 12,00. Calcule o LPA, o DPA, o Pay-out e o
+Dividend Yield. Em seguida, supondo crescimento perpétuo dos dividendos
+de 4% a.a., estime o Ke implícito pelo Modelo de Gordon.
+
+$ upright("Pay-out") = upright("Dividendos") / upright("LL") #h(2em) upright("DY") = upright("DPA") / P_0 #h(2em) upright("Ke") = D_1 / P_0 + g $
+
+```python
+ll, dividendos, num_acoes, preco, g = 250, 90, 50, 12.00, 0.04
+
+lpa = ll / num_acoes
+dpa = dividendos / num_acoes
+payout = dividendos / ll
+dy = dpa / preco
+
+d1 = dpa * (1 + g)
+ke_gordon = d1 / preco + g
+
+print(f"LPA:            R\${lpa:.2f}")
+print(f"DPA:            R\${dpa:.2f}")
+print(f"Pay-out:        {payout*100:.1f}%")
+print(f"Dividend Yield: {dy*100:.2f}%")
+print(f"Ke (Gordon):    {ke_gordon*100:.2f}%")
+```
+
+```
+LPA:            R$5.00
+DPA:            R$1.80
+Pay-out:        36.0%
+Dividend Yield: 15.00%
+Ke (Gordon):    19.60%
+```
+
+#line()
+
+#strong[E8.] Duas empresas, A (valor isolado R\$ 600 milhões) e B (valor
+isolado R\$ 250 milhões), avaliam uma fusão. Estima-se que a empresa
+combinada AB valeria R\$ 950 milhões devido a sinergias operacionais e
+tributárias. A acionistas de B será pago um prêmio de R\$ 40 milhões
+sobre o valor isolado de B. Calcule a sinergia total e o valor líquido
+criado para os acionistas de A.
+
+$ upright("Sinergia") = V\(upright("AB")\)-\[V\(A\)+ V\(B\)\]#h(2em) upright("Valor líquido para A") = upright("Sinergia") - upright("Prêmio") $
+
+```python
+v_a, v_b, v_ab, premio = 600, 250, 950, 40
+
+sinergia = v_ab - (v_a + v_b)
+valor_liquido_a = sinergia - premio
+
+print(f"Sinergia total: R\${sinergia:.2f} milhões")
+print(f"Prêmio pago aos acionistas de B: R\${premio:.2f} milhões")
+print(f"Valor líquido para acionistas de A: R\${valor_liquido_a:.2f} milhões")
+print("Decisão:", "fusão CRIA valor para A" if valor_liquido_a > 0 else "fusão DESTRÓI valor para A")
+```
+
+```
+Sinergia total: R$100.00 milhões
+Prêmio pago aos acionistas de B: R$40.00 milhões
+Valor líquido para acionistas de A: R$60.00 milhões
+Decisão: fusão CRIA valor para A
+```
+
+#line()
+
+== Capítulo 14 --- Tabela Resumo de Fórmulas
+<capítulo-14-tabela-resumo-de-fórmulas>
 #figure(
   align(center)[#table(
     columns: (41.67%, 37.5%, 20.83%),
@@ -1625,8 +1873,8 @@ $ E_t / E_(t - 1) = frac(1 + pi_(upright("doméstica")), 1 + pi_(upright("estran
 
 #line()
 
-== Capítulo 14 --- Glossário
-<capítulo-14-glossário>
+== Capítulo 15 --- Glossário
+<capítulo-15-glossário>
 #figure(
   align(center)[#table(
     columns: (38.89%, 61.11%),
@@ -1671,3 +1919,380 @@ $ E_t / E_(t - 1) = frac(1 + pi_(upright("doméstica")), 1 + pi_(upright("estran
   )]
   , kind: table
   )
+
+#line()
+
+== Capítulo 16 --- Exercícios para Executar (na mão)
+<capítulo-16-exercícios-para-executar-na-mão>
+Estes exercícios não exigem computador: o objetivo é treinar o
+raciocínio financeiro e a interpretação de indicadores antes de
+automatizá-los em código. Resolva no papel ou na calculadora. #strong[As
+soluções não estão neste documento] --- quando terminar, peça para eu
+conferir suas respostas.
+
+=== Exercício 1 --- CAPM na mão
+<exercício-1-capm-na-mão>
+Uma ação tem beta de 0,85. A Selic (Rf) está em 11% a.a. e o retorno
+esperado do Ibovespa é 15,5% a.a. Calcule, sem código, o custo de
+capital próprio (Ke) pelo CAPM. Em seguida, refaça o cálculo supondo que
+o beta sobe para 1,4 (a empresa se tornou mais alavancada) e compare os
+dois resultados.
+
+=== Exercício 2 --- WACC com dados incompletos
+<exercício-2-wacc-com-dados-incompletos>
+Uma empresa tem valor de mercado do capital próprio de R\$ 240 milhões.
+Sua dívida representa 30% do valor total da empresa (V = E + D). O Ke é
+18% e o Kd bruto é 12%, com alíquota de IR de 34%. Calcule o valor da
+dívida (D) e o WACC, mostrando cada passo do cálculo.
+
+=== Exercício 3 --- Interpretação de índice de liquidez
+<exercício-3-interpretação-de-índice-de-liquidez>
+Uma empresa apresenta Liquidez Corrente = 0,85, Liquidez Seca = 0,40 e
+Liquidez Imediata = 0,05. Sem calcular nada, #strong[interprete] esses
+três números: o que eles revelam sobre a composição do ativo circulante
+da empresa (peso de estoques vs.~caixa) e sobre o risco de insolvência
+de curto prazo? Que pergunta você faria ao CFO da empresa antes de tirar
+conclusões?
+
+=== Exercício 4 --- Decisão de estrutura de capital (cenário)
+<exercício-4-decisão-de-estrutura-de-capital-cenário>
+Uma empresa de tecnologia, com fluxo de caixa muito volátil e poucos
+ativos tangíveis para dar em garantia, está avaliando emitir R\$ 200
+milhões em dívida para financiar expansão, elevando sua relação
+Dívida/PL de 0,2 para 1,5. Usando os conceitos de Trade-off Theory e
+Pecking Order Theory (Capítulo 6), argumente se essa decisão parece
+prudente. Que riscos específicos (além do WACC) essa empresa passaria a
+correr que uma indústria madura e com ativos tangíveis não correria no
+mesmo nível de alavancagem?
+
+=== Exercício 5 --- DuPont: qual alavanca puxou o ROE?
+<exercício-5-dupont-qual-alavanca-puxou-o-roe>
+Uma empresa teve ROE de 8% no Ano 1 (Margem 4%, Giro 1,0x, Alavancagem
+2,0x) e ROE de 14% no Ano 2 (Margem 3,5%, Giro 1,0x, Alavancagem 4,0x).
+Sem calcular nada além do que já está dado, explique #strong[qual
+alavanca] foi responsável pelo aumento do ROE e se esse crescimento do
+retorno é, na sua avaliação, uma boa notícia para o acionista (considere
+o risco).
+
+=== Exercício 6 --- Valor Terminal na mão
+<exercício-6-valor-terminal-na-mão>
+Uma empresa gera FCF de R\$ 50 milhões no último ano projetado. O WACC é
+14% e o crescimento perpétuo esperado (g) é 2,5% a.a. Calcule o Valor
+Terminal (VT) usando a fórmula de Gordon. Depois, refaça com g = 5% e
+compare os dois resultados --- por que pequenas mudanças em g têm um
+efeito tão grande no VT quando g se aproxima do WACC?
+
+=== Exercício 7 --- Política de dividendos: qual teoria se aplica?
+<exercício-7-política-de-dividendos-qual-teoria-se-aplica>
+Uma empresa madura, com poucas oportunidades de crescimento, anuncia
+aumento do pay-out de 30% para 70% do lucro líquido, e as ações sobem 8%
+no anúncio. Outra empresa, em fase de forte expansão, anuncia corte do
+pay-out de 40% para 10% para reinvestir na abertura de novas unidades, e
+as ações também sobem. Explique, usando as teorias do Capítulo 7
+(Irrelevância de M&M, Pássaro na Mão de Gordon, Efeito Clientela), por
+que reações de mercado tão diferentes (aumentar dividendo vs.~cortar
+dividendo) podem ambas ser positivas.
+
+=== Exercício 8 --- Sinergia de M&A: vale a pena pagar o prêmio?
+<exercício-8-sinergia-de-ma-vale-a-pena-pagar-o-prêmio>
+A Empresa X (valor isolado R\$ 800 milhões) quer adquirir a Empresa Y
+(valor isolado R\$ 300 milhões). A diretoria de X estima sinergias de
+R\$ 120 milhões, mas o banco de investimento sugere pagar um prêmio de
+R\$ 150 milhões aos acionistas de Y para fechar o negócio. Calcule na
+mão se a aquisição cria ou destrói valor para os acionistas de X, e
+explique o que aconteceria com a decisão se as sinergias estimadas
+fossem superestimadas em 30% (um risco comum em processos de M&A).
+
+#line()
+
+== Capítulo 17 --- Exercícios para Executar (em código)
+<capítulo-17-exercícios-para-executar-em-código>
+Implemente e execute cada um no seu editor. #strong[As soluções não
+estão neste documento] --- o objetivo é você rodar de verdade e ver o
+resultado; quando terminar, peça para eu revisar seu código.
+
+=== Exercício 1 --- Calculadora de métricas VBM
+<exercício-1-calculadora-de-métricas-vbm>
+Crie uma função
+`metricas_vbm(nopat, capital_investido, wacc, valor_mercado, ll, pl)`
+(retome o Capítulo 1) que retorna EVA, MVA, ROIC e ROE, e imprima uma
+mensagem indicando se a empresa está "criando valor" ou "destruindo
+valor" (compare ROIC com WACC).
+
+```python
+dados = dict(nopat=620, capital_investido=4500, wacc=0.115, valor_mercado=7200, ll=410, pl=3200)
+```
+
+=== Exercício 2 --- Retorno esperado e risco a partir de cenários
+<exercício-2-retorno-esperado-e-risco-a-partir-de-cenários>
+Usando a lista de cenários abaixo (probabilidade, retorno), calcule o
+retorno esperado E(R), o desvio padrão e a relação retorno/risco.
+
+```python
+cenarios = [
+    (0.10, 0.30), (0.25, 0.16), (0.35, 0.09), (0.20, -0.02), (0.10, -0.18)
+]
+```
+
+=== Exercício 3 --- Risco de carteira com matriz de covariância
+<exercício-3-risco-de-carteira-com-matriz-de-covariância>
+Dada a matriz de covariância e os pesos abaixo, calcule o risco (desvio
+padrão) da carteira usando `numpy` (produto
+`pesos @ cov_matrix @ pesos`).
+
+```python
+import numpy as np
+pesos = np.array([0.4, 0.3, 0.2, 0.1])
+cov_matrix = np.array([
+    [0.05, 0.010, 0.006, 0.012],
+    [0.010, 0.08, 0.008, 0.020],
+    [0.006, 0.008, 0.025, 0.007],
+    [0.012, 0.020, 0.007, 0.06]
+])
+```
+
+=== Exercício 4 --- Tabela de CAPM para uma carteira de ações
+<exercício-4-tabela-de-capm-para-uma-carteira-de-ações>
+Dado o dicionário abaixo com betas de ações, calcule o Ke (CAPM) de cada
+uma e imprima uma tabela ordenada da menor para a maior exigência de
+retorno.
+
+```python
+betas = {"VALE3": 0.95, "PETR4": 1.15, "ITUB4": 0.80, "MGLU3": 1.85, "WEGE3": 0.70}
+rf, premio_mercado = 0.105, 0.06
+```
+
+=== Exercício 5 --- Beta por regressão linear (dados simulados)
+<exercício-5-beta-por-regressão-linear-dados-simulados>
+Sem baixar dados reais, simule 250 retornos diários de um "mercado" com
+`np.random.normal` e um "ativo" que segue o mercado com beta verdadeiro
+de 1,3 mais ruído idiossincrático. Estime o beta pela fórmula
+`Cov(ativo, mercado) / Var(mercado)` e compare com o beta verdadeiro
+usado na simulação.
+
+=== Exercício 6 --- Fronteira eficiente simplificada
+<exercício-6-fronteira-eficiente-simplificada>
+Adapte a função `fronteira_eficiente` do Capítulo 2 para simular 5.000
+carteiras aleatórias com 3 ativos (ao invés de 4). Encontre e imprima a
+carteira de máximo Índice de Sharpe e a de mínima volatilidade.
+
+```python
+retornos_esperados = np.array([0.11, 0.16, 0.09])
+cov_matrix = np.array([
+    [0.03, 0.010, 0.005],
+    [0.010, 0.07, 0.012],
+    [0.005, 0.012, 0.02]
+])
+```
+
+=== Exercício 7 --- Custo de capital próprio: CAPM vs.~Gordon
+<exercício-7-custo-de-capital-próprio-capm-vs.-gordon>
+Para a mesma empresa, calcule o Ke pelo CAPM e pelo Modelo de Gordon com
+os dados abaixo. Os dois métodos convergem? Imprima a diferença
+percentual entre eles.
+
+```python
+rf, beta, rm = 0.11, 1.05, 0.165
+d1, p0, g = 3.20, 38.00, 0.045
+```
+
+=== Exercício 8 --- Sensibilidade do WACC à estrutura de capital
+<exercício-8-sensibilidade-do-wacc-à-estrutura-de-capital>
+Reaproveite (ou reescreva) a função
+`wacc(ke, kd_bruto, ir, peso_pl, peso_divida)` do Capítulo 3. Gere uma
+tabela variando o peso da dívida de 0% a 90% em passos de 10 pontos
+percentuais, e identifique visualmente em que ponto o WACC é mínimo
+dentro do intervalo simulado.
+
+```python
+ke, kd_bruto, ir = 0.155, 0.11, 0.34
+```
+
+=== Exercício 9 --- Valuation por FCD com múltiplos cenários de crescimento
+<exercício-9-valuation-por-fcd-com-múltiplos-cenários-de-crescimento>
+Reaproveite `valuation_fcd` do Capítulo 4. Calcule o Equity Value para
+três cenários de crescimento perpétuo (g = 2%, 3,5% e 5%), mantendo os
+demais parâmetros fixos, e imprima quanto o Equity Value varia (em % e
+em R\$) entre o cenário mais conservador e o mais otimista.
+
+```python
+fcfs = [70, 84, 96, 110, 125]
+wacc, divida, caixa = 0.125, 220, 45
+cenarios_g = [0.02, 0.035, 0.05]
+```
+
+=== Exercício 10 --- Valuation por múltiplos: P/L, EV/EBITDA e P/VP
+<exercício-10-valuation-por-múltiplos-pl-evebitda-e-pvp>
+Reaproveite `multiplos_empresa` do Capítulo 4. Calcule o preço justo por
+P/L e P/VP para a empresa abaixo e compare com o preço atual de mercado
+--- a ação está cara ou barata segundo cada múltiplo?
+
+```python
+empresa = dict(lucro=280e6, ebitda=520e6, receita=1.1e9, valor_patrimonial=1.6e9,
+                num_acoes=90e6, pl_setor=11, ev_ebitda_setor=6.5, pvp_setor=1.3)
+preco_atual = 28.50
+```
+
+=== Exercício 11 --- Análise vertical de DRE
+<exercício-11-análise-vertical-de-dre>
+Reaproveite `analise_vertical` do Capítulo 5. Rode a função para a DRE
+abaixo e identifique qual item consome a maior fatia da receita depois
+do custo dos produtos.
+
+```python
+dre = {
+    'receita_liquida': 1500000, 'custo_produtos': -820000,
+    'despesas_operacionais': -280000, 'despesas_financeiras': -90000,
+    'imposto_renda': -95000
+}
+```
+
+=== Exercício 12 --- Painel de indicadores de liquidez e endividamento
+<exercício-12-painel-de-indicadores-de-liquidez-e-endividamento>
+Combine `indicadores_liquidez` e `indicadores_endividamento` (Capítulo
+5) em uma única função `diagnostico_financeiro(...)` que recebe todos os
+parâmetros necessários de uma vez e imprime um painel único com as duas
+famílias de indicadores.
+
+```python
+dados = dict(ac=15000, pc=9000, estoques=4500, disponivel=2200, rlp=3000, elp=4000,
+             passivo_circ=9000, passivo_ncirc=6000, pl=12000, lajir=2800, despesas_fin=900)
+```
+
+=== Exercício 13 --- DuPont ao longo de 4 anos
+<exercício-13-dupont-ao-longo-de-4-anos>
+Dada a lista de dicionários abaixo (um por ano), calcule o ROE de cada
+ano pelo DuPont e imprima uma tabela mostrando a evolução de margem,
+giro e alavancagem --- aponte em que ano cada alavanca teve seu melhor
+valor.
+
+```python
+anos = [
+    {"ano": 2022, "ll": 60, "vendas": 900, "ativo": 700, "pl": 350},
+    {"ano": 2023, "ll": 68, "vendas": 980, "ativo": 740, "pl": 360},
+    {"ano": 2024, "ll": 55, "vendas": 1020, "ativo": 810, "pl": 340},
+    {"ano": 2025, "ll": 82, "vendas": 1100, "ativo": 860, "pl": 330},
+]
+```
+
+=== Exercício 14 --- EBITDA e margem EBITDA de múltiplas empresas
+<exercício-14-ebitda-e-margem-ebitda-de-múltiplas-empresas>
+Reaproveite `calcular_ebitda` do Capítulo 5. Dado o dicionário abaixo
+(uma DRE simplificada por empresa), calcule o EBITDA e a margem EBITDA
+de cada uma e ordene do maior para o menor margem.
+
+```python
+empresas = {
+    "Alfa":  {"receita": 1000, "cpv": 600, "desp_op": 150, "deprec": 80, "amort": 30},
+    "Beta":  {"receita": 800,  "cpv": 520, "desp_op": 90,  "deprec": 40, "amort": 10},
+    "Gama":  {"receita": 1500, "cpv": 1050,"desp_op": 220, "deprec": 120,"amort": 50},
+}
+```
+
+=== Exercício 15 --- M&M com e sem impostos, lado a lado
+<exercício-15-mm-com-e-sem-impostos-lado-a-lado>
+Reaproveite `mm_sem_impostos` e `mm_com_impostos` do Capítulo 6. Para
+uma empresa com Vu = R\$ 1.200 milhões, Ke\_U = 14%, Kd = 9,5% e IR =
+34%, gere uma tabela comparando o valor da empresa (VL) nos dois modelos
+para níveis de dívida de R\$ 0 a R\$ 600 milhões, em passos de R\$ 100
+milhões.
+
+=== Exercício 16 --- Simulação de Trade-off Theory
+<exercício-16-simulação-de-trade-off-theory>
+Estenda o modelo de M&M com impostos somando um "custo de falência
+esperado" que cresce de forma não linear com a dívida (ex:
+`custo_falencia = 0.0005 * d**2`). Encontre, por busca simples em um
+laço, o nível de dívida que #strong[maximiza] o valor da empresa nesse
+modelo simulado.
+
+```python
+vu, ir = 1000, 0.34
+niveis_divida = range(0, 801, 20)
+```
+
+=== Exercício 17 --- Métricas de dividendos e classificação de política
+<exercício-17-métricas-de-dividendos-e-classificação-de-política>
+Reaproveite `metricas_dividendos` do Capítulo 7. Para as três empresas
+abaixo, calcule LPA, DPA, Pay-out e Dividend Yield, e classifique a
+política de cada uma como "alta distribuição" (pay-out \> 60%),
+"moderada" (30%-60%) ou "retenção" (\< 30%).
+
+```python
+empresas = {
+    "Utilco":  dict(lucro_liquido=300e6, dividendos_pagos=240e6, num_acoes=60e6, preco_acao=22),
+    "Tech Co": dict(lucro_liquido=150e6, dividendos_pagos=15e6,  num_acoes=40e6, preco_acao=55),
+    "Bancorp": dict(lucro_liquido=500e6, dividendos_pagos=225e6, num_acoes=100e6, preco_acao=18),
+}
+```
+
+=== Exercício 18 --- Diagnóstico de capital de giro para 3 empresas
+<exercício-18-diagnóstico-de-capital-de-giro-para-3-empresas>
+Reaproveite `diagnostico_capital_giro` do Capítulo 8. Rode a função para
+as três empresas abaixo (indústria, varejo e software) e compare o Saldo
+de Tesouraria (ST) de cada uma, explicando por que o resultado faz
+sentido para o modelo de negócio de cada setor.
+
+```python
+empresas = {
+    "Indústria": dict(ac=9000, pc=5500, ac_op=7000, pc_op=3500),
+    "Varejo":    dict(ac=6000, pc=6800, ac_op=5000, pc_op=6200),
+    "Software":  dict(ac=4000, pc=3000, ac_op=1200, pc_op=2600),
+}
+```
+
+=== Exercício 19 --- Ciclo financeiro e necessidade de caixa
+<exercício-19-ciclo-financeiro-e-necessidade-de-caixa>
+Reaproveite `ciclos_economico_financeiro` do Capítulo 8. Dada uma lista
+de empresas com seus prazos médios (estocagem, recebimento, pagamento),
+calcule o ciclo financeiro de cada uma e ordene da que menos precisa
+financiar operação para a que mais precisa.
+
+```python
+empresas = [
+    ("Indústria A", 55, 40, 35),
+    ("Varejo B", 25, 5, 50),
+    ("Distribuidora C", 40, 60, 20),
+]
+```
+
+=== Exercício 20 --- Sinergia de M&A com sensibilidade ao prêmio
+<exercício-20-sinergia-de-ma-com-sensibilidade-ao-prêmio>
+Reaproveite `analise_sinergia` do Capítulo 9. Para uma fusão com V(A) =
+R\$ 700 milhões, V(B) = R\$ 400 milhões e sinergia estimada de R\$ 150
+milhões, calcule o valor líquido para os acionistas de A variando o
+prêmio pago de R\$ 0 a R\$ 200 milhões (passos de R\$ 25 milhões), e
+identifique o prêmio máximo que ainda mantém a fusão como criadora de
+valor para A.
+
+=== Exercício 21 --- Simulação de disposition effect (finanças comportamentais)
+<exercício-21-simulação-de-disposition-effect-finanças-comportamentais>
+Simule uma carteira de 20 ações com retornos aleatórios desde a compra
+(`np.random.normal(0.05, 0.30, 20)`). Escreva uma função que separe as
+ações em "ganhadoras" (retorno \> 0) e "perdedoras" (retorno \<= 0), e
+simule a heurística do #emph[disposition effect] do Capítulo 10: o
+investidor vende 80% das ganhadoras e apenas 20% das perdedoras. Ao
+final, imprima quantas ações de cada grupo permaneceriam na carteira.
+
+=== Exercício 22 --- Projeto integrador: painel financeiro completo
+<exercício-22-projeto-integrador-painel-financeiro-completo>
+Este exercício combina praticamente tudo da apostila. Dada a DRE e o
+balanço simplificados de uma empresa fictícia abaixo, escreva um
+programa que calcule: (1) EBITDA e margem EBITDA; (2) indicadores de
+liquidez e endividamento; (3) ROE via DuPont; (4) o Ke pelo CAPM e o
+WACC; (5) um veredito final ("criando valor" ou "destruindo valor")
+comparando ROIC com o WACC calculado. Imprima tudo em um relatório
+formatado.
+
+```python
+empresa = {
+    "receita": 2000, "cpv": 1150, "despesas_operacionais": 300,
+    "deprec": 90, "amort": 40, "despesas_financeiras": 120,
+    "lucro_liquido": 260, "nopat": 380,
+    "ac": 900, "pc": 600, "estoques": 250, "disponivel": 120,
+    "passivo_circ": 600, "passivo_ncirc": 500, "pl": 1100, "ativo_total": 2200,
+    "capital_investido": 1600,
+    "beta": 1.05, "rf": 0.11, "premio_mercado": 0.06,
+    "valor_mercado_pl": 1900, "valor_mercado_divida": 500,
+    "kd_bruto": 0.115, "ir": 0.34,
+}
+```
