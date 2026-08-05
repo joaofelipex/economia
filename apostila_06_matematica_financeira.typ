@@ -1680,8 +1680,318 @@ print(f"Valor de resgate: R\${vf:.2f}")
 
 #line()
 
-== Capítulo 10 --- Glossário
-<capítulo-10-glossário>
+== Capítulo 10 --- Exercícios para Executar (na mão)
+<capítulo-10-exercícios-para-executar-na-mão>
+Estes exercícios não exigem computador: o objetivo é treinar o
+raciocínio e a manipulação das fórmulas antes de automatizá-las. Resolva
+no papel (ou calculadora simples), mostrando as etapas do cálculo.
+#strong[As soluções não estão neste documento] --- quando terminar, peça
+para eu conferir suas respostas.
+
+=== Exercício 1 --- Juros simples na mão
+<exercício-1-juros-simples-na-mão>
+Um capital de R\$ 3.600,00 foi aplicado a juros simples de 2,2% ao mês
+durante 7 meses. Calcule, mostrando cada etapa: (a) os juros totais; (b)
+o montante final; (c) o montante que seria obtido se a taxa fosse
+proporcional de 26,4% ao ano aplicada pelo mesmo prazo (converta o prazo
+para anos antes de aplicar a fórmula).
+
+=== Exercício 2 --- Desconto comercial vs.~desconto racional
+<exercício-2-desconto-comercial-vs.-desconto-racional>
+Um título de valor nominal R\$ 12.000,00, com vencimento em 3 meses, é
+descontado a uma taxa de 4% ao mês. Calcule à mão o valor líquido
+recebido (a) pelo desconto comercial (por fora) e (b) pelo desconto
+racional (por dentro). Diga qual dos dois é mais vantajoso para quem
+antecipa o recebimento e explique por quê, usando a relação entre $D_c$
+e $D_r$ do Capítulo 2.
+
+=== Exercício 3 --- Juros compostos mês a mês
+<exercício-3-juros-compostos-mês-a-mês>
+Calcule, sem usar código, o valor futuro de um capital de R\$ 2.000,00
+aplicado a uma taxa de 3% ao mês, por 4 meses, usando
+$upright("FV") = upright("PV") times\(1 + i\)^n$. Monte uma pequena
+tabela mostrando o saldo ao final de cada um dos 4 meses (mês 1, 2, 3 e
+4), e confira que o saldo do mês 4 bate com o valor obtido pela fórmula
+fechada.
+
+=== Exercício 4 --- Taxa nominal para taxa efetiva
+<exercício-4-taxa-nominal-para-taxa-efetiva>
+Um banco anuncia uma taxa nominal de 18% ao ano, capitalizada
+mensalmente. Usando a fórmula do Capítulo 3
+($i_(upright("ef")) =\(1 + i_(upright("nom"))\/k\)^k- 1$), calcule à mão
+a taxa efetiva anual. Em seguida, repita o cálculo supondo capitalização
+trimestral ($k = 4$) e compare os dois resultados, explicando por que a
+taxa efetiva aumenta quando o número de capitalizações por ano aumenta.
+
+=== Exercício 5 --- Prestação de uma série uniforme
+<exercício-5-prestação-de-uma-série-uniforme>
+Um consórcio de R\$ 18.000,00 será pago em 6 parcelas mensais iguais,
+postecipadas, a uma taxa de 2,5% ao mês. Usando o Fator de Recuperação
+de Capital (FRC) do Capítulo 4, calcule à mão o valor de cada parcela e
+o total de juros pagos ao final do contrato.
+
+=== Exercício 6 --- Decisão entre Price e SAC
+<exercício-6-decisão-entre-price-e-sac>
+Uma financiadora oferece dois planos para um empréstimo de R\$ 24.000,00
+em 4 parcelas mensais a 3% ao mês: Plano A (Sistema Price) e Plano B
+(SAC). Calcule à mão, para cada plano, apenas a #strong[primeira] e a
+#strong[última] prestação (não é necessário montar a tabela completa dos
+4 períodos --- mas mostre o cálculo de cada uma das quatro prestações de
+cada plano). Depois responda: qual plano tem prestação inicial menor?
+Qual tem o menor total de juros pagos ao final? Justifique com base nas
+características descritas no Capítulo 5.
+
+=== Exercício 7 --- Taxa real pela equação de Fisher
+<exercício-7-taxa-real-pela-equação-de-fisher>
+Uma aplicação rendeu 9,80% ao ano (taxa nominal) em um período no qual o
+IPCA acumulado foi de 4,20%. Calcule à mão a taxa real de retorno usando
+a equação de Fisher completa (Capítulo 6), e compare com o resultado que
+seria obtido pela aproximação linear $i_r approx i_n - pi$. Qual foi o
+erro (em pontos percentuais) cometido pela aproximação?
+
+=== Exercício 8 --- Interpretando VPL e TIR já calculados
+<exercício-8-interpretando-vpl-e-tir-já-calculados>
+Um projeto de investimento tem TMA de 11% ao ano. Foram calculados os
+seguintes resultados para dois projetos concorrentes:
+
+#figure(
+  align(center)[#table(
+    columns: 3,
+    align: (auto,auto,auto,),
+    table.header([Indicador], [Projeto M], [Projeto N],),
+    table.hline(),
+    [Investimento inicial], [R\$ 40.000], [R\$ 40.000],
+    [VPL], [R\$ 3.150,00], [−R\$ 890,00],
+    [TIR], [13,4% a.a.], [10,2% a.a.],
+    [Payback simples], [3,8 anos], [3,2 anos],
+  )]
+  , kind: table
+  )
+
+Sem recalcular nada, apenas interpretando os números da tabela: (a) qual
+projeto é viável, segundo o critério do VPL? (b) o critério da TIR
+concorda com o do VPL? (c) o Projeto N tem payback mais curto --- isso é
+suficiente para recomendá-lo? Justifique com base nas limitações de cada
+indicador discutidas no Capítulo 7.
+
+#line()
+
+== Capítulo 11 --- Exercícios para Executar (em código)
+<capítulo-11-exercícios-para-executar-em-código>
+Implemente e execute cada um no seu editor. Vários exercícios pedem para
+reaproveitar funções definidas em capítulos anteriores (`juros_simples`,
+`serie_postecipada`, `tabela_price`, `tabela_sac`, `fisher`, `vpl`,
+`tir`, `payback`) --- copie-as para o seu arquivo antes de começar.
+#strong[As soluções não estão neste documento] --- o objetivo é você
+rodar de verdade e ver o resultado; quando terminar, peça para eu
+revisar seu código.
+
+=== Exercício 1 --- Juros simples multiuso
+<exercício-1-juros-simples-multiuso>
+Reaproveite (ou reescreva) a função `juros_simples(pv, fv, i, n)` do
+Capítulo 2. Use-a para resolver, sem alterar sua assinatura: (a) o
+montante de R\$ 4.500 a 1,5% a.m. por 10 meses; (b) a taxa necessária
+para que R\$ 6.000 vire R\$ 7.800 em 12 meses; (c) o capital necessário
+para chegar a R\$ 20.000 em 8 meses a 2% a.m.
+
+=== Exercício 2 --- Ponto de cruzamento entre regimes
+<exercício-2-ponto-de-cruzamento-entre-regimes>
+Escreva uma função `mes_do_cruzamento(pv, i, n_max=60)` que, para um
+mesmo capital e mesma taxa, calcula mês a mês o montante em juros
+simples e em juros compostos e retorna o primeiro período em que o
+montante composto ultrapassa o montante simples. Teste com `pv=1000`,
+`i=0.02`.
+
+=== Exercício 3 --- Taxas equivalentes compostas
+<exercício-3-taxas-equivalentes-compostas>
+Crie uma função `taxa_equivalente(i_menor, k)` que recebe uma taxa
+referente a um período menor e o número de períodos menores contidos no
+período maior, retornando a taxa equivalente composta
+($i_(upright("maior")) =\(1 + i_(upright("menor"))\)^k- 1$). Use-a para
+converter 1,8% ao mês em taxa equivalente ao ano ($k = 12$) e compare o
+resultado com a taxa proporcional simples ($1\,8 % times 12$),
+explicando a diferença.
+
+=== Exercício 4 --- Nominal para efetiva com capitalizações diferentes
+<exercício-4-nominal-para-efetiva-com-capitalizações-diferentes>
+Escreva `nominal_para_efetiva(i_nominal_aa, k)` implementando
+$i_(upright("ef")) =\(1 + i_(upright("nom"))\/k\)^k- 1$. Gere uma tabela
+comparando a taxa efetiva anual resultante de uma taxa nominal de 24%
+a.a. capitalizada: anualmente ($k = 1$), semestralmente ($k = 2$),
+trimestralmente ($k = 4$), mensalmente ($k = 12$) e diariamente
+($k = 252$, dias úteis). O que acontece com a taxa efetiva à medida que
+$k arrow.r oo$?
+
+=== Exercício 5 --- Simulação com aportes mensais
+<exercício-5-simulação-com-aportes-mensais>
+Escreva `simular_aportes(aporte_mensal, i, n)` que simula uma aplicação
+em que, além do rendimento composto, o investidor deposita um novo
+aporte fixo ao final de cada mês (sem capital inicial). Mostre o saldo
+acumulado mês a mês para 24 meses, com `aporte_mensal=500` e `i=0.008`,
+e verifique que o saldo final bate com o valor futuro de uma série
+uniforme postecipada calculado pela fórmula do Capítulo 4.
+
+=== Exercício 6 --- Prestação de série postecipada
+<exercício-6-prestação-de-série-postecipada>
+Reaproveite `serie_postecipada` do Capítulo 4. Um equipamento de R\$
+45.000,00 será financiado em 18 parcelas mensais postecipadas a 2,2%
+a.m. Calcule a prestação, o total pago e os juros totais.
+
+=== Exercício 7 --- Antecipada vs.~postecipada
+<exercício-7-antecipada-vs.-postecipada>
+Reaproveite `serie_antecipada` e `serie_postecipada` do Capítulo 4. Para
+o mesmo financiamento do Exercício 6 (R\$ 45.000,00, 18 parcelas, 2,2%
+a.m.), calcule a prestação em série antecipada (com entrada) e compare
+com a postecipada. Calcule também a economia mensal e a economia total
+ao longo do contrato.
+
+=== Exercício 8 --- Série diferida com carência
+<exercício-8-série-diferida-com-carência>
+Reaproveite `serie_diferida` do Capítulo 4. Um financiamento de R\$
+60.000,00 em 24 parcelas mensais a 1,9% a.m. tem carência de 4 meses
+antes do início dos pagamentos. Calcule a prestação com carência e
+compare com a prestação sem carência, explicando de onde vem a diferença
+(dica: os juros da carência não desaparecem --- eles são incorporados a
+quê?).
+
+=== Exercício 9 --- Perpetuidade simples
+<exercício-9-perpetuidade-simples>
+Reaproveite `perpetuidade` do Capítulo 4. Uma pessoa quer se aposentar
+recebendo R\$ 8.000,00 por mês, para sempre, com uma aplicação que rende
+0,7% a.m. Calcule o capital necessário. Em seguida, calcule quanto essa
+mesma pessoa poderia sacar por mês se juntasse R\$ 1.500.000,00 a uma
+taxa de 0,55% a.m.
+
+=== Exercício 10 --- Perpetuidade com crescimento (Gordon)
+<exercício-10-perpetuidade-com-crescimento-gordon>
+Reaproveite `perpetuidade_crescimento` do Capítulo 4. Uma ação pagará
+dividendo de R\$ 3,50 no próximo ano, com crescimento esperado de 5%
+a.a., e o investidor exige retorno (Ke) de 12% a.a. Calcule o preço
+justo pelo modelo de Gordon. Em seguida, dado que a ação está sendo
+negociada a R\$ 42,00 com o mesmo dividendo esperado, calcule a taxa de
+crescimento implícita no preço de mercado.
+
+=== Exercício 11 --- Tabela Price completa
+<exercício-11-tabela-price-completa>
+Implemente `tabela_price(pv, i, n)` do zero (sem colar o código do
+Capítulo 5 --- escreva por conta própria) e gere a tabela completa de
+amortização para um financiamento de R\$ 36.000,00 em 15 parcelas a 2,3%
+a.m. Imprima a tabela formatada com período, prestação, juros,
+amortização e saldo devedor, e confirme que o saldo devedor do último
+período é (aproximadamente) zero.
+
+=== Exercício 12 --- Tabela SAC completa
+<exercício-12-tabela-sac-completa>
+Implemente `tabela_sac(pv, i, n)` do zero, usando os mesmos dados do
+Exercício 11 (R\$ 36.000,00, 15 parcelas, 2,3% a.m.). Imprima a tabela
+completa e identifique a amortização constante, a primeira e a última
+prestação.
+
+=== Exercício 13 --- Comparação Price x SAC
+<exercício-13-comparação-price-x-sac>
+Reaproveite as duas tabelas dos Exercícios 11 e 12. Escreva uma função
+`comparar_sistemas(pv, i, n)` que imprime lado a lado: prestação
+inicial, prestação final, total pago e juros totais de cada sistema, e
+conclui qual sistema é mais barato no total e qual tem prestação inicial
+menor.
+
+=== Exercício 14 --- Sistema de Amortização Americano
+<exercício-14-sistema-de-amortização-americano>
+Implemente `tabela_americano(pv, i, n)` seguindo as regras do Capítulo 5
+(juros constantes pagos a cada período, principal quitado integralmente
+na última parcela). Use R\$ 50.000,00, 10 períodos, 1,5% a.m., e imprima
+a tabela completa, destacando que a última prestação é muito maior que
+as demais.
+
+=== Exercício 15 --- SAM (Sistema de Amortização Mista)
+<exercício-15-sam-sistema-de-amortização-mista>
+Reaproveite `tabela_price` e `tabela_sac`. Implemente
+`tabela_sam(pv, i, n)` que calcula, para cada período, a prestação como
+a #strong[média aritmética] entre a prestação Price e a prestação SAC
+daquele período (conforme a fórmula do Capítulo 5). Use os mesmos dados
+do Exercício 11 e mostre que a prestação inicial do SAM fica entre a do
+Price e a do SAC.
+
+=== Exercício 16 --- Custo Efetivo Total (CET)
+<exercício-16-custo-efetivo-total-cet>
+Reaproveite `calcular_cet` do Capítulo 5. Um empréstimo de R\$ 15.000,00
+é pago em 10 prestações mensais de R\$ 1.680,00 (esse valor já inclui
+tarifa de cadastro e seguro). Calcule o CET mensal e anual, e compare
+com a taxa de juros "pura" que seria necessária para gerar uma prestação
+de R\$ 1.680,00 sobre R\$ 15.000,00 em 10 meses (sem tarifas). Qual é o
+custo extra, em pontos percentuais, gerado pelas tarifas?
+
+=== Exercício 17 --- Equação de Fisher completa
+<exercício-17-equação-de-fisher-completa>
+Reaproveite `fisher` do Capítulo 6. Um CDB rendeu 11,50% a.a. nominal em
+um ano em que o IPCA fechou em 5,80%. Calcule a taxa real. Em seguida,
+calcule qual seria a taxa nominal necessária para se obter uma taxa real
+de 6% a.a., supondo uma inflação projetada de 4,5% a.a.
+
+=== Exercício 18 --- Correção monetária de uma série
+<exercício-18-correção-monetária-de-uma-série>
+Reaproveite `corrigir_por_indice` do Capítulo 6. Um contrato de aluguel
+de R\$ 3.200,00 é reajustado mês a mês pela seguinte série de índices
+mensais (decimais):
+`[0.0061, 0.0055, 0.0048, 0.0070, 0.0052, 0.0044, 0.0058, 0.0039, 0.0061, 0.0050, 0.0047, 0.0053]`.
+Calcule o valor corrigido ao final de 12 meses e a inflação acumulada no
+período (em %).
+
+=== Exercício 19 --- Pré-fixado vs.~pós-fixado
+<exercício-19-pré-fixado-vs.-pós-fixado>
+Reaproveite `comparar_prefixado_posfixado` do Capítulo 6. Um investidor
+tem R\$ 20.000,00 para aplicar por 180 dias e compara: título pré-fixado
+a 11,8% a.a., ou título pós-fixado a 100% do CDI projetado em 12,4% a.a.
+(sem spread). Calcule o valor final de cada opção e diga qual é
+preferível no cenário informado.
+
+=== Exercício 20 --- VPL de um fluxo de caixa
+<exercício-20-vpl-de-um-fluxo-de-caixa>
+Reaproveite `vpl` do Capítulo 7. Um projeto exige investimento de R\$
+32.000,00 e promete fluxos de R\$ 9.000,00 ao final de cada um dos
+próximos 5 anos. Calcule o VPL para TMA de 9% a.a. e para TMA de 15%
+a.a., e explique por que o VPL cai quando a TMA aumenta.
+
+=== Exercício 21 --- TIR implementada do zero
+<exercício-21-tir-implementada-do-zero>
+Implemente `tir(fluxos)` do zero (por bisseção ou Newton-Raphson, sem
+colar o código do Capítulo 7) e calcule a TIR do fluxo
+`[-32000, 9000, 9000, 9000, 9000, 9000]`. Confirme, substituindo a TIR
+encontrada de volta na fórmula do VPL, que o resultado é
+(aproximadamente) zero.
+
+=== Exercício 22 --- Payback simples e descontado
+<exercício-22-payback-simples-e-descontado>
+Reaproveite `payback` do Capítulo 7. Para o mesmo fluxo do Exercício 21,
+calcule o payback simples e o payback descontado a 9% a.a. Explique por
+que o payback descontado é sempre maior ou igual ao payback simples.
+
+=== Exercício 23 --- Índice de Lucratividade e WACC
+<exercício-23-índice-de-lucratividade-e-wacc>
+Reaproveite `indice_lucratividade` do Capítulo 7. Calcule o IL do
+projeto do Exercício 20 (TMA = 9% a.a.) e diga se ele é viável pelo
+critério IL \> 1. Em seguida, calcule o WACC de uma empresa com capital
+próprio de R\$ 60 milhões (custo de 15% a.a.), dívida de R\$ 30 milhões
+(custo bruto de 9% a.a., IR de 34%), e discuta se essa empresa deveria
+usar seu WACC como TMA para avaliar o projeto do Exercício 20 (ou se uma
+outra taxa seria mais apropriada).
+
+=== Exercício 24 --- Projeto integrador: relatório de financiamento
+<exercício-24-projeto-integrador-relatório-de-financiamento>
+Combine várias funções deste capítulo em um único programa. Dado um
+financiamento de R\$ 80.000,00 em 30 parcelas mensais a 1,7% a.m.: (1)
+gere as tabelas Price e SAC completas; (2) calcule o CET supondo que o
+banco cobra uma tarifa de cadastro de R\$ 800,00 somada à primeira
+parcela; (3) calcule a taxa efetiva anual equivalente à taxa mensal
+contratada; (4) imprima um resumo comparando, ao final, qual sistema
+(Price ou SAC) esse cliente deveria escolher se seu objetivo é ter a
+#strong[menor prestação possível nos primeiros 12 meses], e qual deveria
+escolher se o objetivo é #strong[pagar o menor total de juros].
+
+#line()
+
+== Capítulo 12 --- Glossário
+<capítulo-12-glossário>
 #figure(
   align(center)[#table(
     columns: (38.89%, 61.11%),
