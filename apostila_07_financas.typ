@@ -1029,6 +1029,40 @@ estrutura de capital.
 
 $ V_L = V_U $
 
+#strong[Por que isso é verdade: o argumento da arbitragem (alavancagem
+caseira).] A prova original de Modigliani-Miller não é um resultado
+empírico --- é um argumento de #strong[não-arbitragem]: se as duas
+proposições fossem falsas, um investidor poderia montar uma operação
+sem risco adicional que gera lucro garantido, o que não pode persistir
+em equilíbrio. Suponha que $V_L > V_U$ (a empresa alavancada valha mais
+que a desalavancada, para o mesmo fluxo de caixa operacional). Um
+investidor que possui uma fração $alpha$ das ações da empresa
+alavancada pode:
+
++ Vender sua posição na empresa alavancada, recebendo $alpha E_L$.
++ Tomar emprestado, por conta própria, uma quantia igual a
+  $alpha D$ (reproduzindo, pessoalmente, a mesma proporção de dívida que
+  a empresa $L$ tem) --- isso é a #strong[alavancagem caseira]
+  (#emph[homemade leverage]).
++ Usar o total ($alpha E_L + alpha D = alpha V_L$) para comprar uma
+  fração $alpha$ da empresa desalavancada $U$, ao custo $alpha V_U$.
+
+Como $V_L > V_U$, sobra dinheiro no bolso do investidor
+($alpha\(V_L - V_U\) > 0$) --- e, crucialmente, o fluxo de caixa que ele
+recebe da nova posição (ações de $U$ menos os juros da dívida pessoal
+que contraiu) é #strong[idêntico], estado por estado da natureza, ao que
+ele recebia antes como acionista de $L$. Ele replicou exatamente a mesma
+exposição a risco e retorno, mas embolsou uma diferença positiva
+imediata --- um #strong[almoço grátis], que outros investidores
+também tentariam capturar, comprando $U$ e vendendo $L$ até que os
+preços se ajustem e $V_L = V_U$. É esse mecanismo --- não uma hipótese
+sobre o comportamento de gestores --- que sustenta a Proposição I sob os
+pressupostos de mercado perfeito (sem impostos, sem custos de falência,
+sem assimetria de informação, e a capacidade de qualquer investidor
+tomar emprestado à mesma taxa que a empresa). A Proposição II
+(abaixo) é uma consequência algébrica direta de $V_L = V_U$ combinada
+com a definição de WACC --- não uma hipótese independente.
+
 #strong[Proposição II --- Custo do Capital Próprio:]
 
 O custo do capital próprio aumenta linearmente com o endividamento:

@@ -181,7 +181,34 @@ a função objetivo resultante é diferenciável em toda parte, o que
 permite resolver o problema analiticamente (derivando e igualando a
 zero), em vez de recorrer a métodos numéricos iterativos. Resolvendo
 esse sistema (as chamadas #strong[equações normais]), chega-se a uma
-fórmula fechada:
+fórmula fechada.
+
+#strong[A derivação, passo a passo.] Chame a soma dos quadrados dos
+resíduos de $S(hat(beta)_0, hat(beta)_1)$. Minimizar uma função de duas
+variáveis exige que #strong[ambas] as derivadas parciais sejam nulas
+simultaneamente (condição de primeira ordem):
+
+$ frac(partial S, partial hat(beta)_0) = -2 sum_(i=1)^n (y_i - hat(beta)_0 - hat(beta)_1 x_i) = 0 $
+
+$ frac(partial S, partial hat(beta)_1) = -2 sum_(i=1)^n x_i (y_i - hat(beta)_0 - hat(beta)_1 x_i) = 0 $
+
+A primeira equação, dividida por $-2n$, diz que a soma dos resíduos
+precisa ser exatamente zero --- é #strong[por construção do próprio
+método], não uma hipótese adicional, que a reta de OLS sempre passa
+pelo ponto médio $(macron(x), macron(y))$:
+
+$ macron(y) - hat(beta)_0 - hat(beta)_1 macron(x) = 0 quad arrow.r.double quad hat(beta)_0 = macron(y) - hat(beta)_1 macron(x) $
+
+Substituindo esse $hat(beta)_0$ na segunda equação e isolando
+$hat(beta)_1$ (álgebra que aqui se omite, mas que é apenas expandir o
+produto e agrupar termos em $hat(beta)_1$), chega-se à fórmula fechada
+abaixo. O ponto que costuma passar despercebido: essas duas equações
+não são um "truque de cálculo" isolado --- são o motivo estrutural pelo
+qual os #strong[resíduos de uma regressão OLS sempre somam zero] e
+#strong[nunca são correlacionados com o regressor $x$] (a segunda
+equação, reescrita, diz exatamente $sum x_i hat(u)_i = 0$). Essas duas
+propriedades reaparecerão no Capítulo 3 como consequência direta --- não
+coincidência --- do próprio critério de minimização.
 
 $ hat(beta)_1 = frac(sum_(i = 1)^n\(x_i - macron(x)\)\(y_i - macron(y)\), sum_(i = 1)^n\(x_i - macron(x)\)^2) = frac(upright("Cov")\(x\,y\), upright("Var")\(x\)) $
 

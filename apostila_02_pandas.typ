@@ -1425,6 +1425,23 @@ print(populacao_nullable)
 # dtype: Int64
 ```
 
+Uma propriedade de `NaN`, herdada diretamente do padrão IEEE 754, explica
+por que #strong[nunca] se testa dado faltante com `==`:
+
+```python
+import numpy as np
+print(np.nan == np.nan)   # False!
+```
+
+Por definição do padrão, `NaN` não é igual a #strong[nada], nem a si
+mesmo --- é o único valor de ponto flutuante com essa propriedade
+(reflete a ideia de que "não sei o valor" comparado a "não sei o valor"
+não deveria ser afirmado como igual). Na prática, isso significa que
+`df[df["coluna"] == np.nan]` #strong[nunca] encontra as linhas faltantes
+--- sempre retorna vazio, silenciosamente, sem erro. A forma correta é
+sempre `.isnull()`/`.isna()` (Seção 8.2), que testam o #emph[tipo] do
+valor, não sua igualdade.
+
 === 8.2. Detectando dados faltantes
 <detectando-dados-faltantes>
 ```python
