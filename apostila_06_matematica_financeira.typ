@@ -1363,12 +1363,49 @@ print(f"Decisão B: {'VIÁVEL' if tir_b > tma else 'INVIÁVEL'}")
 
 === 7.3. Limitações da TIR
 <limitações-da-tir>
-+ #strong[Múltiplas TIRs:] quando o fluxo de caixa muda de sinal mais de
-  uma vez, podem existir múltiplas raízes
-+ #strong[TIR vs VPL:] a TIR pode classificar projetos incorretamente
-  quando há diferença de escala ou prazo
-+ #strong[Taxa de reinvestimento:] a TIR assume que os fluxos
-  intermediários são reinvestidos à própria TIR
++ #strong[Múltiplas TIRs.] A equação que define a TIR é um polinômio de
+  grau $n$ na incógnita $1\/(1+"TIR")$ --- e um polinômio de grau $n$
+  pode ter até $n$ raízes reais. Pela #strong[regra de sinais de
+  Descartes], o número de raízes positivas é, no máximo, igual ao número
+  de #strong[trocas de sinal] na sequência de fluxos de caixa
+  ($upright("FC")_0, upright("FC")_1, ..., upright("FC")_n$). Um fluxo
+  convencional (negativo seguido só de positivos, como um investimento
+  simples) troca de sinal #strong[uma única vez] --- garantindo, pela
+  regra de Descartes, no máximo uma raiz positiva, e por isso uma TIR
+  bem definida. Já um fluxo #strong[não convencional], que troca de sinal
+  mais de uma vez (ex.: investimento com desembolso adicional no meio do
+  projeto, como manutenção pesada ou descomissionamento), pode ter mais
+  de uma raiz positiva --- e nesse caso "a TIR" deixa de ser um número
+  único bem definido, e o critério "TIR \> TMA" perde sentido sem
+  qualificação adicional.
++ #strong[TIR vs VPL: por que o ranking pode divergir.] O VPL é uma
+  função #strong[decrescente] da taxa de desconto (fluxos futuros valem
+  cada vez menos quanto maior a taxa usada para trazê-los a valor
+  presente); dois projetos com perfis de fluxo diferentes (um mais
+  concentrado no início, outro no fim; ou magnitudes muito diferentes)
+  geram curvas de VPL que #strong[cruzam] em algum ponto --- a chamada
+  #emph[taxa de Fisher] do cruzamento. Abaixo dessa taxa, um projeto tem
+  VPL maior; acima, o outro. A TIR de cada projeto (onde sua própria
+  curva cruza o zero) não carrega informação sobre #strong[onde esse
+  cruzamento entre os dois projetos] acontece --- por isso, ao comparar
+  projetos #strong[mutuamente excludentes] (só um pode ser escolhido), o
+  critério correto é sempre o #strong[maior VPL à TMA relevante], nunca
+  "a maior TIR": o projeto de maior TIR pode ter o menor VPL, se a TMA
+  estiver do lado "errado" da taxa de Fisher.
++ #strong[Taxa de reinvestimento implícita.] Ao descontar um fluxo
+  futuro por $(1+"TIR")^t$, a fórmula da TIR presume implicitamente que
+  qualquer fluxo intermediário recebido é #strong[reinvestido à própria
+  TIR] até o fim do projeto --- um pressuposto que só é razoável se a TIR
+  for uma taxa de mercado à qual de fato dá para reinvestir. Para uma TIR
+  muito alta (comum em projetos de curta duração e alto retorno), supor
+  reinvestimento a essa mesma taxa é otimista; o VPL, em contraste, já
+  assume reinvestimento à TMA --- taxa que o analista escolhe de forma
+  realista (o custo de oportunidade de capital da empresa) --- o que é
+  outro motivo, além do ranking, para preferir o VPL como critério
+  principal e tratar a TIR como um indicador complementar. A TIR
+  Modificada (MTIR, abaixo) corrige exatamente essa premissa, separando
+  a taxa de financiamento dos fluxos negativos da taxa de reinvestimento
+  dos fluxos positivos.
 
 ```python
 # Exemplo de múltiplas TIRs: fluxo não convencional

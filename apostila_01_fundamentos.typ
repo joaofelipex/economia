@@ -325,7 +325,35 @@ print(0.1 + 0.2 == 0.3) # False
 
 Isso #strong[não é um bug do Python] --- é uma característica de como
 todo computador representa ponto flutuante (IEEE 754), presente em
-praticamente qualquer linguagem. Para um economista, a implicação
+praticamente qualquer linguagem.
+
+#strong[Por que isso acontece, exatamente.] Um computador guarda um
+`float` em base #strong[binária] (potências de 2), não em base decimal
+(potências de 10). Em base 10, uma fração como $1 slash 3$ não tem
+representação finita ($0,333...$); em base 2, o mesmo problema ocorre
+com frações que são triviais em base 10, como $0,1$. Expandindo $0,1$
+como soma de potências de 2:
+
+$ 0,1 = 1 / 16 + 1 / 32 + 1 / 256 + ... = sum_(i=1)^infinity a_i dot.op 2^(-i) $
+
+essa série #strong[nunca fecha exatamente] --- é uma dízima binária
+periódica, análoga a $1/3 = 0,333...$ em base 10. O computador guarda
+apenas um número finito de bits (52 bits de mantissa em `IEEE 754`
+double precision), então armazena a #strong[melhor aproximação
+possível] de $0,1$, não o valor exato. Ao somar duas aproximações
+(`0.1` e `0.2`), os erros de arredondamento --- cada um da ordem de
+$10^(-17)$ --- se acumulam e aparecem no resultado. Você pode ver a
+representação binária real com:
+
+```python
+from decimal import Decimal
+print(Decimal(0.1))  # 0.1000000000000000055511151231257827021181583404541015625
+```
+
+Ou seja: `0.1` do Python #strong[já nasce] ligeiramente diferente de
+$1/10$ exato --- a soma só torna esse erro, que já existia antes, visível.
+
+Para um economista, a implicação
 prática é: nunca compare valores monetários ou taxas com `==`
 diretamente; arredonde antes, ou compare a diferença absoluta com uma
 tolerância pequena:
@@ -819,7 +847,31 @@ Internamente, um dicionário Python é implementado como uma
 na memória. Isso significa que buscar `pib["Brasil"]` é praticamente
 instantâneo, independentemente de o dicionário ter 10 ou 10 milhões de
 entradas --- bem diferente de procurar um valor numa lista, que no pior
-caso exige percorrer item por item. Na prática: #strong[use dicionário
+caso exige percorrer item por item.
+
+#strong[Como isso funciona, em mais detalhe.] A função hash (`hash("Brasil")`
+em Python) transforma a chave num número inteiro grande; esse número,
+reduzido ao tamanho da tabela interna (via resto da divisão), aponta
+diretamente para o "balde" (#emph[bucket]) onde o par chave-valor deveria
+estar. Isso é o que dá complexidade $O(1)$ --- tempo constante, não
+crescente com o tamanho dos dados --- para buscar, inserir ou remover, em
+contraste com a lista, cuja busca por valor é $O(n)$ (no pior caso,
+percorre todos os $n$ elementos). Duas consequências práticas dessa
+implementação:
+
+- #strong[Colisões existem e são tratadas automaticamente.] Duas chaves
+  diferentes podem, por acaso, mapear para o mesmo balde (`hash("Brasil")
+  % tamanho_tabela == hash("Chile") % tamanho_tabela`); o Python resolve
+  isso internamente, mas é o motivo de a complexidade $O(1)$ ser uma
+  #emph[média], não uma garantia absoluta.
+- #strong[A chave precisa ser hasheável, e portanto imutável.] É por
+  isso que listas não podem ser chave de dicionário (`TypeError:
+  unhashable type: 'list'`) --- se o conteúdo da chave pudesse mudar
+  depois de guardada, seu hash mudaria, e o Python não conseguiria mais
+  encontrá-la no balde certo. Tuplas (Capítulo 11.6), strings e números
+  podem ser chave; listas e dicionários, não.
+
+Na prática: #strong[use dicionário
 sempre que a busca for por um identificador nomeado] (país, código,
 data), e lista quando a ordem sequencial for o que importa.
 

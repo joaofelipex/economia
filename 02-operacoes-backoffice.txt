@@ -1,0 +1,291 @@
+# DIA 2 — OPERAÇÕES DE BACK OFFICE
+⏱️ 4-5h | Objetivo: Dominar o ciclo operacional do back office e o fluxo de dados
+
+---
+
+## 1. Posições, Movimentações e Saldos
+
+### Conceitos Fundamentais
+
+**Posição (Position):**
+- Estado atual de um ativo em uma data específica
+- Ex: "Tenho 1.000 cotas do Fundo XPBR01 no dia 30/09"
+- É um snapshot — "quanto posso dizer que tenho hoje?"
+
+**Movimentação (Transaction/Movement):**
+- Evento que altera a posição (compra, venda, dividendos, bonificações, transferências)
+- Ex: "Comprei mais 500 cotas em 01/10" → movimentação
+- Todo movimento precisa ser validado e conciliado
+
+**Saldo (Balance):**
+- Resultado da posição atualizada pelas movimentações
+- Pode ser monetário (R$ 10.000,00) ou quantitativo (1.500 cotas)
+- Ex: Saldo da conta corretora, saldo de cotas, saldo de cash
+
+### Relacionamento entre os três:
+```
+POSIÇÃO(t-1) + MOVIMENTAÇÃO(t) = POSIÇÃO(t)
+SALDO(t) = Σ MOVIMENTAÇÕES até t
+```
+
+---
+
+## 2. Custódia — Onde os ativos "guardados" oficialmente
+
+**O que é:**
+A custódia é o ato de **guardar direitos** sobre um ativo financeiro de forma **registrada e auditorável**. A instituição custodiante é a responsável legal por garantir que o ativo exista e pertença ao cliente.
+
+**Quem faz:**
+1. **B3** — Custódia de ações, fundos, ETFs, derivativos (SISCAML, SELIC, etc.)
+2. **Cetip (agora B3)** — Custódia de direitos creditícios (CDB, LCI, LCA, debêntures)
+3. **Bancos Custodiantes** — Internos (ex: Itaú, Bradesco têm sua própria custódia) ou terceirizados (JPMorgan, State Street, BNP Paribas)
+4. **Corretoras de Valores** — Custódia de pequenos (geralmente para RV)
+
+**Fluxo de custódia:**
+1. **Pledge/Transferência:** Cliente manda ativo → instituição custodiante
+2. **Registro:** B3/Cetip registra titularidade (em nome do cliente ou em nominativo)
+3. **Proteção:** Seguro de responsabilidade civil, separação de patrimônio
+4. **Serviços:** Relatórios de posição, movimentos, dividendos, correção
+
+**Tipos de custódia:**
+- **Nomeado (Nominativo):** Ativo registrado em nome específico do cliente (pessoa física ou empresa)
+- **Anônimo (Emolumental):** Ativo registrado em nome da instituição (corretora) — menos seguro
+- **Bloqueio:** Ativo bloqueado para venda (ex: fundo em liquidação)
+- **Brasílica:** Movimentos fora do sistema normal (emergência)
+
+### Exemplo prático:
+```
+Cliente compra 100 ações da PETR4:
+1. Corretora executa → envia para B3 (liquidação D+2)
+2. B3 registra em "nome duo" → cliente + corretora (até a posição ser liberada)
+3. Após liberação (D+2), posição "vai para a custódia do cliente"
+4. Cliente passa a receber dividendos diretamente (ou via corretora)
+```
+
+---
+
+## 3. Consolidação de Carteiras
+
+**Definição:**
+É o processo de ** agregar informações de múltiplas fontes** (corretoras, gestores, fundos, contas) para apresentar uma visão **única e reconcilada** da carteira do cliente.
+
+**Fontes típicas para consolidar:**
+- Extratos de corretoras (PDF/CSV/API)
+- Relatórios de custódia (B3, bancos custodiantes)
+- Fundos de investimento (posições e PL)
+- Contas bancárias (cash, CDB, Tesouro)
+- Contratos de seguro / previdência privada
+- Ativos alternativos (imóveis, arte, crypto)
+
+### Processo de Consolidação:
+
+1. **Extração (Data Collection):**
+   - Receber arquivos de posição (posição em dia)
+   - Normalizar formatos (colunas, nomenclatura de ativos, datas)
+
+2. **Mapeamento (Security Master):**
+   - Mapear identificadores: CNPJ do fundo, código da ação, CPF do cliente
+   - Unificar nomes: "PETRA4" → "PETROBRAS4 ON"
+   - Corrigir duplicatas (mesmo ativo em diferentes contas)
+
+3. **Agregação:**
+   - Agrupar por ativo, classe, instituição, tipo
+   - Somar quantidades e valores
+   - Aplicar preços de fechamento do dia
+
+4. **Detecção de inconsistências:**
+   - Saldo ≠ soma das posições
+   - Ativo faltando em uma fonte
+   - Quantidade negativa (venda a descoberto?)
+
+5. **Produção do Consolidado Final:**
+   - Exportar para formato padrão (CSV, Excel, sistema)
+   - Enviar ao gestor / compliance / cliente
+
+### Ferramentas comuns:
+- **Excel/Power Query:** Para bases manuais
+- **Python (pandas):** Para automação
+- **Qlik/SAP Analytics:** Para grandes volumes
+- **Sistemas específicos:** NARRAS, Totvs, Caleidoscópio, NGM, etc.
+
+---
+
+## 4. Liquidação e Conciliação
+
+### Liquidação (Settlement)
+
+**O que é:**
+É o momento em que as partes **trocam efetivamente** o dinheiro pelo ativo. É o **fim do processo de negociação**.
+
+**Prazos no Brasil:**
+| Produto | Liquidação |
+|---------|------------|
+| Ações / FIIs / BDRs | D+2 |
+| Fundos | D+1 (resgate) / D+3 (aplicação) |
+| Tesouro Direto | D+1 (venda) |
+| Renda Fixa (CDB, LC) | D+1 a D+30 (negociação) |
+| Câmbio | D+2 (ou spot + prazo) |
+| Derivativos (opções, futuros) | D+1 |
+
+**Exemplo de Tesouraria (Cash):**
+```
+Dia 0 (Segunda): Compro R$ 10.000 de ações PETR4
+- Débito: R$ 10.000 na conta corretora
+- Crédito: 100 ações PETR4 (em nome duo)
+
+Dia 1 (Terça): Liquidamos → dinheiro é debitado, ações liberam
+- Banco Central (ou B3) move a posição entre as partes
+
+Dia 2 (Quarta): Liquidação real — posição passa para o cliente
+- Ações aparecem na posição definitiva (custódia)
+- Cash é descontado
+```
+
+### Conciliação (Reconciliation)
+
+**Definição:**
+É o processo de **conferir se a movimentação registrada no sistema interno** **confere com a movimentação oficial** (B3, CETIP, corretora, fundo, etc.).
+
+### Tipos de Conciliação:
+1. **Custódia x Sistema Interno:** Conferir se posição bate com extrato oficial
+2. **Contábil x Operacional:** Conferir se a contabilização foi correta
+3. **Posição x Cash:** Conferir se o dinheiro bate com os ativos
+4. **Trade x Liquidado:** Conferir se todas as ordens foram liquidas
+5. **Fundo x Administrador:** Conferir se PL, cotas e dividendos batem
+
+### Processo de Conciliação (Checklist):
+1. Receber extrato oficial (B3, fundo, corretora)
+2. Comparar com sistema interno (linhas por linha)
+3. Identificar divergências (diferenças de quantidade, valor, data)
+4. Investigar causa raiz:
+   - Atraso de informação
+   - Erro de digitação
+   - Split/bonificação não aplicada
+   - Erro de cálculo
+5. Resolver (corrigir posição ou reenviar informação)
+6. Documentar e reportar (audit trail)
+7. Encaminhar para Compliance/Controlador
+
+### Exemplo:
+```
+Posição interna: 1.000 cotas do Fundo XPBR01, PL R$ 1.020,00
+Extrato fundo: 1.000 cotas, PL R$ 1.018,50
+Divergência: R$ 1,50
+Causa: Erro de arredondamento ou dividendos não recebidos
+Ação: Investigar, corrigir, reportar
+```
+
+---
+
+## 5. Rentabilidade e Acompanhamento Patrimonial
+
+### Rentabilidade — Como medir performance
+
+#### **TWR (Time-Weighted Return) — Método Tempo-Ponderado**
+- Elimina o efeito do **fluxo de caixa** (depósitos/saques)
+- Ideal para medir **performance do gestor**
+- Cálculo:
+  1. Dividir o período em sub-períodos (entre fluxos de caixa)
+  2. Calcular retorno de cada sub-período: `(VF / (VI + fluxo)) - 1`
+  3. Compor: `(1+R1) × (1+R2) × … × (1+Rn) - 1`
+
+#### **MWR (Money-Weighted Return) — Método Interno de Retorno (IRR)**
+- Inclui o efeito do **fluxo de caixa** (quanto tempo o dinheiro ficou investido)
+- Ideal para medir **performance do investidor**
+- Sensível a grandes aportes/saques em períodos bons/ruins
+
+#### **Benchmark**
+- Referência contra a qual a rentabilidade é comparada
+- Ex: CDI, IBOV, IPCA+, ou índice específico de classe
+
+#### **Exemplo prático:**
+```
+Cliente:
+- Dia 1: Investe R$ 10.000
+- Dia 30: Saldo sobe para R$ 10.500 (sem novos aportes)
+- Dia 30-60: Aporta mais R$ 5.000
+- Dia 60: Saldo final R$ 16.000
+
+TWR: [(10.500/10.000 -1) × (16.000/(10.500+5.000) - 1)] - 1 = 2,0% × 2,86% ≈ 4,93%
+MWR: IRR dos fluxos: -10.000; -5.000; +16.000 → ~4,2% a.a. (aproximado)
+
+→ TWR é mais justo para avaliar o gestor
+```
+
+---
+
+## 6. Rentabilidade Corporativa e Acompanhamento
+
+### **Acompanhamento Patrimonial Diário**
+- **Cálculo do PL (Patrimônio Líquido):** Ativos - Passivos
+- **Cota:** PL / Número de cotas
+- **Rentabilidade do dia:** `(Cota_hoje / Cota_ontem) - 1`
+- **Rentabilidade acumulada:** Produto dos fatores diários
+
+### **Indicadores de Saúde da Carteira**
+- **Rentabilidade no período:** TWR, MWR
+- **Comparação com benchmark:** Diferença em pontos percentuais
+- **Volatilidade:** Desvio padrão dos retornos
+- **Relação risco/retorno:** Sharpe, Sortino
+- **Máxima desvantagem (drawdown):** Maior queda de pico a vale
+- **Concentração:** % por ativo/classe/alavancagem
+
+---
+
+## 7. Qualidade e Integridade das Informações
+
+### **Problemas comuns de dados no back office:**
+1. **Dados incompletos:** Fundo sem PL, posição sem data
+2. **Dados incorretos:** Quantidade negativa, valor zero
+3. **Dados atrasados:** Posição do dia não chegou
+4. **Dados duplicados:** Mesmo movimento aparece duas vezes
+5. **Formato inconsistente:** Data "30/09" vs "2024-09-30"
+6. **Referencial quebrado:** CNPJ errado, ticker não mapeado
+
+### **Controles de qualidade (checklist):**
+- Validação de campos obrigatórios (não nulos)
+- Faixa de valores plausíveis (ex: rentabilidade diária < 10%)
+- Verificação de consistência (quantidade × preço = valor)
+- Reconciliation flags (divergências destacadas)
+- Reconciliação automática (threshold de tolerância)
+
+### **Auditoria e Governança:**
+- **Audit Trail:** Registro completo de todas as movimentações
+- **Logs de acesso:** Quem fez o quê e quando
+- **Controle de versão:** Backup de arquivos e mudanças
+- **Aprovação de exceções:** Divergências precisam de aprovação manual
+
+---
+
+## 🎯 Exercícios práticos (faça hoje)
+
+1. **Fluxo completo:** Desenhe: Ordem → Execução → Liquidação → Custódia → Posição → Relatório → Conciliação
+2. **Caso de conciliação:** Receba uma posição de fundo (200 cotas), extrato (200.1 cotas). Como investiga?
+3. **TWR vs MWR:** Calcule os dois para este cenário:
+   - Dia 0: R$ 5.000 → Dia 30: R$ 5.500 → Dia 30: aporta R$ 3.000 → Dia 60: R$ 9.200
+4. **Prazos de liquidação:** Liste prazos de D+2, D+1, D+30 para: ações, fundos, Tesouro, CDB
+5. **Checklist de validação:** Monte um checklist de 10 pontos para validar um extrato de posição
+
+---
+
+## 🔍 Termos técnicos do dia (15)
+
+1. **Nominativo** — Ativo registrado em nome específico do cliente
+2. **Anônimo** — Ativo em nome da corretora (menos seguro)
+3. **Emolumental** — Taxa cobrada pela B3 por operação
+4. **Taxa de Custódia** — % cobrada pela instituição custodiante
+5. **Liquidar** — Troca efetiva de dinheiro por ativo
+6. **D+2** — Dia de negociação mais 2 dias úteis
+7. **Conciliação** — Conferência entre dois registros (interno x oficial)
+8. **Reconciliação** — Mesmo do anterior (sinônimo em português)
+9. **Cash** — Dinheiro disponível na conta (não investido)
+10. **Carry** — Rendimento/custo de carregar uma posição (juros overnight)
+11. **Come-cotas** — Antecipação de IR pago pelo fundo ao investidor
+12. **PL (Patrimônio Líquido)** — Ativos - Passivos do fundo
+13. **Cota** — Unidade de participação no fundo (PL / nº de cotas)
+14. **TWR (Time Weighted Return)** — Rentabilidade que elimina efeito cash flow
+15. **MWR (Money Weighted Return / IRR)** — Rentabilidade que inclui efeito cash flow
+
+---
+
+> **Ponto-chave:** Back office é sobre **precisão**, **integridade** e **rastreabilidade**. Você não precisa ser o gestor, mas precisa garantir que os dados do gestor estejam corretos.

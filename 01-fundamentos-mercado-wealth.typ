@@ -1,0 +1,178 @@
+# DIA 1 — FUNDAMENTOS DO MERCADO FINANCEIRO E WEALTH MANAGEMENT
+⏱️ 4-5h | Objetivo: Entender o ecossistema e falar a língua do mercado
+
+---
+
+## 1. Como funciona o mercado financeiro brasileiro
+
+**Estrutura regulatória:**
+- **Banco Central (BCB):** Autoridade monetária, regula bancos, política monetária, câmbio
+- **CVM (Comissão de Valores Mobiliários):** Regula mercado de capitais, ofertas públicas, fundos, corretoras
+- **B3:** Bolsa de valores oficial (ações, derivativos, renda fixa privada), também faz liquidação e custódia
+- **ANBIMA:** Autorregulação dos mercados de investimentos (fundos, certificações, códigos)
+
+**Fluxo básico:**
+Investidor → Corretora/Assessoria → Bolsa/Balcão → Custódia → Posição → Relatório
+
+---
+
+## 2. Principais players e diferenças
+
+| Player | Função Principal | Exemplo |
+|--------|------------------|---------|
+| **Banco Comercial** | Captação (depósitos), crédito, conta corrente, produtos próprios | Itaú, Bradesco, Santander, BB, Caixa |
+| **Banco de Investimento** | Underwriting, M&A, estruturação, não capta depósito à vista | BTG Pactual, Banco Modal, Banco Safra |
+| **Corretora/DTVM** | Intermediação de ordens (ações, fundos, renda fixa), não faz crédito | XP, Rico, Clear, Órama, Terra |
+| **Gestora de Recursos** | Administra fundos e carteiras (gestão ativa/passiva), não atende pessoa física direto | Verde, Dynamo, SPX, Kapitalo, AZ Quest |
+| **Assessoria de Investimentos (AAI)** | Distribui produtos, assessoria ao cliente, ligada a corretora | XP Investimentos (rede), Monte Bravo, Guide |
+| **Family Office / Wealth Advisory** | Gestão patrimonial full-service (investimentos + sucessão + tributação + filantropia) | Julius Baer, UBS, BTG Family Office, independentes |
+
+**Diferença chave Wealth vs Corretora:**
+- Corretora = executa ordens, ganha corretagem/spread
+- Wealth Advisory = cobra fee sobre patrimônio (AUM), alinhamento de longo prazo, visão 360°
+
+---
+
+## 3. O que é Wealth Management / Wealth Advisory
+
+**Definição:** Gestão integrada do patrimônio de alta renda (HNWI/UHNWI).
+
+**Pilares:**
+1. **Investimentos** — Alocação, seleção de gestores, acesso a produtos exclusivos
+2. **Planejamento Sucessório** — Holding, doações, testamento, previdência, offshore
+3. **Tributário** — Eficiência fiscal (IR, ITCMD, IOF, ganho de capital)
+4. **Risk Management** — Seguros, proteção cambial, diversificação jurisdicional
+5. **Filantropia / Impacto** — Fundos próprios, investimento de impacto
+6. **Lifestyle / Concierge** — Arte, imóveis, educação, governança familiar
+
+**Modelos de remuneração:**
+- Fee-only (%, ex: 0,5-1,5% a.a. sobre AUM)
+- Fee-based (fee + comissão — conflito de interesse)
+- Comissão pura (corretagem — modelo antigo)
+
+---
+
+## 4. Produtos financeiros e classes de ativos
+
+### **Renda Fixa (Crédito / Juros)**
+| Produto | Emissor | Liquidez | Risco | Tributação |
+|---------|---------|----------|-------|------------|
+| Tesouro Direto (Selic, IPCA+, Prefixado) | Governo Federal | D+1 | Soberano (baixo) | Regressiva 22,5%→15% |
+| CDB | Bancos | Varia (diária a vencimento) | Banco (FGC até 250k) | Regressiva |
+| LCI / LCA | Bancos (lastro imobiliário/agronegócio) | Varia | Banco (FGC) | **Isento IR PF** |
+| Debêntures | Empresas | Baixa (mercado secundário fraco) | Empresa (rating) | Regressiva |
+| CRI / CRA | Securitizadoras (lastro imob/agro) | Baixa | Estrutura/lastro | **Isento IR PF** |
+| Fundos de Renda Fixa | Gestora | D+1 a D+30 | Carteira | Regressiva (fundo) |
+
+### **Renda Variável (Capital / Risco)**
+| Produto | Característica | Risco | Tributação |
+|---------|----------------|-------|------------|
+| Ações (ON/PN/Units) | Participação societária | Alto | 15% swing trade, 20% day trade |
+| FIIs (Fundos Imobiliários) | Renda imobiliária, isento IR PF rendimentos | Médio | 20% ganho capital |
+| ETFs | Índice (BOVA11, IVVB11, SMAL11, FIXA11) | Médio | 15% ganho capital |
+| BDRs | Ações estrangeiras negociadas na B3 | Alto + câmbio | 15% ganho capital |
+| Fundos Multimercado | Livre alocação (juros, câmbio, ações, derivativos) | Varia | Regressiva |
+| Fundos de Ações | Gestão ativa em ações | Alto | Regressiva |
+
+### **Derivativos Básicos (conceito)**
+- **Futuro:** Compromisso de compra/venda a preço fixo (DI1, DOL, IND, WDO)
+- **Opção:** Direito (não obrigação) de comprar (call) ou vender (put) — prêmio pago
+- **Swap:** Troca de fluxos (ex: pré x CDI, dólar x CDI)
+- **Forward:** Contrato a termo não padronizado (balcão)
+
+---
+
+## 5. Classes de ativos e perfil de risco
+
+| Classe | Risco | Retorno Esperado | Horizonte | Exemplo |
+|--------|-------|------------------|-----------|---------|
+| Caixa / Liquidez | Muito baixo | CDI / Selic | Curto (0-6m) | Tesouro Selic, CDB diário |
+| Renda Fixa Curta | Baixo | CDI + 0,5-1,5% | Curto-Médio (6m-2a) | Fundos RF curto prazo |
+| Renda Fixa Longa / Inflação | Médio | IPCA + 3-6% | Longo (3a+) | Tesouro IPCA+, Debêntures IPCA |
+| Crédito Privado / High Yield | Médio-Alto | CDI + 2-5% / IPCA + 5-8% | Médio-Longo | Debêntures, CRI, FIDC |
+| Ações Brasil | Alto | Ibovespa + alpha | Longo (5a+) | Ações, Fundos Ações, FIIs |
+| Ações Internacional | Alto + câmbio | MSCI World / S&P 500 | Longo | ETFs, BDRs, Fundos Globais |
+| Alternativos | Muito Alto | Variável | Muito Longo | Private Equity, Venture, Hedge Funds, Crypto, Arte |
+
+**Perfis de risco (suitability):**
+- Conservador: 80-100% RF, 0-10% RV
+- Moderado: 40-70% RF, 20-50% RV
+- Arrojado/Agressivo: 0-40% RF, 60-100% RV
+
+---
+
+## 6. Como funciona uma carteira de investimentos
+
+**Processo de construção:**
+1. **Diagnóstico:** Perfil, objetivos, horizonte, restrições (liquidez, tributação, sucessão)
+2. **Política de Investimento (IPS):** Alocação estratégica (targets por classe), limites, benchmarks, rebalanceamento
+3. **Seleção:** Gestores, fundos, ativos diretos — due diligence quanti + quali
+4. **Implementação:** Execução faseada, custo de transação, impacto de mercado
+5. **Monitoramento:** Rentabilidade, risco, aderência à política, mudanças de cenário
+6. **Rebalanceamento:** Voltar aos targets (calendarizado ou por bandas)
+
+**Conceitos-chave:**
+- **Alocação Estratégica (SAA):** Targets de longo prazo (ex: 40% RF, 30% Ações BR, 20% Intl, 10% Alt)
+- **Alocação Tática (TAA):** Desvios controlados de curto prazo (ex: +5% em dólar por visão de câmbio)
+- **Diversificação:** Correlação baixa/negativa entre ativos reduz risco sem perder retorno
+- **Fronteira Eficiente (Markowitz):** Para dado risco, máximo retorno (ou mínimo risco para dado retorno)
+
+---
+
+## 📚 Resumo para memorizar (30 termos essenciais — Dia 1)
+
+1. **AUM** — Assets Under Management (patrimônio sob gestão)
+2. **Suitability** — Adequação do produto ao perfil do cliente
+3. **FGC** — Fundo Garantidor de Créditos (até R$ 250k por CPF/instituição)
+4. **Spread** — Diferença entre compra e venda / taxa de intermediação
+5. **Liquidez** — Facilidade de converter em dinheiro sem perda significativa
+6. **Duration** — Sensibilidade do preço do título à variação de juros (anos)
+7. **Marcação a Mercado (MtM)** — Valorização do ativo pelo preço atual de mercado
+8. **Carrego** — Rentabilidade "segura" de carregar a posição (juros + rolagem)
+9. **Roll-over** — Troca de título vencendo por outro mais longo
+10. **Benchmark** — Referência de desempenho (CDI, IBOV, IPCA+)
+11. **Alpha** — Retorno acima do benchmark (habilidade do gestor)
+12. **Beta** — Sensibilidade sistemática ao mercado
+13. **Sharpe Ratio** — (Retorno - Risco Livre) / Volatilidade
+14. **Drawdown** — Queda máxima de pico a vale
+15. **VaR** — Value at Risk (perda máxima esperada com X% confiança)
+16. **Correlação** — Grau de movimento conjunto (-1 a +1)
+17. **Rebalanceamento** — Ajuste de pesos de volta ao target
+18. **IPS** — Investment Policy Statement (política de investimentos)
+19. **Due Diligence** — Análise profunda antes de contratar gestor/fundo
+20. **Custódia** — Guarda legal dos ativos (B3, Cetip, bancos custodiante)
+21. **Liquidação** — Transferência definitiva (D+0, D+1, D+2)
+22. **Conciliação** — Conferência de posições/saldos entre sistemas
+23. **TWR** — Time-Weighted Return (rentabilidade ponderada pelo tempo)
+24. **MWR** — Money-Weighted Return (IRR, ponderada pelo capital)
+25. **PL / Patrimônio Líquido** — Ativos - Passivos do fundo/cliente
+26. **Cota** — Unidade de participação no fundo (PL / qtd cotas)
+27. **Taxa de Administração** — % a.a. sobre PL (ex: 1% a.a.)
+28. **Taxa de Performance** — % sobre ganho acima do benchmark (ex: 20% do alpha)
+29. **Come-cotas** — Antecipação semestral de IR nos fundos (maio/novembro)
+30. **Suitability / Perfil de Risco** — Conservador, Moderado, Arrojado (questionário CVM)
+
+---
+
+## 🎯 Exercícios práticos (faça hoje)
+
+1. **Mapa mental:** Desenhe o fluxo: Cliente → Assessoria → Corretora → Bolsa → Custódia → Consolidado → Relatório
+2. **Tabela comparativa:** Monte no Excel a tabela de produtos (Renda Fixa vs Renda Variável) com colunas: Emissor, Liquidez, Risco, Tributação, Público-alvo
+3. **Simulação de conversa:** Explique em 2 min para um leigo: "O que faz um Wealth Advisor e como ele ganha dinheiro?"
+4. **Quiz rápido:** Qual a diferença entre TWR e MWR? Quando usar cada um?
+5. **Pesquisa:** Entre no site da ANBIMA e veja os códigos de autorregulação (fundos, distribuição, etc.)
+
+---
+
+## 🔗 Recursos rápidos (grátis)
+
+- **YouTube:** "Mercado Financeiro para Iniciantes" — XP, BTG, Rico, Clear (playlist 30-60 min)
+- **B3:** Área "Educação" → "Primeiros Passos" / "Produtos"
+- **CVM:** Cartilha "Investidor Pessoa Física"
+- **ANBIMA:** Guia de Fundos de Investimento (PDF grátis)
+- **Tesouro Direto:** Simulador e calculadora no site oficial
+- **Investopedia (PT):** Artigos curtos sobre cada conceito acima
+
+---
+
+> **Dica de ouro:** Não decore. Entenda a **lógica** e a **cadeia de valor**. Na entrevista, vão testar se você sabe *onde* cada coisa se encaixa, não decorar tabelas.
