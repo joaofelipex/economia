@@ -833,7 +833,7 @@ aplicam a tudo que passa pelas suas mãos.
 Fluxo típico de abertura:
 
 + Coleta de documentos (identificação, comprovantes, dados fiscais).
-+ Verificação de identidade e da lista de restrições (PEP, sanctions).
++ Verificação de identidade e consulta a listas restritivas (PEP, sanções internacionais, listas de terroristas).
 + Questionário de suitability e definição do perfil.
 + Assinatura de termos (contrato de intermediação, adesões, avisos legais).
 + Vinculação bancária e primeira movimentação.
@@ -842,7 +842,7 @@ Pontos que aparecem em entrevista:
 
 - *Atualização cadastral periódica*: perfis e documentos vencem; o back office acompanha e cobra.
 - *Investidor qualificado*: acessa produtos restritos mediante condições da Resolução CVM 21 (ex.: investimentos acima de R\$ 1 milhão ou certificações aprovadas --- confira valores vigentes); o cadastro precisa comprovar a condição.
-- *FATCA/CRS*: clientes com vínculo ou ativos no exterior exigem declarações adicionas; o processo é da instituição, mas o back office trata os dados.
+- *FATCA/CRS*: clientes com vínculo ou ativos no exterior exigem declarações adicionais; o processo é da instituição, mas o back office trata os dados.
 
 == 7.5 Eventos corporativos em detalhe
 
@@ -898,7 +898,7 @@ Onde o Power BI entra em relação ao que você já estudou:
 
 - *Excel + tabelas dinâmicas*: resolve análises pontuais de um analista por vez.
 - *Power Query*: comum ao Excel e ao Power BI --- tudo o que o Módulo 3 ensina reaproveita.
-- *Power BI*: quando o relatório precisa ser consultado por várias pessoas, atualizado recorrentemente contra fontes múltiples e interativo (filtros por cliente, período, classe). Usa *DAX* para criar medidas calculadas (a lógica é parente das fórmulas de tabela dinâmica).
+- *Power BI*: quando o relatório precisa ser consultado por várias pessoas, atualizado recorrentemente contra fontes múltiplas e interativo (filtros por cliente, período, classe). Usa *DAX* para criar medidas calculadas (a lógica é parente das fórmulas de tabela dinâmica).
 
 Como posicionar na entrevista, sem inflar: "domino Excel a fundo, entendo
 modelo de dados e o conceito de medidas; Power BI entra naturalmente
@@ -992,6 +992,31 @@ Ajuste o ritmo à sua disponibilidade e ao prazo da vaga.
   dia a dia do arquivo `plano-estudos-backoffice-wealth.md` e use esta
   apostila como fonte de conteúdo, priorizando os Módulos 2, 3, 6 e 7.
 ]
+
+= Revisão de véspera --- números e conceitos que caem em entrevista
+
+Uma única página para reler na véspera. Cada item tem resposta em uma ou
+duas frases; se alguma não sair de cabeça, volte à seção indicada.
+
+#table(
+  columns: (auto, 1fr),
+  table.header([Pergunta], [Resposta curta]),
+  [Prazo de liquidação de ações à vista na B3?], [D+2 em geral (seção 2.3)],
+  [O que é come-cotas?], [Antecipação semestral de IR (maio e novembro) em fundos abertos de renda fixa e multimercado (seção 1.4)],
+  [Alíquotas de IR na renda fixa?], [Regressiva: 22,5% até 180 dias, caindo até 15% acima de 720 dias; IOF nos primeiros 30 dias (seção 1.4)],
+  [TWR × MWR?], [TWR isola a decisão de investimento (padrão para comparar gestores); MWR/TIR reflete a experiência do cliente com o timing dos aportes (seção 2.4)],
+  [O que a Resolução CVM 178 define?], [A atividade de assessoria: orienta e recomenda, vinculada a corretora/distribuidora; não custodia nem administra carteira (seção 7.1)],
+  [Os três deveres da suitability (RCVM 30)?], [Conhecer o cliente, conhecer o produto e verificar a adequação (seção 7.2)],
+  [O que é KYC e para onde vai a suspeita de lavagem?], [Identificar o cliente e a origem dos recursos; operações suspeitas são comunicadas ao COAF, nunca discutidas com o cliente (seção 7.3)],
+  [Quem é PEP?], [Pessoa exposta politicamente (e familiares/associados): exige cadastro reforçado e aprovação superior (seção 7.3)],
+  [Data-com × data-ex?], [Data-com é o último dia com direito ao provento; data-ex é o primeiro dia sem o direito --- vender na data-ex perde o provento (seção 7.5)],
+  [Efeito do split e do inplit?], [Split multiplica a quantidade e divide o preço pelo mesmo fator; inplit é o inverso; ajustar a base histórica (seção 7.5)],
+  [PGBL × VGBL em três frases?], [Depende da declaração de IR e do teto de 12% da renda tributável; no PGBL o IR incide sobre o total resgatado, no VGBL só sobre rendimentos; escolha errada transforma dedução em armadilha (seção 7.6)],
+  [Como conciliar duas bases?], [Mesma data-base, chaves padronizadas, cruzamento com PROCX ou merge do pandas, classificar a divergência (timing, preço, lançamento, evento), corrigir a causa e documentar (seções 2.3 e 3.3)],
+  [O que a Aplix faz de diferente?], [Honorários fixos desde 2023 (sem comissão), advisory independente multi-custodiante e comitê de investimentos mensal --- o que torna consolidação e qualidade de relatório o coração da operação (dossiê Aplix)],
+)
+
+=line()
 
 = Checklist final
 
