@@ -134,16 +134,19 @@
 
 ## Materiais do Repositório
 
+Fonte em Typst (`.typ`); o PDF correspondente é gerado com `typst compile arquivo.typ`.
+
 | Arquivo | Conteúdo |
 |---------|----------|
-| `apostila_01_fundamentos.md` | Fundamentos de Python para Economia |
-| `apostila_02_pandas.md` | Pandas para análise de dados econômicos |
-| `apostila_03_visualizacao.md` | Visualização de dados (matplotlib, seaborn) |
-| `apostila_04_econometria.md` | Econometria com Python (statsmodels) |
-| `apostila_05_projetos.md` | Projetos práticos de portfólio |
-| `apostila_06_matematica_financeira.md` | Matemática Financeira com Python (juros, amortização, VPL, TIR) |
-| `apostila_07_financas.md` | Finanças com Python (CAPM, WACC, valuation, indicadores) |
-| `livro_python_economia.md` | Livro completo: Python para Economia |
-| `python_para_economia.md` | Guia de Python para Economia |
+| `apostila_01_fundamentos` | Fundamentos de Python para Economia |
+| `apostila_02_pandas` | pandas para análise de dados econômicos |
+| `apostila_03_visualizacao` | Visualização de dados (matplotlib, seaborn); figuras em `figuras03/` |
+| `apostila_04_econometria` | Econometria com Python (statsmodels), com simulações de Monte Carlo |
+| `apostila_05_projetos` | Projetos práticos de portfólio e guia de TCC |
+| `apostila_06_matematica_financeira` | Matemática Financeira (juros, amortização, VPL, TIR, aplicações no Brasil) |
+| `apostila_07_financas` | Finanças (CAPM, WACC, valuation, estudo de caso integrador) |
+| `apostila_backoffice_wealth` | Back office analítico e Wealth Advisory |
+| `livro_python_economia` | Livro completo: Python para Economia |
+| `economia_informal_brasil` | Trabalho sobre a economia informal no Brasil |
 
 > Lema: Programação é igual econometria — só se aprende fazendo.
