@@ -1,3 +1,90 @@
+#set document(title: "Projetos Práticos de Economia", author: "Felipe")
+#set text(lang: "pt", region: "br", size: 10.5pt)
+#set page(
+  paper: "a4",
+  margin: (x: 2.2cm, y: 2.4cm),
+  numbering: "1",
+  footer: context [
+    #set text(size: 8.5pt, fill: luma(110))
+    Projetos Práticos de Economia #h(1fr) #counter(page).display("1")
+  ],
+)
+#set par(justify: true, leading: 0.62em)
+#set heading(numbering: none)
+#show heading.where(level: 2): it => block(above: 1.6em, below: 0.9em)[
+  #set text(size: 16pt)
+  #it.body
+  #v(-0.3em)
+  #line(length: 100%, stroke: 1pt + rgb("#2c3e50"))
+]
+#show heading.where(level: 3): set block(above: 1.3em, below: 0.7em)
+#show heading.where(level: 4): set block(above: 1.1em, below: 0.6em)
+#show raw: set text(size: 8.3pt)
+#show raw.where(block: true): it => block(
+  width: 100%,
+  fill: if it.lang == none { rgb("#fbfcf8") } else { luma(247) },
+  stroke: if it.lang == none {
+    (left: 2.5pt + rgb("#7aa37a"), rest: 0.5pt + luma(225))
+  } else {
+    0.5pt + luma(215)
+  },
+  inset: 7pt,
+  radius: 2pt,
+  it,
+)
+#set line(length: 100%, stroke: 0.6pt + luma(170))
+#set table(
+  inset: 5pt,
+  stroke: 0.4pt + luma(175),
+  fill: (x, y) => if y == 0 { luma(232) },
+)
+#show table: set text(size: 9.5pt)
+#show figure.where(kind: table): set block(breakable: true)
+#show link: set text(fill: rgb("#1d4f91"))
+
+// ---- Caixas de destaque -------------------------------------------------
+#let caixa(titulo, cor, fundo, corpo) = block(
+  width: 100%,
+  inset: (x: 10pt, y: 8pt),
+  radius: 3pt,
+  fill: fundo,
+  stroke: (left: 3pt + cor),
+  above: 1em,
+  below: 1em,
+  breakable: true,
+)[
+  #block(sticky: true, below: 4pt)[#text(weight: "bold", fill: cor, size: 9.5pt)[#titulo]]
+  #corpo
+]
+#let exemplo(titulo, corpo) = caixa("Exemplo resolvido — " + titulo, rgb("#1f6f4a"), rgb("#eef7f1"), corpo)
+#let intuicao(corpo) = caixa("Intuição", rgb("#1d4f91"), rgb("#edf3fb"), corpo)
+#let atencao(corpo) = caixa("Atenção — erro comum", rgb("#a33a1c"), rgb("#fcf1ec"), corpo)
+#let teoria(titulo, corpo) = caixa("Aprofundando a teoria — " + titulo, rgb("#5b3a8c"), rgb("#f4f0fa"), corpo)
+#let mercado(corpo) = caixa("No mercado brasileiro", rgb("#8a6100"), rgb("#fdf6e3"), corpo)
+#let resumo(corpo) = caixa("Em resumo", rgb("#444444"), rgb("#f2f2f2"), corpo)
+
+// ---- Linha do tempo de fluxo de caixa ------------------------------------
+// valores: strings; começando com "-" = saída (seta para baixo), "" = nada.
+#let fluxo(..valores) = {
+  let v = valores.pos()
+  let n = v.len()
+  block(width: 100%, inset: 8pt, stroke: 0.5pt + luma(210), radius: 3pt, above: 1em, below: 1em)[
+    #set text(size: 8.5pt)
+    #grid(
+      columns: (1fr,) * n,
+      row-gutter: 3pt,
+      align: center,
+      ..v.map(x => if x == "" { [] } else if x.starts-with("-") {
+        text(fill: rgb("#a33a1c"))[↓ #x.slice(1)]
+      } else {
+        text(fill: rgb("#1f6f4a"))[↑ #x]
+      }),
+      ..range(n).map(_ => line(length: 100%, stroke: 0.7pt + luma(90))),
+      ..range(n).map(t => text(fill: luma(90))[t = #t]),
+    )
+  ]
+}
+
 = Apostila 5 --- Projetos Práticos de Economia
 <apostila-5-projetos-práticos-de-economia>
 Esta apostila reúne projetos completos que integram tudo que você
@@ -24,6 +111,52 @@ O Projeto 8, ao final, foge um pouco desse padrão: é uma lista de
 exercícios curtos e pontuais --- não projetos inteiros --- para praticar
 conceitos específicos das apostilas anteriores em dados reais, um de
 cada vez.
+
+#align(center)[
+  #text(size: 11pt, fill: luma(90))[Projetos de portfólio e de TCC, com laboratórios executáveis offline]
+]
+
+#v(0.5em)
+#outline(title: [Sumário], depth: 2)
+
+#pagebreak()
+
+== Como Usar Esta Apostila
+<como-usar-esta-apostila>
+Os projetos desta apostila dependem de #strong[APIs externas] (Banco Central, Banco Mundial): bom para portfólio, mas
+inconveniente para estudo --- sem internet ou sem as bibliotecas, nada roda. Por isso cada projeto ganha, ao final, um
+#strong[laboratório offline]: um bloco de código #emph[executado] (com saídas reais, semente fixa) que usa os dados deste repositório
+(`selic_meta.json`, `ipca_12m.json`, `ipca_abertura_grupos.csv`, `taylor_rule_series.csv`) ou dados simulados com mecanismo
+conhecido. O laboratório ensina a #strong[ler os resultados] --- o que o script do projeto não faz sozinho --- e destaca as armadilhas de
+interpretação. Os #strong[Desafios] de cada projeto continuam sem solução: o laboratório complementa, não resolve.
+
+#exemplo("modelo")[Um laboratório executado com a interpretação.]
+
+#intuicao[A ideia econômica por trás do número.]
+
+#teoria("modelo")[A dedução ou o resultado formal por trás do método.]
+
+#atencao[Uma armadilha de interpretação que invalida conclusões.]
+
+#mercado[Como o projeto se conecta a um trabalho real de economista.]
+
+```python
+import statsmodels.api as sm
+import matplotlib.dates as mdates
+
+def ler_bcb(caminho):
+    d = pd.read_json(caminho, dtype=False)
+    d["data"] = pd.to_datetime(d["data"], format="%d/%m/%Y")
+    return d.set_index("data")["valor"].astype(float)
+
+sel5, ip5 = ler_bcb("selic_meta.json"), ler_bcb("ipca_12m.json")
+tay5 = pd.read_csv("taylor_rule_series.csv", parse_dates=["data"], index_col="data")
+print(f"Selic: {len(sel5)} dias | IPCA 12m: {len(ip5)} meses | Taylor: {len(tay5)} meses")
+```
+
+```
+Selic: 1355 dias | IPCA 12m: 43 meses | Taylor: 43 meses
+```
 
 #line()
 
@@ -235,6 +368,49 @@ print("\n📊 Dashboard salvo: dashboard_macro.png")
 Adicione mais 2 indicadores de sua escolha (pesquise códigos no site do
 BCB SGS).
 
+#exemplo("laboratório do Projeto 1: um painel de indicadores com sinal e tendência")[
+  Um dashboard útil não é uma coleção de gráficos: é uma #strong[tabela de decisão] que diz, para cada indicador, onde está, como
+  se moveu e para onde aponta. O código monta o painel com os dados reais do repositório:
+]
+
+```python
+juro_real5 = ((1 + sel5.resample("MS").last() / 100) / (1 + ip5 / 100) - 1).dropna() * 100
+painel = pd.DataFrame({
+    "Selic meta (% a.a.)": sel5.resample("MS").last().reindex(ip5.index),
+    "IPCA 12m (%)": ip5,
+    "Juro real ex-post (%)": juro_real5,
+})
+linhas = []
+for nome_i, serie_i in painel.items():
+    ultimo, ha_12m = serie_i.iloc[-1], serie_i.iloc[-13]
+    tendencia = "alta" if ultimo - serie_i.iloc[-4] > 0.15 else ("queda" if ultimo - serie_i.iloc[-4] < -0.15 else "estável")
+    linhas.append((nome_i, ultimo, ultimo - ha_12m, serie_i.min(), serie_i.max(), tendencia))
+resumo5 = pd.DataFrame(linhas, columns=["indicador", "último", "var. 12m (p.p.)", "mínimo", "máximo", "tendência 3m"]).set_index("indicador")
+print(f"Referência: {painel.index[-1]:%m/%Y}")
+print(resumo5.round(2).to_string())
+```
+
+```
+Referência: 07/2026
+                       último  var. 12m (p.p.)  mínimo  máximo tendência 3m
+indicador
+Selic meta (% a.a.)     14.25            -0.75   10.50   15.00        queda
+IPCA 12m (%)             4.44            -0.79    3.16    5.77      estável
+Juro real ex-post (%)    9.39             0.11    5.72   10.78        queda
+```
+
+#intuicao[
+  A coluna #emph[tendência] resume a direção dos últimos três meses; #emph[var. 12m] mostra o movimento de um ano, e #emph[mín./máx.] contextualiza
+  o valor na série. Um dashboard bom permite responder "isso é alto ou baixo?" sem abrir outro arquivo. O #strong[juro real ex-post] usa a
+  inflação já realizada; uma versão #emph[ex-ante] usaria a expectativa de inflação (Focus), mais relevante para decisões de investimento.
+]
+
+#atencao[
+  #strong[Alinhe as frequências antes de comparar.] A Selic é diária e o IPCA é mensal: compará-los exige reamostrar (`resample`) ou
+  casar por data (`merge_asof`). E #strong[defasagem de divulgação]: o IPCA de um mês sai no início do mês seguinte, de modo que o
+  último ponto do IPCA é sempre mais antigo que o da Selic --- o painel precisa deixar explícita a #emph[data de referência] de cada indicador.
+]
+
 #line()
 
 == Projeto 2 --- Análise de Convergência de Renda
@@ -287,9 +463,9 @@ Um $lambda$ próximo de 2% ao ano é o resultado clássico de Barro e
 Sala-i-Martin (1992) em países e regiões --- a chamada "regra dos 2%".
 
 #strong[Exemplo numérico.] Suponha que a regressão do script produza
-$hat(beta) = - 0\,015$ para uma janela de $T = 20$ anos (o mesmo
+$hat(beta) = - "0,015"$ para uma janela de $T = 20$ anos (o mesmo
 horizonte 2000--2020 usado no código). A velocidade de convergência
-implícita seria $lambda = - ln\(1 - 0\,015\)\/20 approx 0\,00076$, ou
+implícita seria $lambda = - ln\(1 - "0,015"\)\/20 approx "0,00076"$, ou
 cerca de 0,076% ao ano --- bem abaixo da "regra dos 2%", o que
 sinalizaria convergência extremamente lenta (o hiato entre países ricos
 e pobres levaria séculos para se fechar pela metade). Comparar o
@@ -422,6 +598,44 @@ regressão e verifique se a hipótese de convergência absoluta se
 sustenta. Em seguida, adicione uma variável de controle (ex: taxa de
 investimento ou escolaridade média) e compare o β estimado antes e
 depois --- a magnitude aumentou ou diminuiu?
+
+#teoria("convergência beta e sigma, e a velocidade de convergência")[
+  A hipótese de #strong[convergência beta (absoluta)] diz que economias mais pobres crescem mais rápido, de modo que na regressão
+  $g_i = alpha + beta ln(y_(i,0)) + epsilon_i$ o coeficiente $beta$ é #strong[negativo]. Já a #strong[convergência sigma] exige que a
+  #emph[dispersão] da renda entre países #emph[diminua] ao longo do tempo (desvio padrão de $ln y$ cai). Beta é condição #emph[necessária]
+  (mas não suficiente) para sigma: choques podem reabrir a dispersão. Da regressão sai a #strong[velocidade de convergência] $lambda$ e a
+  #strong[meia-vida] (tempo para eliminar metade da distância ao estado estacionário): se $g$ é o crescimento médio anual em $T$ anos,
+  $beta = -(1 - e^(-lambda T))/T$, portanto $lambda = -ln(1 + beta T)/T$ e a meia-vida é $ln 2/lambda$.
+]
+
+```python
+rng_c = np.random.default_rng(100)
+n_pc = 60
+ln_y0 = rng_c.normal(8.5, 0.9, n_pc)                                        # ln da renda per capita inicial
+beta_v, T_c = -0.015, 20
+cresc_aa = 0.15 + beta_v * ln_y0 + rng_c.normal(0, 0.004, n_pc)                # crescimento médio anual (decimal)
+modelo_c = sm.OLS(cresc_aa, sm.add_constant(ln_y0)).fit()
+b_c = modelo_c.params[1]
+lam = -np.log(1 + b_c * T_c) / T_c
+print(f"beta estimado = {b_c:.4f} (verdadeiro {beta_v}) | p-valor = {modelo_c.pvalues[1]:.1e} | R² = {modelo_c.rsquared:.2f}")
+print(f"Velocidade de convergência lambda = {lam * 100:.2f}% ao ano | meia-vida = {np.log(2) / lam:.0f} anos")
+
+ln_y_final = ln_y0 + cresc_aa * T_c                                          # ln da renda ao fim de T anos
+print(f"Dispersão de ln y: inicial = {ln_y0.std():.3f} | final = {ln_y_final.std():.3f} -> {'convergência sigma' if ln_y_final.std() < ln_y0.std() else 'sem convergência sigma'}")
+```
+
+```
+beta estimado = -0.0142 (verdadeiro -0.015) | p-valor = 5.3e-35 | R² = 0.93
+Velocidade de convergência lambda = 1.67% ao ano | meia-vida = 42 anos
+Dispersão de ln y: inicial = 0.899 | final = 0.648 -> convergência sigma
+```
+
+#atencao[
+  #strong[Convergência absoluta raramente se verifica em amostras amplas de países]: sem controlar por investimento, capital humano e
+  instituições, o $beta$ costuma ser próximo de zero. A #strong[convergência condicional] (controlando por determinantes do estado estacionário)
+  é a que a evidência empírica sustenta, com velocidades de cerca de 2% ao ano --- próximas da do exemplo simulado (1,7%). Com dados reais, desconfie
+  de $beta$ muito negativo calculado sem controles.
+]
 
 #line()
 
@@ -579,6 +793,41 @@ reais? Teste também uma especificação cúbica
 ($beta_3 thin upright("PIB")^3$) e verifique se ela é estatisticamente
 significativa --- isso mudaria sua conclusão sobre a forma da curva?
 
+#teoria("o ponto de inflexão da curva e o risco de extrapolar")[
+  A especificação quadrática $y = alpha + beta_1 x + beta_2 x^2 + epsilon$ com $beta_1 > 0$ e $beta_2 < 0$ gera um U invertido, com ponto de
+  máximo em $x^* = -beta_1/(2 beta_2)$. Duas cautelas essenciais. #strong[(1)] O teste da hipótese de U invertido exige
+  $beta_2 < 0$ #emph[significativo] e $x^*$ #emph[dentro do intervalo observado] dos dados: se o ponto de inflexão está acima do maior $x$ da amostra,
+  o que se observa é só a parte ascendente --- e a "curva" é uma extrapolação. #strong[(2)] O ponto de inflexão tem incerteza própria
+  (é uma razão de coeficientes): reporte um intervalo (método delta ou bootstrap), não só o valor.
+]
+
+```python
+rng_k = np.random.default_rng(111)
+n_k = 120
+pib_pc = rng_k.uniform(1, 40, n_k)                                          # PIB per capita (milhares de US$)
+emissao = 0.5 + 0.9 * pib_pc - 0.015 * pib_pc ** 2 + rng_k.normal(0, 1.5, n_k)
+Xk = sm.add_constant(np.column_stack([pib_pc, pib_pc ** 2]))
+mk = sm.OLS(emissao, Xk).fit()
+b1, b2 = mk.params[1], mk.params[2]
+pico_x = -b1 / (2 * b2)
+
+rng_boot = np.random.default_rng(7)
+picos = []
+for _ in range(1500):
+    idx = rng_boot.integers(0, n_k, n_k)
+    mb = sm.OLS(emissao[idx], Xk[idx]).fit()
+    picos.append(-mb.params[1] / (2 * mb.params[2]))
+print(f"b1 = {b1:.3f}, b2 = {b2:.4f} (p = {mk.pvalues[2]:.1e}) | ponto de inflexão = {pico_x:.1f} mil US$ (verdadeiro: {0.9 / (2 * 0.015):.0f})")
+print(f"IC 95% bootstrap do ponto de inflexão: ({np.percentile(picos, 2.5):.1f}, {np.percentile(picos, 97.5):.1f}) | maior PIB per capita da amostra: {pib_pc.max():.1f}")
+print("O ponto de inflexão está", "DENTRO" if pico_x < pib_pc.max() else "FORA", "do intervalo observado dos dados")
+```
+
+```
+b1 = 0.917, b2 = -0.0156 (p = 3.0e-20) | ponto de inflexão = 29.5 mil US$ (verdadeiro: 30)
+IC 95% bootstrap do ponto de inflexão: (27.6, 31.7) | maior PIB per capita da amostra: 39.0
+O ponto de inflexão está DENTRO do intervalo observado dos dados
+```
+
 #line()
 
 == Projeto 4 --- Modelo de Previsão de Inflação
@@ -614,7 +863,7 @@ sazonalidade anual em dados mensais --- por exemplo, reajustes
 concentrados em determinados meses).
 
 #strong[Identificando as ordens (p, q): ACF e PACF.] Antes de
-simplesmente "chutar" $\(1\,d\,1\)\(1\,1\,1\,12\)$ como o script faz por
+simplesmente "chutar" $\(1\,d\,1\)\("1,1"\,"1,12"\)$ como o script faz por
 conveniência didática, a metodologia Box-Jenkins clássica identifica $p$
 e $q$ examinando dois gráficos da série já estacionária: a
 #strong[função de autocorrelação] (ACF),
@@ -771,6 +1020,51 @@ dos últimos 12 meses). O SARIMA supera o modelo ingênuo em MAE/MAPE fora
 da amostra? Um modelo sofisticado que não supera uma referência simples
 é um resultado importante --- não descarte essa possibilidade.
 
+#teoria("sazonalidade, decomposição e diagnóstico dos resíduos de um modelo de previsão")[
+  O IPCA mensal tem #strong[tendência] (nível de inflação), #strong[sazonalidade] (padrões que se repetem a cada 12 meses, como reajustes
+  de início de ano) e #strong[ruído]. A decomposição separa as três partes. Um bom modelo de previsão deixa resíduos que parecem
+  #strong[ruído branco]: sem autocorrelação, com média zero. O teste de #strong[Ljung-Box] verifica a ausência de autocorrelação nos resíduos; se
+  rejeitar, o modelo deixou estrutura temporal sem explicar. O código simula um IPCA mensal com sazonalidade e persistência, decompõe e testa
+  os resíduos de um SARIMA:
+]
+
+```python
+from statsmodels.tsa.seasonal import seasonal_decompose
+from statsmodels.tsa.statespace.sarimax import SARIMAX
+from statsmodels.stats.diagnostic import acorr_ljungbox
+rng_s = np.random.default_rng(77)
+meses = pd.date_range("2015-01-01", periods=120, freq="MS")
+sazonal = np.tile([0.25, 0.30, 0.10, 0.00, -0.05, -0.05, -0.10, -0.15, -0.05, 0.05, 0.10, 0.25], 10)   # padrão que se repete
+base = np.zeros(120)
+for t in range(1, 120):
+    base[t] = 0.5 + 0.6 * (base[t - 1] - 0.5) + rng_s.normal(0, 0.12)
+ipca_sim = pd.Series(base + sazonal, index=meses, name="ipca_mensal")
+dec = seasonal_decompose(ipca_sim, model="additive", period=12)
+print("Padrão sazonal estimado por mês (jan..dez):", np.round(dec.seasonal[:12].values, 2).tolist())
+print(f"Variância explicada pela sazonalidade: {dec.seasonal.var() / ipca_sim.var():.0%} | pela tendência: {dec.trend.dropna().var() / ipca_sim.var():.0%}")
+
+ajuste_s = SARIMAX(ipca_sim, order=(1, 0, 0), seasonal_order=(0, 1, 1, 12)).fit(disp=False)
+lb = acorr_ljungbox(ajuste_s.resid[12:], lags=[12], return_df=True)
+print(f"AIC do SARIMA(1,0,0)(0,1,1)12: {ajuste_s.aic:.1f} | Ljung-Box (12 defasagens): p = {lb['lb_pvalue'].iloc[0]:.3f} -> "
+      f"{'resíduos compatíveis com ruído branco' if lb['lb_pvalue'].iloc[0] > 0.05 else 'sobrou estrutura nos resíduos'}")
+prev = ajuste_s.get_forecast(12)
+ic = prev.conf_int()
+print(f"Previsão para os próximos 12 meses: média = {prev.predicted_mean.mean():.2f}% a.m. | intervalo de 95% no 12º mês: ({ic.iloc[-1, 0]:.2f}, {ic.iloc[-1, 1]:.2f})")
+```
+
+```
+Padrão sazonal estimado por mês (jan..dez): [0.16, 0.13, 0.01, -0.04, -0.09, -0.06, -0.04, -0.11, -0.05, -0.06, -0.01, 0.16]
+Variância explicada pela sazonalidade: 28% | pela tendência: 22%
+AIC do SARIMA(1,0,0)(0,1,1)12: -107.3 | Ljung-Box (12 defasagens): p = 0.849 -> resíduos compatíveis com ruído branco
+Previsão para os próximos 12 meses: média = 0.55% a.m. | intervalo de 95% no 12º mês: (0.36, 1.01)
+```
+
+#atencao[
+  #strong[Previsão sem incerteza é incompleta.] Reporte #emph[sempre] o intervalo de previsão; ele se alarga com o horizonte. E a
+  avaliação deve ser #strong[fora da amostra] e respeitar o tempo (treinar no passado, testar no futuro): ajuste bom em dados já vistos
+  não significa previsão boa.
+]
+
 #line()
 
 == Projeto 5 --- Regra de Taylor
@@ -794,7 +1088,7 @@ a taxa de juros real de equilíbrio ("neutra"), $pi_t$ é a inflação
 corrente (ou esperada) e $pi^(*)$ a meta, $y_t - y_t^(*)$ é o hiato do
 produto (PIB efetivo menos potencial, em %), e $phi.alt_pi$, $phi.alt_y$
 são os coeficientes de reação do banco central. Taylor (1993) propôs
-$phi.alt_pi = 0\,5$ e $phi.alt_y = 0\,5$ com base em dados dos EUA ---
+$phi.alt_pi = "0,5"$ e $phi.alt_y = "0,5"$ com base em dados dos EUA ---
 não derivados de otimização formal, mas como regra simples que descrevia
 bem o Fed da época.
 
@@ -815,7 +1109,7 @@ defasada como regressor:
 
 $ i_t =\(1 - rho\)thin i_t^(upright("regra")) + rho thin i_(t - 1) + eta_t $
 
-com $rho in\(0\,1\)$ medindo o grau de suavização. O script cria
+com $rho in\("0,1"\)$ medindo o grau de suavização. O script cria
 `selic_lag1` para permitir esse tipo de especificação, embora a
 regressão principal, por simplicidade didática, estime a versão sem
 suavização.
@@ -925,6 +1219,47 @@ coeficiente $rho$ implícito é alto ou baixo? Compare o ajuste (R²) do
 modelo com e sem suavização, e discuta se a regra estimada é mais
 compatível com um Copom que reage rápido ou gradualmente.
 
+#exemplo("laboratório do Projeto 5: decompondo a Selic implícita da regra de Taylor com dados reais")[
+  A regra usada no repositório é $i^* = r^* + pi + "0,5" (pi - pi^*)$, com $r^*$ a taxa neutra, $pi$ a inflação em 12 meses e $pi^*$ a meta. Ela
+  se lê como #strong[três blocos]: o juro neutro, a compensação da inflação corrente e a reação ao desvio da meta. O
+  #strong[princípio de Taylor] exige que o coeficiente total sobre a inflação seja #strong[maior que 1] (aqui, $1 + "0,5" = "1,5"$): o juro #emph[nominal] sobe
+  mais que um para um com a inflação, de modo que o juro #emph[real] também sobe e a política é de fato contracionista. A decomposição, a partir da série do repositório:
+]
+
+```python
+ultimo_t = tay5.iloc[-1]
+bloco_neutro = ultimo_t["r_star"]
+bloco_inflacao = ultimo_t["ipca12m"]
+bloco_desvio = 0.5 * (ultimo_t["ipca12m"] - ultimo_t["meta"])
+print(f"Referência {tay5.index[-1]:%m/%Y}: Selic implícita = {ultimo_t['taylor_selic']:.2f}% = neutro {bloco_neutro:.2f} + inflação {bloco_inflacao:.2f} + reação ao desvio {bloco_desvio:.2f}")
+print(f"Selic efetiva = {ultimo_t['selic']:.2f}% | gap = {ultimo_t['gap_pp']:+.2f} p.p. (política {'mais apertada' if ultimo_t['gap_pp'] > 0 else 'mais frouxa'} que a regra)")
+
+print("\nSensibilidade da Selic implícita ao coeficiente de reação à inflação (a):")
+for a_coef in (0.0, 0.5, 1.0, 1.5):
+    implicita = tay5["r_star"] + tay5["ipca12m"] + a_coef * (tay5["ipca12m"] - tay5["meta"])
+    print(f"  a = {a_coef:.1f} (coeficiente total {1 + a_coef:.1f}) -> Selic implícita média = {implicita.mean():.2f}% | gap médio = {(tay5['selic'] - implicita).mean():+.2f} p.p.")
+print(f"\nPrincípio de Taylor satisfeito com a = 0,5? coeficiente total = {1 + 0.5} {'> 1: sim' if 1 + 0.5 > 1 else '<= 1: não'}")
+```
+
+```
+Referência 07/2026: Selic implícita = 10.16% = neutro 5.00 + inflação 4.44 + reação ao desvio 0.72
+Selic efetiva = 14.25% | gap = +4.09 p.p. (política mais apertada que a regra)
+
+Sensibilidade da Selic implícita ao coeficiente de reação à inflação (a):
+  a = 0.0 (coeficiente total 1.0) -> Selic implícita média = 9.38% | gap médio = +3.82 p.p.
+  a = 0.5 (coeficiente total 1.5) -> Selic implícita média = 10.15% | gap médio = +3.04 p.p.
+  a = 1.0 (coeficiente total 2.0) -> Selic implícita média = 10.93% | gap médio = +2.27 p.p.
+  a = 1.5 (coeficiente total 2.5) -> Selic implícita média = 11.70% | gap médio = +1.50 p.p.
+
+Princípio de Taylor satisfeito com a = 0,5? coeficiente total = 1.5 > 1: sim
+```
+
+#atencao[
+  A regra "simples" (sem hiato do produto) é uma #strong[simplificação]: o Copom também olha o hiato, as expectativas e o ambiente
+  externo. O gap positivo persistente sugere #emph[política mais apertada que a sugerida pela regra], mas não prova erro do Banco Central:
+  a regra tem incerteza forte sobre $r^*$ (inobservável) e sobre os pesos. Use-a como #strong[referência de calibragem], não como veredito.
+]
+
 #line()
 
 == Projeto 6 --- Análise de Crise Cambial
@@ -973,7 +1308,7 @@ binário. A convenção mais usada (Eichengreen, Rose & Wyplosz, 1996;
 Kaminsky & Reinhart, 1999) é marcar como crise qualquer observação que
 ultrapasse a média histórica por uma margem de 1,5 a 3 desvios-padrão:
 
-$ upright("Crise")_t = bb(1) [upright("EMP")_t > overline(upright("EMP")) + k dot.op sigma_(upright("EMP"))]\,#h(2em) k in\[1\,5\,thin 3\] $
+$ upright("Crise")_t = bb(1) [upright("EMP")_t > overline(upright("EMP")) + k dot.op sigma_(upright("EMP"))]\,#h(2em) k in\["1,5"\,thin 3\] $
 
 O script usa $k = 2$ --- um parâmetro de julgamento, não um valor
 "correto" derivado de teoria: $k$ menor identifica mais episódios
@@ -981,11 +1316,11 @@ O script usa $k = 2$ --- um parâmetro de julgamento, não um valor
 deixar passar crises reais.
 
 #strong[Um exemplo numérico simplificado.] Suponha que, em um mês, o
-câmbio se desvalorizou 3% ($Delta e\/e_(t - 1) = 0\,03$) enquanto as
-reservas caíram 1% ($Delta r\/r_(t - 1) = - 0\,01$), e que o
+câmbio se desvalorizou 3% ($Delta e\/e_(t - 1) = "0,03"$) enquanto as
+reservas caíram 1% ($Delta r\/r_(t - 1) = - "0,01"$), e que o
 desvio-padrão histórico da variação de reservas seja
-$sigma_(Delta r) = 0\,02$ (2%). O índice fica
-$upright("EMP") = 0\,03 - frac(1, 0\,02) times\(- 0\,01\)= 0\,03 + 0\,5 = 0\,53$,
+$sigma_(Delta r) = "0,02"$ (2%). O índice fica
+$upright("EMP") = "0,03" - frac(1, "0,02") times\(- "0,01"\)= "0,03" + "0,5" = "0,53"$,
 um valor bem acima de um mês "normal" (em que ambos os componentes ficam
 próximos de zero) --- ilustrando como uma queda de reservas
 relativamente pequena, mas grande frente à sua própria volatilidade
@@ -1072,8 +1407,43 @@ fig.savefig("crise_cambial.png", dpi=150)
 Estenda o índice EMP para incluir o diferencial de juros (SELIC menos
 Fed Funds) como terceiro componente, seguindo a formulação estendida de
 Eichengreen, Rose e Wyplosz (1996). O número de crises identificadas
-muda? Compare também os resultados usando $k = 1\,5$ e $k = 3$ e discuta
+muda? Compare também os resultados usando $k = "1,5"$ e $k = 3$ e discuta
 o trade-off entre falsos positivos e crises não detectadas.
+
+#teoria("o índice de pressão do mercado de câmbio (EMP): construção passo a passo")[
+  Uma crise cambial é um episódio em que a pressão por depreciação é #emph[extrema], seja ela absorvida pela taxa de câmbio (a moeda cai), pelas reservas (o
+  Banco Central vende dólares) ou pelos juros (sobem para defender a moeda). O índice EMP combina os três, padronizando cada componente pelo
+  seu desvio padrão (para que nenhum domine só por escala):
+
+  $ "EMP"_t = Delta e_t/e_(t-1) dot 1/(sigma_e) - Delta "Res"_t/"Res"_(t-1) dot 1/(sigma_"R") $
+
+  O sinal negativo nas reservas reflete que #emph[queda] de reservas indica pressão. Os pesos $1\/sigma$ equalizam a contribuição de cada componente.
+  Um episódio é classificado como crise quando o EMP supera a média por uma quantidade de desvios padrão. O código constrói o índice com
+  dados simulados que contêm um #strong[episódio de crise plantado], para ver o mecanismo de composição (a escolha do limiar fica como Desafio do projeto):
+]
+
+```python
+rng_emp = np.random.default_rng(55)
+n_m = 120
+var_cambio = rng_emp.normal(0.003, 0.012, n_m)
+var_reservas = rng_emp.normal(0.002, 0.008, n_m)
+var_cambio[80:83] += [0.09, 0.12, 0.05]                                    # depreciação forte
+var_reservas[80:83] -= [0.03, 0.05, 0.02]                                  # perda de reservas
+sig_e, sig_r = var_cambio.std(ddof=1), var_reservas.std(ddof=1)
+emp = var_cambio / sig_e - var_reservas / sig_r
+print(f"Pesos: 1/sigma_e = {1 / sig_e:.1f} | 1/sigma_R = {1 / sig_r:.1f} (a componente de menor variabilidade pesa mais)")
+print(f"EMP: média = {emp.mean():.2f} | desvio padrão = {emp.std(ddof=1):.2f}")
+top = np.argsort(emp)[-4:][::-1]
+print("Quatro maiores valores do EMP (mês, valor):", [(int(i), round(float(emp[i]), 1)) for i in top])
+print("Os picos coincidem com o episódio plantado (meses 80 a 82):", set(top[:3]) == {80, 81, 82} or all(80 <= i <= 83 for i in top[:3]))
+```
+
+```
+Pesos: 1/sigma_e = 52.5 | 1/sigma_R = 102.0 (a componente de menor variabilidade pesa mais)
+EMP: média = 0.24 | desvio padrão = 1.68
+Quatro maiores valores do EMP (mês, valor): [(80, 10.2), (81, 8.9), (82, 2.9), (69, 2.8)]
+Os picos coincidem com o episódio plantado (meses 80 a 82): True
+```
 
 #line()
 
@@ -1275,6 +1645,69 @@ fixos com um modelo de efeitos aleatórios (`RandomEffects` do
 por escrito (como faria na seção de metodologia de um TCC) qual dos dois
 modelos você reportaria como principal.
 
+#exemplo("apresentando resultados como num TCC: tabela de modelos lado a lado")[
+  Em um trabalho acadêmico, os resultados de várias especificações aparecem numa #strong[única tabela], com os coeficientes e (entre parênteses) os erros-padrão,
+  asteriscos de significância e as estatísticas de ajuste. O `summary_col` do statsmodels monta isso. Exemplo com três especificações
+  sobre dados simulados de salários:
+]
+
+```python
+from statsmodels.iolib.summary2 import summary_col
+rng_t = np.random.default_rng(91)
+n_t = 800
+educ_t = rng_t.integers(6, 20, n_t).astype(float)
+exp_t = rng_t.uniform(0, 30, n_t)
+homem = rng_t.integers(0, 2, n_t).astype(float)
+lw_t = 0.6 + 0.085 * educ_t + 0.03 * exp_t - 0.0005 * exp_t ** 2 + 0.12 * homem + rng_t.normal(0, 0.4, n_t)
+d_t = pd.DataFrame({"lw": lw_t, "educ": educ_t, "exp": exp_t, "exp2": exp_t ** 2, "homem": homem})
+m1 = sm.OLS(d_t["lw"], sm.add_constant(d_t[["educ"]])).fit()
+m2 = sm.OLS(d_t["lw"], sm.add_constant(d_t[["educ", "exp", "exp2"]])).fit()
+m3 = sm.OLS(d_t["lw"], sm.add_constant(d_t[["educ", "exp", "exp2", "homem"]])).fit()
+tabela = summary_col([m1, m2, m3], stars=True, model_names=["(1)", "(2)", "(3)"], float_format="%.3f",
+                     info_dict={"N": lambda x: f"{int(x.nobs)}"})
+print(tabela)
+```
+
+```
+
+=========================================
+                 (1)      (2)      (3)
+-----------------------------------------
+const          0.878*** 0.608*** 0.531***
+               (0.050)  (0.062)  (0.062)
+educ           0.090*** 0.089*** 0.088***
+               (0.004)  (0.004)  (0.004)
+exp                     0.026*** 0.027***
+                        (0.007)  (0.007)
+exp2                    -0.000   -0.000
+                        (0.000)  (0.000)
+homem                            0.157***
+                                 (0.028)
+R-squared      0.413    0.477    0.497
+R-squared Adj. 0.412    0.476    0.494
+N              800      800      800
+=========================================
+Standard errors in parentheses.
+* p<.1, ** p<.05, ***p<.01
+```
+
+#intuicao[
+  Observe o coeficiente de #emph[educ] ao longo das colunas: ele muda ao incluir controles. Se ele fosse #strong[estável] entre especificações plausíveis, seria uma
+  evidência de #emph[robustez]; se mudasse muito, o resultado depende do modelo --- e isso precisa ser discutido, não escondido. É a
+  base da seção de #strong[robustez] de um TCC.
+]
+
+#teoria("como escrever a seção de metodologia: um modelo de parágrafo")[
+  #emph["Estima-se a equação de Mincer em sua forma log-linear, $ln(w_i) = beta_0 + beta_1 "educ"_i + beta_2 "exp"_i + beta_3 "exp"_i^2 + epsilon_i$, por
+  Mínimos Quadrados Ordinários, com erros-padrão robustos à heterocedasticidade (HC3). A experiência entra em forma quadrática para captar os
+  rendimentos decrescentes. Como robustez, reestima-se o modelo sem a experiência ao quadrado e com a dummy de sexo, e reporta-se a estabilidade
+  de $beta_1$. A principal ameaça à interpretação causal é a omissão de habilidade não observada, que tende a viesar $beta_1$ para cima; discute-se o sentido
+  desse viés na seção de limitações."]
+
+  Estrutura de um bom parágrafo: #strong[modelo] (equação), #strong[estimador e correções] (por que e como), #strong[escolhas de especificação]
+  (justificadas), #strong[robustez] e #strong[ameaças à validade]. Cada decisão técnica tem uma justificativa econômica ou estatística explícita.
+]
+
 #line()
 
 == Checklist para seu TCC
@@ -1396,8 +1829,8 @@ terceiros.
   ARIMA e compare com a ordem usada no script do Projeto 4.
 
 + #strong[AIC/BIC para seleção de modelo.] Ainda sobre a série de IPCA,
-  estime três ARIMAs com ordens diferentes (por exemplo, $\(1\,1\,1\)$,
-  $\(2\,1\,1\)$, $\(1\,1\,2\)$) e compare o AIC e o BIC de cada um. O
+  estime três ARIMAs com ordens diferentes (por exemplo, $\("1,1"\,1\)$,
+  $\("2,1"\,1\)$, $\("1,1"\,2\)$) e compare o AIC e o BIC de cada um. O
   modelo com menor AIC é o mesmo com menor BIC? Se não for, qual
   critério você prefere seguir, e por quê (pesquise a diferença de
   penalização entre os dois critérios)?
@@ -1465,6 +1898,41 @@ qualquer um dos Desafios ou dos exercícios do Projeto 8 que você decidir
 aprofundar em um artigo, TCC ou dissertação deveria, em algum momento,
 remeter a esses textos originais, não apenas a este material
 introdutório.
+
+#strong[Reprodutibilidade em uma célula.] Antes de entregar qualquer projeto, registre o ambiente e fixe as sementes. O trecho abaixo,
+colocado no topo do script principal, imprime as versões usadas e garante que a aleatoriedade seja repetível:
+
+```python
+import sys, platform, random
+random.seed(42); np.random.seed(42)
+pacotes = {"pandas": pd.__version__, "numpy": np.__version__, "statsmodels": sm.__version__}
+print(f"Python {sys.version.split()[0]} em {platform.system()} | " + " | ".join(f"{k} {v}" for k, v in pacotes.items()))
+print("Sementes fixadas: random e numpy = 42 (registre-as no README)")
+```
+
+```
+Python 3.12.10 em Windows | pandas 2.2.3 | numpy 2.5.4 | statsmodels 0.15.0
+Sementes fixadas: random e numpy = 42 (registre-as no README)
+```
+
+#figure(
+  align(center)[#table(
+    columns: (4%, 38%, 58%),
+    align: (center, left, left),
+    table.header([\#], [Erro], [Como evitar],),
+    [1], [Dashboard sem data de referência de cada indicador], [Mostre a data e a defasagem de divulgação],
+    [2], [Comparar variáveis de frequências diferentes sem alinhar], [`resample` ou `merge_asof`],
+    [3], [Afirmar convergência sem controles], [Convergência condicional; reporte a velocidade e a meia-vida],
+    [4], [Curva de Kuznets com ponto de inflexão fora da amostra], [Verifique `x*` dentro do intervalo observado; intervalo de confiança],
+    [5], [Previsão sem intervalo e sem avaliação fora da amostra], [Intervalo de previsão e treino/teste no tempo],
+    [6], [Resíduos autocorrelacionados ignorados (Ljung-Box)], [Ajustar a ordem do modelo],
+    [7], [Tomar a regra de Taylor como veredito sobre o Banco Central], [Tratar como referência; discutir incerteza de $r^*$],
+    [8], [Índice composto sem padronizar os componentes], [Pesos inversos ao desvio padrão],
+    [9], [Apresentar uma só especificação], [Tabela com várias especificações e discussão de robustez],
+    [10], [Dados e sementes não registrados], [`requirements.txt`, sementes, README, scripts numerados],
+  )]
+  , kind: table
+  )
 
 #line()
 
