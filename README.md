@@ -150,3 +150,12 @@ Fonte em Typst (`.typ`); o PDF correspondente é gerado com `typst compile arqui
 | `economia_informal_brasil` | Trabalho sobre a economia informal no Brasil |
 
 > Lema: Programação é igual econometria — só se aprende fazendo.
+
+---
+
+## Licença e contribuições
+
+Projeto aberto, para que o conhecimento de economia e finanças não fique restrito.
+- Código: [MIT](LICENSE). Texto, apostilas e figuras: [CC BY-SA 4.0](LICENSE-CONTEUDO.txt) — pode copiar, adaptar e usar (inclusive comercialmente), citando a fonte e mantendo a mesma licença aberta nos derivados.
+- Quer ajudar? Veja o [guia de contribuição](CONTRIBUTING.md).
+- Os conteúdos são educacionais e não constituem recomendação de investimento.
